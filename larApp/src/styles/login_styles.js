@@ -1,15 +1,16 @@
 import { StyleSheet } from 'react-native';
+import { colors } from './colors';
 
 const LoginStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#522074',
+    backgroundColor: colors.primary,
     padding: 25,
     justifyContent: 'center',
   },
   title: {
     fontSize: 40,
-    color: "#B3B3B3",
+    color: colors.tittle,
     fontWeight: 'bold',
     fontFamily: "sans-serif-medium",
     textAlign: 'center',
@@ -22,7 +23,7 @@ const LoginStyles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 20,
     borderRadius: 25,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
   },
   loginButton: {  
     backgroundColor: '#999999',

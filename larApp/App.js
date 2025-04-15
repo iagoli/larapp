@@ -3,17 +3,23 @@ import { StyleSheet, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import UsersListScreen from './src/screens/userListScreen';
 import LoginScreen from './src/screens/login';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './src/screens/homePage';
 
 export default function App() {
   return (
-    <PaperProvider>
+    <NavigationContainer> 
+      <PaperProvider>
       <View style={styles.container}>
-        <LoginScreen/>
+        <HomeScreen/>
         <StatusBar style="auto" />
       </View>
-    </PaperProvider>
+      </PaperProvider>
+    </NavigationContainer>
   );
-}
+ 
+    
+};
 
 const styles = StyleSheet.create({
   container: {
