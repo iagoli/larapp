@@ -113,19 +113,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   headerLabel: {
     backgroundColor: '#5e3b7f',
     color: '#fff',
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 20,
+    paddingHorizontal: 25,
+    paddingVertical: 15,
+    borderRadius: 25,
     fontWeight: 'bold',
+    fontSize: 19,
   },
   iconGroup: {
     flexDirection: 'row',
-    gap: 4,
+    gap: 2,
+    marginRight: 5,
   },
   itemRow: {
     flexDirection: 'row',
@@ -138,11 +140,11 @@ const styles = StyleSheet.create({
   },
   avatar: {
     backgroundColor: '#e0cfff',
-    marginRight: 12,
+    marginRight: 10,
   },
   itemText: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
     color: '#3a2d4d',
   },
 });

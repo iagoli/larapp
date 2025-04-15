@@ -2,12 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import UsersListScreen from './src/screens/userListScreen';
+import LoginScreen from './src/screens/login';
 
 export default function App() {
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <UsersListScreen />
+        <LoginScreen/>
         <StatusBar style="auto" />
       </View>
     </PaperProvider>
@@ -17,9 +18,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 30,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
 });
