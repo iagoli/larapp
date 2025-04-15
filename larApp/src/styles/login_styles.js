@@ -13,7 +13,7 @@ const LoginStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: "sans-serif-medium",
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 100,
   },
   input: {
     height: 40,
