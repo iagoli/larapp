@@ -30,7 +30,7 @@ const HomeScreen = () => {
           <MaterialIcons name="event-note" size={24} color="#000" />
           <Text style={HomeStyles.itemText}>Consulta</Text>
         </TouchableOpacity>
-
+        
         <TouchableOpacity
           style={HomeStyles.item}
           onPress={() => console.log('Botão Refeição pressionado')}

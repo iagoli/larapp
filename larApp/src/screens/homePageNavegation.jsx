@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import HomeNavegationstyles from '../styles/homePageNavegation';
+import HomeNavegationstyles from '../styles/homePageNavegation_styles';
 import { colors } from '../styles/colors';
 
 const Drawer = createDrawerNavigator();
@@ -39,7 +39,7 @@ function CustomDrawerContent(props) {
           <Text style={HomeNavegationstyles.plusText}>+</Text>
         </TouchableOpacity>
 
-        {['Usuarios', 'Quartos', 'Utentes', 'Relatorios'].map((item, i) => (
+        {['Usuários', 'Quartos', 'Utentes', 'Relatórios'].map((item, i) => (
           <DrawerItem
             key={i}
             label={() => (

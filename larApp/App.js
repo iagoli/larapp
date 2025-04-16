@@ -7,6 +7,7 @@ import LoginScreen from './src/screens/login';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './src/screens/homePage';
 import MenuScreen from './src/screens/homePageNavegation';
+import CreateUserScreen from './src/screens/createUserScreen';
 
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
  
       <PaperProvider>
       <View style={AppStyles.container}>
-        <HomeScreen/>
+        <CreateUserScreen/>
         <StatusBar style="auto" />
       </View>
       </PaperProvider>
