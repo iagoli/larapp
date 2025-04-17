@@ -17,7 +17,7 @@ const CreateUserScreen = () => {
   const [utenteAssociado, setUtenteAssociado] = useState('');
 
   const tipoUsuarioOptions = [
-    { label: 'Selecione um tipo', value: '' },
+    { label: 'Selecione uma opção', value: '' },
     { label: 'Administrador', value: 'admin' },
     { label: 'Enfermeiro', value: 'enfermeiro' },
     { label: 'Utente', value: 'utente' },

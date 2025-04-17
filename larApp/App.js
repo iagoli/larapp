@@ -9,6 +9,7 @@ import HomeScreen from './src/screens/homePage';
 import MenuScreen from './src/screens/homePageNavegation';
 import CreateUserScreen from './src/screens/createUserScreen';
 import NewPatientScreen from './src/screens/createUtente';
+import NewRoomScreen from './src/screens/createQuarto';
 
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
  
       <PaperProvider>
       <View style={AppStyles.container}>
-        <NewPatientScreen/>
+        <NewRoomScreen/>
         <StatusBar style="auto" />
       </View>
       </PaperProvider>
