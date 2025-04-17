@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import Title from '../components/title';
 import Label from '../components/label';
 import TextInputField from '../components/textInputField';
+import SelectInput from '../components/selectInput'; 
 import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader'; 
 import userScreenStyles from '../styles/userScreen_styles';
@@ -12,7 +13,15 @@ const CreateUserScreen = () => {
   const [email, setEmail] = useState('');
   const [telemovel, setTelemovel] = useState('');
   const [morada, setMorada] = useState('');
+  const [tipoUsuario, setTipoUsuario] = useState(''); 
   const [utenteAssociado, setUtenteAssociado] = useState('');
+
+  const tipoUsuarioOptions = [
+    { label: 'Selecione um tipo', value: '' },
+    { label: 'Administrador', value: 'admin' },
+    { label: 'Enfermeiro', value: 'enfermeiro' },
+    { label: 'Utente', value: 'utente' },
+  ];
 
   const handleSave = () => {
     console.log({
@@ -20,6 +29,7 @@ const CreateUserScreen = () => {
       email,
       telemovel,
       morada,
+      tipoUsuario,
       utenteAssociado
     });
   };
@@ -39,6 +49,13 @@ const CreateUserScreen = () => {
 
       <Label>Morada</Label>
       <TextInputField value={morada} onChangeText={setMorada} placeholder="Value" />
+
+      <SelectInput
+        label="Tipo de Usuario"
+        selectedValue={tipoUsuario}
+        onValueChange={setTipoUsuario}
+        items={tipoUsuarioOptions}
+      />
 
       <Label>Utente Associado</Label>
       <TextInputField value={utenteAssociado} onChangeText={setUtenteAssociado} placeholder="Value" />

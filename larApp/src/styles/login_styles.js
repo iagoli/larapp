@@ -10,7 +10,7 @@ const LoginStyles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    color: colors.tittle,
+    color: colors.title,
     fontWeight: 'bold',
     fontFamily: "sans-serif-medium",
     textAlign: 'center',
