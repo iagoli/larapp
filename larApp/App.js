@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './src/screens/homePage';
 import MenuScreen from './src/screens/homePageNavegation';
 import CreateUserScreen from './src/screens/createUserScreen';
+import NewPatientScreen from './src/screens/createUtente';
 
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
  
       <PaperProvider>
       <View style={AppStyles.container}>
-        <CreateUserScreen/>
+        <NewPatientScreen/>
         <StatusBar style="auto" />
       </View>
       </PaperProvider>
