@@ -30,7 +30,7 @@ const CreateUserScreen = () => {
       <Label>Nome</Label>
       <TextInputField value={nome} onChangeText={setNome} placeholder="Value" />
 
-      <Label>Email</Label>View
+      <Label>Email</Label>
       <TextInputField value={email} onChangeText={setEmail} placeholder="Value" keyboardType="email-address" />
 
       <Label>Telemovel</Label>

@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
+import { colors } from './colors';
 
 const userScreenStyles = StyleSheet.create({
     container: {
-      padding: 20,
+      padding: 25,
       paddingBottom: 40,
-      backgroundColor: '#fff',
+      backgroundColor: colors.background,
     },
   });
   

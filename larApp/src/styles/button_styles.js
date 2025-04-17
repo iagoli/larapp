@@ -5,9 +5,10 @@ const ButtonStyles = StyleSheet.create({
     button: {
       backgroundColor: colors.primary,
       padding: 14,
-      borderRadius: 8,
+      borderRadius: 10,
       alignItems: 'center',
       marginTop: 10,
+      marginLeft: 15,
     },
     text: {
       color: '#fff',
