@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import Title from '../components/title';
 import Label from '../components/label';
 import TextInputField from '../components/textInputField';
 import SaveButton from '../components/saveButton';
-import userScreenStyles from '../styles/userScreen_styles'; 
+import PhotoUploader from '../components/photoUploader'; 
+import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateUserScreen = () => {
   const [nome, setNome] = useState('');
@@ -41,6 +42,8 @@ const CreateUserScreen = () => {
 
       <Label>Utente Associado</Label>
       <TextInputField value={utenteAssociado} onChangeText={setUtenteAssociado} placeholder="Value" />
+
+      <PhotoUploader /> 
 
       <SaveButton onPress={handleSave} />
     </ScrollView>

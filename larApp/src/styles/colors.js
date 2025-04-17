@@ -2,7 +2,7 @@ export const colors = {
     primary: '#522074', // Roxo principal, mais forte (Parecido com a Nubank)
     secondary: '#007AFF',
     background: '#FFFFFF',
-    tittle:'#fff',
+    title:'#fff',
     text: '#333333',
     error: '#FF3B30',
     success: '#34C759',
