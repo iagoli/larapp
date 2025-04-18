@@ -1,25 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
+import AppStyles from './src/styles/app_styles';
 import UsersListScreen from './src/screens/userListScreen';
+import LoginScreen from './src/screens/login';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './src/screens/homePage';
+import MenuScreen from './src/screens/homePageNavegation';
+import CreateUserScreen from './src/screens/createUserScreen';
+import NewPatientScreen from './src/screens/createUtente';
+import NewRoomScreen from './src/screens/createQuarto';
+
 
 export default function App() {
   return (
-    <PaperProvider>
-      <View style={styles.container}>
-        <UsersListScreen />
+ 
+      <PaperProvider>
+      <View style={AppStyles.container}>
+        <NewRoomScreen/>
         <StatusBar style="auto" />
       </View>
-    </PaperProvider>
+      </PaperProvider>
   );
-}
+ 
+    
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
