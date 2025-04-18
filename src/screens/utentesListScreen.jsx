@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import { Text, Avatar, Checkbox, IconButton } from 'react-native-paper';
-import { Dialog, Portal, Button } from 'react-native-paper';
+import Header from '../components/Header';
+import UserItem from '../components/UserItem';
+import ConfirmDialog from '../components/ConfirmDialog';
 
-
-const utentes = [
-  { id: '1', name: 'Maniche' },
+const users = [
+  { id: '1', name: 'João' },
   { id: '2', name: 'Derlei' },
   { id: '3', name: 'Jardel' },
   { id: '4', name: 'Deco' },
@@ -19,83 +19,51 @@ const utentes = [
 
 const UtentesListScreen = () => {
   const [checkedItems, setCheckedItems] = useState(
-    Object.fromEntries(utentes.map(utente => [utente.id, false]))
+    Object.fromEntries(users.map(user => [user.id, true]))
   );
+
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-
-  const renderItem = ({ item }) => (
-    <View style={styles.itemRow}>
-      <Avatar.Text
-        label={item.name.charAt(0).toUpperCase()}
-        size={36}
-        style={styles.avatar}
-        color="#5e3b7f"
-      />
-      <Text style={styles.itemText}> {item.name} </Text>
-      <Checkbox
-        status={checkedItems[item.id] ? 'checked' : 'unchecked'}
-        onPress={() => toggleCheckbox(item.id)}
-        color="#5e3b7f"
-      />
-    </View>
-  );
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerLabel}>Utentes</Text>
-        <View style={styles.iconGroup}>
-          <IconButton
-            icon="pencil"
-            size={20}
-            iconColor="#5e3b7f"
-            onPress={() => console.log('Edit pressed')}
-          />
-          <IconButton
-            icon="delete"
-            size={20}
-            iconColor="#5e3b7f"
-            onPress={() => setShowDeleteDialog(true)}
-          />
-          <IconButton
-            icon="plus"
-            size={20}
-            iconColor="#5e3b7f"
-            onPress={() => console.log('Add pressed')}
-          />
-        </View>
-
+      {/* Área de cabeçalho separada */}
+      <View style={styles.headerSection}>
+        <Header
+          onEdit={() => console.log('Edit pressed')}
+          onDelete={() => setShowDeleteDialog(true)}
+          onAdd={() => console.log('Add pressed')}
+        />
       </View>
 
-      <FlatList
-        data={utentes}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-      />
+      {/* Área de listagem */}
+      <View style={styles.listSection}>
+        <FlatList
+          data={users}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <UserItem
+              item={item}
+              checked={checkedItems[item.id]}
+              onToggle={() => toggleCheckbox(item.id)}
+            />
+          )}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
 
-      <Portal>
-        <Dialog
-          visible={showDeleteDialog}
-          onDismiss={() => setShowDeleteDialog(false)}
-        >
-          <Dialog.Title>Confirmar</Dialog.Title>
-          <Dialog.Content>
-            <Text>Tem a certeza que quer remover o utente selecionado?</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setShowDeleteDialog(false)}>Cancel</Button>
-            <Button onPress={() => {
-              console.log('Deleting users...');
-              setShowDeleteDialog(false);
-            }}>Confirm</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmDialog
+        visible={showDeleteDialog}
+        onCancel={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          console.log('Deleting users...');
+          setShowDeleteDialog(false);
+        }}
+      />
     </View>
   );
 };
@@ -105,46 +73,18 @@ export default UtentesListScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9efff',
-    paddingTop: 40,
+    backgroundColor: 'white',
+    padding: 0,
     paddingHorizontal: 16,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+  headerSection: {
+    marginBottom: 10,
+    backgroundColor: 'white',
   },
-  headerLabel: {
-  backgroundColor: '#5e3b7f',
-  color: '#fff',
-  paddingHorizontal: 20,
-  paddingVertical: 6,
-  borderRadius: 20,
-  fontWeight: '600',
-  fontSize: 14,
-},
-  iconGroup: {
-    flexDirection: 'row',
-    gap: 2,
-    marginRight: 5,
-  },
-  itemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f9efff',
-    marginBottom: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 12,
-  },
-  avatar: {
-    backgroundColor: '#e0cfff',
-    marginRight: 10,
-  },
-  itemText: {
+  listSection: {
     flex: 1,
-    fontSize: 18,
-    color: '#3a2d4d',
+  },
+  listContent: {
+    paddingBottom: 0,
   },
 });
