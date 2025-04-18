@@ -18,7 +18,6 @@ const NewPatientScreen = () => {
       quarto,
       idade
     });
-    // Aqui você adicionaria a lógica para salvar os dados
   };
 
   return (
