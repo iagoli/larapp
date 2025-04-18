@@ -83,9 +83,9 @@ const UsersListScreen = () => {
           visible={showDeleteDialog}
           onDismiss={() => setShowDeleteDialog(false)}
         >
-          <Dialog.Title>Confirm Removal</Dialog.Title>
+          <Dialog.Title>Confirmar</Dialog.Title>
           <Dialog.Content>
-            <Text>Are you sure you want to remove the selected users?</Text>
+            <Text>Tem a certeza que quer remover o utente selecionado?</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => setShowDeleteDialog(false)}>Cancel</Button>
