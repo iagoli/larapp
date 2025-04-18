@@ -7,7 +7,7 @@ import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import userScreenStyles from '../styles/userScreen_styles';
 
-const NewRoomScreen = () => {
+const CreateQuarto = () => {
   const [camas, setCamas] = useState('');
   const [numero, setNumero] = useState('');
   const [disponibilidade, setDisponibilidade] = useState('');
@@ -75,4 +75,4 @@ const NewRoomScreen = () => {
   );
 };
 
-export default NewRoomScreen;
+export default CreateQuarto;
