@@ -23,7 +23,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <UtentesListScreen/>
+      <RoomsListScreen/>
 
         <StatusBar style="auto" />
       </View>

@@ -1,128 +1,88 @@
 import React, { useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import { Text, Avatar, Checkbox, IconButton } from 'react-native-paper';
-import { Dialog, Portal, Button } from 'react-native-paper';
+import Header from '../components/Header';
+import UserItem from '../components/UserItem';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const rooms = [
-    { id: '1', number: '101' },
-    { id: '2', number: '102' },
-    { id: '3', number: '103' },
-    { id: '4', number: '104' },
-    { id: '5', number: '105' },
-    { id: '6', number: '106' },
-    { id: '7', number: '107' },
-    { id: '8', number: '108' },
+  { id: '1', name: '101' },
+  { id: '2', name: '102' },
+  { id: '3', name: '103' },
+  { id: '4', name: '104' },
+  { id: '5', name: '105' },
+  { id: '6', name: '106' },
+  { id: '7', name: '107' },
+  { id: '8', name: '108' },
 ];
 
 const RoomsListScreen = () => {
-    const [checkedItems, setCheckedItems] = useState(
-        Object.fromEntries(rooms.map(room => [room.id, false]))
-    );
+  const [checkedItems, setCheckedItems] = useState(
+    Object.fromEntries(rooms.map(room => [room.id, false]))
+  );
 
-    const toggleCheckbox = (id) => {
-        setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
-    };
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const toggleCheckbox = (id) => {
+    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
-    const renderItem = ({ item }) => (
-        <View style={styles.itemRow}>
-            <Avatar.Text
-                label={item.number}
-                size={36}
-                style={styles.avatar}
-                color="#5e3b7f"
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerSection}>
+        <Header
+          title="Quartos"
+          onEdit={() => console.log('Edit pressed')}
+          onDelete={() => setShowDeleteDialog(true)}
+          onAdd={() => console.log('Add pressed')}
+        />
+      </View>
+
+      <View style={styles.listSection}>
+        <FlatList
+          data={rooms}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <UserItem
+                item={{ id: item.id, name: `Quarto ${item.name}` }}
+                avatarLabel={item.name}
+                checked={checkedItems[item.id]}
+                onToggle={() => toggleCheckbox(item.id)}
             />
-            <Text style={styles.itemText}>Quarto {item.number}</Text>
-            <Checkbox
-                status={checkedItems[item.id] ? 'checked' : 'unchecked'}
-                onPress={() => toggleCheckbox(item.id)}
-                color="#5e3b7f"
-            />
-        </View>
-    );
+          )}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerLabel}>Quartos</Text>
-                <View style={styles.iconGroup}>
-                    <IconButton icon="pencil" size={20} iconColor="#5e3b7f" onPress={() => console.log('Edit pressed')} />
-                    <IconButton icon="delete" size={20} iconColor="#5e3b7f" onPress={() => setShowDeleteDialog(true)} />
-                    <IconButton icon="plus" size={20} iconColor="#5e3b7f" onPress={() => console.log('Add pressed')} />
-                </View>
-            </View>
-
-            <FlatList
-                data={rooms}
-                keyExtractor={item => item.id}
-                renderItem={renderItem}
-            />
-            <Portal>
-                <Dialog
-                    visible={showDeleteDialog}
-                    onDismiss={() => setShowDeleteDialog(false)}
-                >
-                    <Dialog.Title>Confirmar</Dialog.Title>
-                    <Dialog.Content>
-                        <Text>Tem a certeza que quer remover o quarto selecionado?</Text>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={() => setShowDeleteDialog(false)}>Cancel</Button>
-                        <Button onPress={() => {
-                            console.log('Deleting users...');
-                            setShowDeleteDialog(false);
-                        }}>Confirm</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-        </View>
-    );
+      <ConfirmDialog
+        visible={showDeleteDialog}
+        onCancel={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          console.log('Deleting rooms...');
+          setShowDeleteDialog(false);
+        }}
+      />
+    </View>
+  );
 };
 
 export default RoomsListScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f9efff',
-        paddingTop: 40,
-        paddingHorizontal: 16,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    headerLabel: {
-        backgroundColor: '#5e3b7f',
-        color: '#fff',
-        paddingHorizontal: 16,
-        paddingVertical: 6,
-        borderRadius: 20,
-        fontWeight: 'bold',
-    },
-    iconGroup: {
-        flexDirection: 'row',
-        gap: 4,
-    },
-    itemRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f9efff',
-        marginBottom: 6,
-        paddingVertical: 6,
-        paddingHorizontal: 10,
-        borderRadius: 12,
-    },
-    avatar: {
-        backgroundColor: '#e0cfff',
-        marginRight: 12,
-    },
-    itemText: {
-        flex: 1,
-        fontSize: 16,
-        color: '#3a2d4d',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 0,
+    paddingHorizontal: 16,
+  },
+  headerSection: {
+    marginBottom: 10,
+    backgroundColor: 'white',
+  },
+  listSection: {
+    flex: 1,
+  },
+  listContent: {
+    paddingBottom: 0,
+  },
 });
