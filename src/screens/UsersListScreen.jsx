@@ -33,6 +33,7 @@ const UsersListScreen = () => {
       {/* Área de cabeçalho separada */}
       <View style={styles.headerSection}>
         <Header
+          title="Utilizadores"
           onEdit={() => console.log('Edit pressed')}
           onDelete={() => setShowDeleteDialog(true)}
           onAdd={() => console.log('Add pressed')}
