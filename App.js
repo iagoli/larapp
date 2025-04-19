@@ -14,10 +14,11 @@ import LoadingScreen from './src/screens/loadingScreen';
 import UtentesListScreen from './src/screens/utentesListScreen';
 import RoomsListScreen from './src/screens/roomsListScreen';
 import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
-import UtenteDetailsScreen from './src/screens/utenteDetailsScreen'
-import MedicationForm from './src/screens/medicationForm'
-import CreateMedicacaoScreen from './src/screens/createMedicacaoScreen'
-import CreateAtividadesScreen from './src/screens/createAtividadesScreen'
+import UtenteDetailsScreen from './src/screens/utenteDetailsScreen';
+import MedicationForm from './src/screens/medicationForm';
+import CreateMedicacaoScreen from './src/screens/createMedicacaoScreen';
+import CreateAtividadesScreen from './src/screens/createAtividadesScreen';
+import CreateCuidadosScreen from './src/screens/createCuidadosScreen';
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <CreateAtividadesScreen/>
+      <CreateCuidadosScreen/>
 
         <StatusBar style="auto" />
       </View>

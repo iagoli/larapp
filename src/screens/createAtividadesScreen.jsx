@@ -31,7 +31,7 @@ const CreateAtividadesScreen = () => {
       <TextInputField
         value={dataHora}
         onChangeText={setDataHora}
-        placeholder="Value"
+        placeholder="numeric"
       />
 
       <Label>Descrição</Label>
@@ -39,7 +39,6 @@ const CreateAtividadesScreen = () => {
         value={descricao}
         onChangeText={setDescricao}
         placeholder="Value"
-        keyboardType="numeric"
       />
 
       <SaveButton onPress={handleSave} />

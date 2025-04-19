@@ -31,7 +31,7 @@ const CreateMedicacaoScreen = () => {
       <TextInputField
         value={dataHora}
         onChangeText={setDataHora}
-        placeholder="Value"
+        placeholder="numeric"
       />
 
       <Label>Quantidade</Label>
