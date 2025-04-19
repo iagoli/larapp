@@ -16,6 +16,7 @@ import RoomsListScreen from './src/screens/roomsListScreen';
 import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
 import UtenteDetailsScreen from './src/screens/utenteDetailsScreen'
 import MedicationForm from './src/screens/medicationForm'
+import CreateMedicacaoScreen from './src/screens/createMedicacaoScreen'
 
 export default function App() {
   return (
@@ -23,7 +24,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <RoomsListScreen/>
+      <CreateMedicacaoScreen/>
 
         <StatusBar style="auto" />
       </View>
