@@ -19,6 +19,7 @@ import MedicationForm from './src/screens/medicationForm';
 import CreateMedicacaoScreen from './src/screens/createMedicacaoScreen';
 import CreateAtividadesScreen from './src/screens/createAtividadesScreen';
 import CreateCuidadosScreen from './src/screens/createCuidadosScreen';
+import CreateObservacoesScreen from './src/screens/createObservacoesScreen'
 
 export default function App() {
   return (
@@ -26,7 +27,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <CreateCuidadosScreen/>
+      <CreateObservacoesScreen/>
 
         <StatusBar style="auto" />
       </View>
