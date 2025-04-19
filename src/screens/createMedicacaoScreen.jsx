@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import Label from '../components/label';
 import TextInputField from '../components/textInputField';
 import SaveButton from '../components/saveButton';
@@ -20,31 +20,29 @@ const CreateMedicacaoScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={userScreenStyles.container}>
-      <View style={userScreenStyles.formContainer}>
-        <Label>Medicamento</Label>
-        <TextInputField
-          value={medicamento}
-          onChangeText={setMedicamento}
-          placeholder="Value"
-        />
+      <Label>Medicamento</Label>
+      <TextInputField
+        value={medicamento}
+        onChangeText={setMedicamento}
+        placeholder="Value"
+      />
 
-        <Label>Data/Hora Administrada</Label>
-        <TextInputField
-          value={dataHora}
-          onChangeText={setDataHora}
-          placeholder="Value"
-        />
+      <Label>Data/Hora Administrada</Label>
+      <TextInputField
+        value={dataHora}
+        onChangeText={setDataHora}
+        placeholder="Value"
+      />
 
-        <Label>Quantidade</Label>
-        <TextInputField
-          value={quantidade}
-          onChangeText={setQuantidade}
-          placeholder="Value"
-          keyboardType="numeric"
-        />
+      <Label>Quantidade</Label>
+      <TextInputField
+        value={quantidade}
+        onChangeText={setQuantidade}
+        placeholder="Value"
+        keyboardType="numeric"
+      />
 
-        <SaveButton onPress={handleSave} />
-      </View>
+      <SaveButton onPress={handleSave} />
     </ScrollView>
   );
 };
