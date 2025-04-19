@@ -26,7 +26,8 @@ const CreateAlimentacoesScreen = () => {
       <TextInputField
         value={dataHora}
         onChangeText={setDataHora}
-        placeholder="numeric"
+        placeholder="Value"
+        keyboardType="numeric" 
       />
 
       <Label>Prato</Label>

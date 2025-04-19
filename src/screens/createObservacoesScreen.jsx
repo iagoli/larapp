@@ -26,7 +26,8 @@ const CreateObservacoesScreen = () => {
       <TextInputField
         value={dataHora}
         onChangeText={setDataHora}
-        placeholder="numeric"
+        placeholder="Value"
+        keyboardType="numeric" 
       />
 
       <Label>Descrição</Label>
@@ -34,6 +35,7 @@ const CreateObservacoesScreen = () => {
         value={descricao}
         onChangeText={setDescricao}
         placeholder="Value"
+        multiline
      />
 
       <SaveButton onPress={handleSave} />
