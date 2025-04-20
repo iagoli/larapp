@@ -4,6 +4,7 @@ import { Dialog, Portal, Button, Text } from 'react-native-paper';
 import HeaderWithIcons from '../components/HeaderWithIcons';
 import RoomItem from '../components/RoomItem';
 import screenStyles from '../styles/roomsListScreen_styles';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const rooms = [
   { id: '1', number: '101' },
@@ -45,21 +46,16 @@ const RoomsListScreen = () => {
         )}
       />
 
-      <Portal>
-        <Dialog visible={showDeleteDialog} onDismiss={() => setShowDeleteDialog(false)}>
-          <Dialog.Title>Confirmar</Dialog.Title>
-          <Dialog.Content>
-            <Text>Tem a certeza que quer remover o quarto selecionado?</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setShowDeleteDialog(false)}>Cancelar</Button>
-            <Button onPress={() => {
-              console.log('Deleting selected...');
-              setShowDeleteDialog(false);
-            }}>Confirmar</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmDialog
+        visible={showDeleteDialog}
+        onDismiss={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          console.log('Deleting users...');
+          setShowDeleteDialog(false);
+        }}
+        title="Confirmar"
+        message="Tem a certeza que quer remover o utente selecionado?"
+      />
     </View>
   );
 };

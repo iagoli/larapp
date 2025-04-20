@@ -3,6 +3,7 @@ import { View, FlatList } from 'react-native';
 import { Text, Avatar, Checkbox, Dialog, Portal, Button } from 'react-native-paper';
 import HeaderWithIcons from '../components/HeaderWithIcons';
 import styles from '../styles/usersListScreen_styles';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const users = [
   { id: '1', name: 'Maniche' },
@@ -59,21 +60,16 @@ const UsersListScreen = () => {
         renderItem={renderItem}
       />
 
-      <Portal>
-        <Dialog visible={showDeleteDialog} onDismiss={() => setShowDeleteDialog(false)}>
-          <Dialog.Title>Confirmar</Dialog.Title>
-          <Dialog.Content>
-            <Text>Tem a certeza que quer remover o utente selecionado?</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setShowDeleteDialog(false)}>Cancelar</Button>
-            <Button onPress={() => {
-              console.log('Deleting users...');
-              setShowDeleteDialog(false);
-            }}>Confirmar</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmDialog
+        visible={showDeleteDialog}
+        onDismiss={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          console.log('Deleting users...');
+          setShowDeleteDialog(false);
+        }}
+        title="Confirmar"
+        message="Tem a certeza que quer remover o utente selecionado?"
+      />
     </View>
   );
 };
