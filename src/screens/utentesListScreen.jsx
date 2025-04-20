@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/Header';
 import UserItem from '../components/UserItem';
 import ConfirmDialog from '../components/ConfirmDialog';
 import BottomTabBar from '../components/BottomTabBar';
+import styles from '../styles/utentesListScreen_styles';
 
 const users = [
   { id: '1', name: 'João' },
@@ -33,7 +34,6 @@ const UtentesListScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={styles.container}>
-        {/* Cabeçalho */}
         <View style={styles.headerSection}>
           <Header
             title="Utentes"
@@ -43,7 +43,6 @@ const UtentesListScreen = () => {
           />
         </View>
 
-        {/* Lista */}
         <View style={styles.listSection}>
           <FlatList
             data={users}
@@ -60,7 +59,6 @@ const UtentesListScreen = () => {
           />
         </View>
 
-        {/* Diálogo de confirmação */}
         <ConfirmDialog
           visible={showDeleteDialog}
           onCancel={() => setShowDeleteDialog(false)}
@@ -71,29 +69,9 @@ const UtentesListScreen = () => {
         />
       </View>
 
-      {/* Navegação Inferior */}
       <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
     </SafeAreaView>
   );
 };
 
 export default UtentesListScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: 16,
-  },
-  headerSection: {
-    marginBottom: 10,
-    backgroundColor: 'white',
-  },
-  listSection: {
-    flex: 1,
-    paddingBottom: 100, 
-  },
-  listContent: {
-    paddingBottom: 16,
-  },
-});
