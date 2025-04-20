@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import HeaderWithIcons from '../components/HeaderWithIcons';
 import ConfirmDialog from '../components/ConfirmDialog';
 import ListItemRow from '../components/ListItemRow';
-import styles from '../styles/utentesListScreen_styles';
+import styles from '../../styles/styles/utentesListScreen_styles';
 
 const utentes = [
   { id: '1', name: 'Maniche' },
