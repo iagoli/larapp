@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
+
 import Title from '../components/title';
 import Label from '../components/label';
 import TextInputField from '../components/textInputField';
 import SelectInput from '../components/selectInput'; 
 import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader'; 
+import HeaderButtons from '../components/HeaderButtons';
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateUserScreen = () => {
@@ -34,8 +36,13 @@ const CreateUserScreen = () => {
     });
   };
 
+  const handleBack = () => console.log('Voltar');
+  const handleMenu = () => console.log('Mais opções');
+
   return (
     <ScrollView contentContainerStyle={userScreenStyles.container}>
+      <HeaderButtons onBackPress={handleBack} onMenuPress={handleMenu} />
+
       <Title>Novo Utilizador</Title>
 
       <Label>Nome</Label>
