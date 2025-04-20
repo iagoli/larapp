@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import Title from '../components/Title';
 import Label from '../components/Label';
 import TextInputField from '../components/TextInputField';
 import SelectInput from '../components/SelectInput'; 
 import SaveButton from '../components/SaveButton';
 import PhotoUploader from '../components/PhotoUploader'; 
+import HeaderButtons from '../components/HeaderButtons';
+import BottomTabBar from '../components/BottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateUserScreen = () => {
@@ -15,6 +17,7 @@ const CreateUserScreen = () => {
   const [morada, setMorada] = useState('');
   const [tipoUsuario, setTipoUsuario] = useState(''); 
   const [utenteAssociado, setUtenteAssociado] = useState('');
+  const [activeTab, setActiveTab] = useState('Utilizadores');
 
   const tipoUsuarioOptions = [
     { label: 'Selecione uma opção', value: '' },
@@ -34,36 +37,45 @@ const CreateUserScreen = () => {
     });
   };
 
+  const handleBack = () => console.log('Voltar');
+  const handleMenu = () => console.log('Mais opções');
+
   return (
-    <ScrollView contentContainerStyle={userScreenStyles.container}>
-      <Title>Novo Utilizador</Title>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <ScrollView contentContainerStyle={[userScreenStyles.container, { paddingBottom: 100 }]}>
+        <HeaderButtons onBackPress={handleBack} onMenuPress={handleMenu} />
 
-      <Label>Nome</Label>
-      <TextInputField value={nome} onChangeText={setNome} placeholder="Value" />
+        <Title>Novo Utilizador</Title>
 
-      <Label>Email</Label>
-      <TextInputField value={email} onChangeText={setEmail} placeholder="Value" keyboardType="email-address" />
+        <Label>Nome</Label>
+        <TextInputField value={nome} onChangeText={setNome} placeholder="Value" />
 
-      <Label>Telemovel</Label>
-      <TextInputField value={telemovel} onChangeText={setTelemovel} placeholder="Value" keyboardType="phone-pad" />
+        <Label>Email</Label>
+        <TextInputField value={email} onChangeText={setEmail} placeholder="Value" keyboardType="email-address" />
 
-      <Label>Morada</Label>
-      <TextInputField value={morada} onChangeText={setMorada} placeholder="Value" />
+        <Label>Telemóvel</Label>
+        <TextInputField value={telemovel} onChangeText={setTelemovel} placeholder="Value" keyboardType="phone-pad" />
 
-      <SelectInput
-        label="Tipo de Usuario"
-        selectedValue={tipoUsuario}
-        onValueChange={setTipoUsuario}
-        items={tipoUsuarioOptions}
-      />
+        <Label>Morada</Label>
+        <TextInputField value={morada} onChangeText={setMorada} placeholder="Value" />
 
-      <Label>Utente Associado</Label>
-      <TextInputField value={utenteAssociado} onChangeText={setUtenteAssociado} placeholder="Value" />
+        <SelectInput
+          label="Tipo de Usuário"
+          selectedValue={tipoUsuario}
+          onValueChange={setTipoUsuario}
+          items={tipoUsuarioOptions}
+        />
 
-      <PhotoUploader /> 
+        <Label>Utente Associado</Label>
+        <TextInputField value={utenteAssociado} onChangeText={setUtenteAssociado} placeholder="Value" />
 
-      <SaveButton onPress={handleSave} />
-    </ScrollView>
+        <PhotoUploader /> 
+
+        <SaveButton onPress={handleSave} />
+      </ScrollView>
+
+      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
+    </SafeAreaView>
   );
 };
 

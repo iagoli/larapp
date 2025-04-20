@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import Title from '../components/Title';
 import Label from '../components/Label';
 import TextInputField from '../components/TextInputField';
 import SaveButton from '../components/SaveButton';
 import PhotoUploader from '../components/PhotoUploader';
+import HeaderButtons from '../components/HeaderButtons';
+import BottomTabBar from '../components/BottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateUtente = () => {
   const [nome, setNome] = useState('');
   const [quarto, setQuarto] = useState('');
   const [idade, setIdade] = useState('');
+  const [activeTab, setActiveTab] = useState('Utentes');
 
   const handleSave = () => {
     console.log({
@@ -20,37 +23,46 @@ const CreateUtente = () => {
     });
   };
 
+  const handleBack = () => console.log('Voltar');
+  const handleMenu = () => console.log('Mais opções');
+
   return (
-    <ScrollView contentContainerStyle={userScreenStyles.container}>
-      <Title>Novo Utente</Title>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <ScrollView contentContainerStyle={[userScreenStyles.container, { paddingBottom: 100 }]}>
+        <HeaderButtons onBackPress={handleBack} onMenuPress={handleMenu} />
 
-      <Label>Nome</Label>
-      <TextInputField 
-        value={nome} 
-        onChangeText={setNome} 
-        placeholder="Value" 
-      />
+        <Title>Novo Utente</Title>
 
-      <Label>Quarto</Label>
-      <TextInputField 
-        value={quarto} 
-        onChangeText={setQuarto} 
-        placeholder="Value"
-        keyboardType="numeric" 
-      />
+        <Label>Nome</Label>
+        <TextInputField 
+          value={nome} 
+          onChangeText={setNome} 
+          placeholder="Value" 
+        />
 
-      <Label>Idade</Label>
-      <TextInputField 
-        value={idade} 
-        onChangeText={setIdade} 
-        placeholder="Value"
-        keyboardType="numeric" 
-      />
+        <Label>Quarto</Label>
+        <TextInputField 
+          value={quarto} 
+          onChangeText={setQuarto} 
+          placeholder="Value"
+          keyboardType="numeric" 
+        />
 
-      <PhotoUploader />
+        <Label>Idade</Label>
+        <TextInputField 
+          value={idade} 
+          onChangeText={setIdade} 
+          placeholder="Value"
+          keyboardType="numeric" 
+        />
 
-      <SaveButton onPress={handleSave} />
-    </ScrollView>
+        <PhotoUploader />
+
+        <SaveButton onPress={handleSave} />
+      </ScrollView>
+
+      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
+    </SafeAreaView>
   );
 };
 
