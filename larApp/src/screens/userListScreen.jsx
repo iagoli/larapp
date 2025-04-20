@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Text, Avatar, Checkbox, Dialog, Portal, Button } from 'react-native-paper';
 import HeaderWithIcons from '../components/HeaderWithIcons';
-import styles from '../styles/usersListScreen_styles';
 import ConfirmDialog from '../components/ConfirmDialog';
+import ListItemRow from '../components/ListItemRow';
+import styles from '../styles/usersListScreen_styles';
 
 const users = [
   { id: '1', name: 'Maniche' },
@@ -28,23 +28,6 @@ const UsersListScreen = () => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.itemRow}>
-      <Avatar.Text
-        label={item.name.charAt(0).toUpperCase()}
-        size={36}
-        style={styles.avatar}
-        color="#5e3b7f"
-      />
-      <Text style={styles.itemText}>{item.name}</Text>
-      <Checkbox
-        status={checkedItems[item.id] ? 'checked' : 'unchecked'}
-        onPress={() => toggleCheckbox(item.id)}
-        color="#5e3b7f"
-      />
-    </View>
-  );
-
   return (
     <View style={styles.container}>
       <HeaderWithIcons
@@ -57,7 +40,13 @@ const UsersListScreen = () => {
       <FlatList
         data={users}
         keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <ListItemRow
+            item={item}
+            checked={checkedItems[item.id]}
+            onToggle={toggleCheckbox}
+          />
+        )}
       />
 
       <ConfirmDialog

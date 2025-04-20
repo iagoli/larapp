@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Checkbox, Avatar, Text } from 'react-native-paper';
 import HeaderWithIcons from '../components/HeaderWithIcons';
 import ConfirmDialog from '../components/ConfirmDialog';
+import ListItemRow from '../components/ListItemRow';
 import styles from '../styles/utentesListScreen_styles';
 
 const utentes = [
@@ -18,23 +18,6 @@ const utentes = [
   { id: '10', name: 'Jorge Costa' },
 ];
 
-const UtenteListItem = ({ item, checked, onToggle }) => (
-  <View style={styles.itemRow}>
-    <Avatar.Text
-      label={item.name.charAt(0).toUpperCase()}
-      size={36}
-      style={styles.avatar}
-      color="#5e3b7f"
-    />
-    <Text style={styles.itemText}>{item.name}</Text>
-    <Checkbox
-      status={checked ? 'checked' : 'unchecked'}
-      onPress={() => onToggle(item.id)}
-      color="#5e3b7f"
-    />
-  </View>
-);
-
 const UtentesListScreen = () => {
   const [checkedItems, setCheckedItems] = useState(
     Object.fromEntries(utentes.map(utente => [utente.id, false]))
@@ -47,25 +30,28 @@ const UtentesListScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Header */}
       <HeaderWithIcons
         title="Utentes"
         onEdit={() => console.log('Edit pressed')}
         onDelete={() => setShowDeleteDialog(true)}
         onAdd={() => console.log('Add pressed')}
       />
-
+  
+      {/* FlatList */}
       <FlatList
         data={utentes}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <UtenteListItem
+          <ListItemRow
             item={item}
             checked={checkedItems[item.id]}
             onToggle={toggleCheckbox}
           />
         )}
       />
-
+  
+      {/* ConfirmDialog */}
       <ConfirmDialog
         visible={showDeleteDialog}
         onDismiss={() => setShowDeleteDialog(false)}
