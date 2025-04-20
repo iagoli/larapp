@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet } from 'react-native';
 import Header from '../components/Header';
-import UserItem from '../components/UserItem';
+import RoomItem from '../components/RoomItem';
 import ConfirmDialog from '../components/ConfirmDialog';
 import BottomTabBar from '../components/BottomTabBar';
+import styles from '../styles/roomsListScreen_styles';
 
 const rooms = [
-  { id: '1', name: '101' },
-  { id: '2', name: '102' },
-  { id: '3', name: '103' },
-  { id: '4', name: '104' },
-  { id: '5', name: '105' },
-  { id: '6', name: '106' },
-  { id: '7', name: '107' },
-  { id: '8', name: '108' },
+  { id: '1', name: '101', availability: 'Disponível' },
+  { id: '2', name: '102', availability: 'Ocupado' },
+  { id: '3', name: '103', availability: 'Ocupado' },
+  { id: '4', name: '104', availability: 'Disponível' },
+  { id: '5', name: '105', availability: 'Ocupado' },
+  { id: '6', name: '106', availability: 'Manutenção' },
+  { id: '7', name: '107', availability: 'Disponível' },
+  { id: '8', name: '108', availability: 'Manutenção' },
 ];
 
 const RoomsListScreen = () => {
@@ -45,11 +46,10 @@ const RoomsListScreen = () => {
             data={rooms}
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <UserItem
-                item={{ id: item.id, name: `Quarto ${item.name}` }}
-                avatarLabel={item.name}
+              <RoomItem
+                room={item}
                 checked={checkedItems[item.id]}
-                onToggle={() => toggleCheckbox(item.id)}
+                onToggle={toggleCheckbox}
               />
             )}
             contentContainerStyle={styles.listContent}
@@ -59,11 +59,13 @@ const RoomsListScreen = () => {
 
         <ConfirmDialog
           visible={showDeleteDialog}
-          onCancel={() => setShowDeleteDialog(false)}
+          onDismiss={() => setShowDeleteDialog(false)}
           onConfirm={() => {
-            console.log('Deleting rooms...');
+            console.log('Deleting...');
             setShowDeleteDialog(false);
           }}
+          title="Confirmar remoção"
+          message="Tem a certeza que quer remover o item selecionado?"
         />
       </View>
 
@@ -73,22 +75,3 @@ const RoomsListScreen = () => {
 };
 
 export default RoomsListScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: 16,
-  },
-  headerSection: {
-    marginBottom: 10,
-    backgroundColor: 'white',
-  },
-  listSection: {
-    flex: 1,
-    paddingBottom: 100, 
-  },
-  listContent: {
-    paddingBottom: 16,
-  },
-});
