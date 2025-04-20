@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
-import Title from '../components/title';
-import Label from '../components/label';
-import TextInputField from '../components/textInputField';
-import SaveButton from '../components/saveButton';
+import Title from '../components/Title';
+import Label from '../components/Label';
+import TextInputField from '../components/TextInputField';
+import SaveButton from '../components/SaveButton';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';

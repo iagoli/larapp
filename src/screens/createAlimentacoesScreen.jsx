@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
-import Title from '../components/title';
-import TextInputField from '../components/textInputField';
-import SaveButton from '../components/saveButton';
+import Title from '../components/Title';
+import TextInputField from '../components/TextInputField';
+import SaveButton from '../components/SaveButton';
 import DateTimePickerField from '../components/dateTimePickerField';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';

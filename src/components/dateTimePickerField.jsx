@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, Platform, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Label from './label';
+import Label from './Label';
 import Inputstyles from '../styles/textInput_styles';
 
 const formatDate = (date) => {
