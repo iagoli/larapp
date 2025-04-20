@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import { Text, Avatar, Checkbox, IconButton } from 'react-native-paper';
-import { Dialog, Portal, Button } from 'react-native-paper';
-
+import { View, FlatList } from 'react-native';
+import { Text, Avatar, Checkbox, Dialog, Portal, Button } from 'react-native-paper';
+import HeaderWithIcons from '../components/HeaderWithIcons';
+import styles from '../styles/usersListScreen_styles';
 
 const users = [
   { id: '1', name: 'Maniche' },
@@ -21,12 +21,11 @@ const UsersListScreen = () => {
   const [checkedItems, setCheckedItems] = useState(
     Object.fromEntries(users.map(user => [user.id, false]))
   );
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
-
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const renderItem = ({ item }) => (
     <View style={styles.itemRow}>
@@ -36,7 +35,7 @@ const UsersListScreen = () => {
         style={styles.avatar}
         color="#5e3b7f"
       />
-      <Text style={styles.itemText}> {item.name} </Text>
+      <Text style={styles.itemText}>{item.name}</Text>
       <Checkbox
         status={checkedItems[item.id] ? 'checked' : 'unchecked'}
         onPress={() => toggleCheckbox(item.id)}
@@ -47,52 +46,31 @@ const UsersListScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerLabel}>Utilizadores</Text>
-        <View style={styles.iconGroup}>
-          <IconButton
-            icon="pencil"
-            size={20}
-            iconColor="#5e3b7f"
-            onPress={() => console.log('Edit pressed')}
-          />
-          <IconButton
-            icon="delete"
-            size={20}
-            iconColor="#5e3b7f"
-            onPress={() => setShowDeleteDialog(true)}
-          />
-          <IconButton
-            icon="plus"
-            size={20}
-            iconColor="#5e3b7f"
-            onPress={() => console.log('Add pressed')}
-          />
-        </View>
-
-      </View>
+      <HeaderWithIcons
+        title="Utilizadores"
+        onEdit={() => console.log('Edit pressed')}
+        onDelete={() => setShowDeleteDialog(true)}
+        onAdd={() => console.log('Add pressed')}
+      />
 
       <FlatList
         data={users}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
 
       <Portal>
-        <Dialog
-          visible={showDeleteDialog}
-          onDismiss={() => setShowDeleteDialog(false)}
-        >
+        <Dialog visible={showDeleteDialog} onDismiss={() => setShowDeleteDialog(false)}>
           <Dialog.Title>Confirmar</Dialog.Title>
           <Dialog.Content>
             <Text>Tem a certeza que quer remover o utente selecionado?</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => setShowDeleteDialog(false)}>Cancel</Button>
+            <Button onPress={() => setShowDeleteDialog(false)}>Cancelar</Button>
             <Button onPress={() => {
               console.log('Deleting users...');
               setShowDeleteDialog(false);
-            }}>Confirm</Button>
+            }}>Confirmar</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -101,50 +79,3 @@ const UsersListScreen = () => {
 };
 
 export default UsersListScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9efff',
-    paddingTop: 40,
-    paddingHorizontal: 16,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  headerLabel: {
-    backgroundColor: '#5e3b7f',
-    color: '#fff',
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    borderRadius: 25,
-    fontWeight: 'bold',
-    fontSize: 19,
-  },
-  iconGroup: {
-    flexDirection: 'row',
-    gap: 2,
-    marginRight: 5,
-  },
-  itemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f9efff',
-    marginBottom: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 12,
-  },
-  avatar: {
-    backgroundColor: '#e0cfff',
-    marginRight: 10,
-  },
-  itemText: {
-    flex: 1,
-    fontSize: 18,
-    color: '#3a2d4d',
-  },
-});
