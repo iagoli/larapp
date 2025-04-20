@@ -3,7 +3,6 @@ import { SafeAreaView, ScrollView } from 'react-native';
 import Title from '../components/Title';
 import TextInputField from '../components/TextInputField';
 import SaveButton from '../components/SaveButton';
-import DateTimePickerField from '../components/dateTimePickerField';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
@@ -11,7 +10,7 @@ import userScreenStyles from '../styles/userScreen_styles';
 const CreateAlimentacoesScreen = () => {
   const [dataHora, setDataHora] = useState(new Date());
   const [prato, setPrato] = useState('');
-  const [activeTab, setActiveTab] = useState('Home'); 
+  const [activeTab, setActiveTab] = useState('Home');
 
   const handleSave = () => {
     console.log({
