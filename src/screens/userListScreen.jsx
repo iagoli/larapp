@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import HeaderWithIcons from '../components/HeaderWithIcons';
 import ConfirmDialog from '../components/ConfirmDialog';
 import ListItemRow from '../components/ListItemRow';
-import styles from '../styles/usersListScreen_styles';
+import UsersListScreen_styles from '../styles/usersListScreen_styles';
 
 const users = [
   { id: '1', name: 'Maniche' },
@@ -29,7 +29,7 @@ const UsersListScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={UsersListScreen_styles.container}>
       <HeaderWithIcons
         title="Utilizadores"
         onEdit={() => console.log('Edit pressed')}

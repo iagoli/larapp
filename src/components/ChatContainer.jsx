@@ -3,7 +3,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   FlatList,
-  View,
 } from 'react-native';
 import chatStyles from '../styles/chatScreen_styles';
 import MessageBubble from './MessageBubble';
@@ -23,6 +22,7 @@ const ChatContainer = ({ messages, onSend }) => {
         renderItem={({ item }) => (
           <MessageBubble
             text={item.text}
+            time={item.time}
             isMyMessage={item.sender === 'eu'}
           />
         )}
