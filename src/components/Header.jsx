@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import { Text, IconButton } from 'react-native-paper';
 import styles from '../styles/Header_styles';
 
-function Header({ onEdit, onDelete, onAdd }) {
+function Header({ title = 'Utilizadores', onEdit, onDelete, onAdd }) {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerLabel}>Utilizadores</Text>
+      <Text style={styles.headerLabel}>{title}</Text>
       <View style={styles.iconGroup}>
         <IconButton icon="pencil" size={20} iconColor="#5e3b7f" onPress={onEdit} style={{ marginLeft: 6 }} />
         <IconButton icon="delete" size={20} iconColor="#5e3b7f" onPress={onDelete} style={{ marginLeft: 6 }} />

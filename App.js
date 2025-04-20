@@ -2,10 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppStyles from './src/styles/app_styles';
-import UsersListScreen from './src/screens/UsersListScreen';
+import UsersListScreen from './src/screens/userListScreen';
 import LoginScreen from './src/screens/login';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './src/screens/homePage';
+import HomeScreen from './src/screens/homeScreen';
 import MenuScreen from './src/screens/homePageNavegation';
 import CreateUserScreen from './src/screens/createUserScreen';
 import NewPatientScreen from './src/screens/createUtente';
@@ -13,14 +13,17 @@ import NewRoomScreen from './src/screens/createQuarto';
 import LoadingScreen from './src/screens/loadingScreen';
 import UtentesListScreen from './src/screens/utentesListScreen';
 import RoomsListScreen from './src/screens/roomsListScreen';
-import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
-import UtenteDetailsScreen from './src/screens/utenteDetailsScreen';
-import MedicationForm from './src/screens/medicationForm';
 import CreateMedicacaoScreen from './src/screens/createMedicacaoScreen';
 import CreateAtividadesScreen from './src/screens/createAtividadesScreen';
 import CreateCuidadosScreen from './src/screens/createCuidadosScreen';
 import CreateObservacoesScreen from './src/screens/createObservacoesScreen';
 import CreateAlimentacoesScreen from './src/screens/createAlimentacoesScreen';
+import UtenteDetailsScreen from './src/screens/utenteDetailsScreen';
+import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
+import MedicationForm from './src/screens/medicationForm';
+import UtenteAtividadeScreen from './src/screens/utenteAtividadeScreen';
+import AtividadeForm from './src/screens/atividadeForm';
+import ChatScreen from './src/screens/chatScreen';
 
 export default function App() {
   return (
@@ -28,11 +31,12 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <UsersListScreen/>
+      <ChatScreen></ChatScreen>
 
         <StatusBar style="auto" />
       </View>
     </PaperProvider>
   );
+
 
 };
