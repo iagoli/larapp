@@ -7,7 +7,7 @@ import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader';
 import userScreenStyles from '../styles/userScreen_styles';
 
-const NewPatientScreen = () => {
+const CreateUtente = () => {
   const [nome, setNome] = useState('');
   const [quarto, setQuarto] = useState('');
   const [idade, setIdade] = useState('');
@@ -54,4 +54,4 @@ const NewPatientScreen = () => {
   );
 };
 
-export default NewPatientScreen;
+export default CreateUtente;
