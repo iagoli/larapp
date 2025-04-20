@@ -15,7 +15,7 @@ const MessageBubble = ({ text, time, isMyMessage }) => (
         isMyMessage && chatStyles.myBubble
       ]}
     >
-      <Text style={chatStyles.messageText}>{text}</Text>
+      <Text style={chatStyles.messageText}>{text.replace(/[\n\r]+$/, '').trim()}</Text>
       <Text style={chatStyles.timestampText}>{time}</Text>
     </View>
   </View>
