@@ -15,20 +15,9 @@ const chatStyles = StyleSheet.create({
     resizeMode: 'contain',
     opacity: 0.6,
   },    
-  messageBubble: {
-    padding: 12,
-    marginVertical: 4,
-    marginRight: 5,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-    maxWidth: '80%',
-  },
-  myMessage: {
-    backgroundColor: colors.primary,
-    alignSelf: 'flex-end',
-  },
   messageText: {
     color: 'white',
+    fontSize: 16,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -37,44 +26,68 @@ const chatStyles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: colors.primary,
     fontWeight: 12,
+    alignItems: 'flex-end',
   },
   input: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
     padding: 10,
     borderRadius: 10,
     backgroundColor: colors.secondary,
     minHeight: 40, 
     maxHeight: 120, 
+    borderWidth: 1,
+    borderColor: colors.primary,
+    color: 'black',
   },
   
   sendButton: {
-    justifyContent: 'center',
-    paddingHorizontal: 10,
+    justifyContent: 'center', 
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: colors.primary,
+    marginLeft: 8,
+    alignSelf: 'flex-end',
   },
   sendButtonText: {
-    color: colors.primary,
+    color: 'white',
     fontWeight: 'bold',
   },
+  
   bubbleContainer: {
-    width: '80%',
-    padding: 10,
-    borderRadius: 12,
-    backgroundColor: '#e0e0e0',
+    maxWidth: '80%',
+    backgroundColor: '#4B0082',
+    borderRadius: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignSelf: 'flex-start',
+    minHeight: 40,
+    flexShrink: 1,
   },
-  myBubble: {
-    backgroundColor: '#d1e7dd',
+    messageRow: {
+    flexDirection: 'row',
+    marginBottom: 8,
+    justifyContent: 'flex-start',
   },
-  timestampContainer: {
-    width: '20%',
+  
+  messageRowReverse: {
     justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    paddingRight: 5,
+  },
+    
+  myBubble: {
+    backgroundColor: colors.primary,
+    alignSelf: 'flex-end',
   },
   timestampText: {
+    color: 'white',
     fontSize: 10,
-    color: '#888',
-  },
+    marginTop: 4,
+    alignSelf: 'flex-end',
+  }, 
 
 });
 

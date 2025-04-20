@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+ const UsersListScreen_styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f9efff',
@@ -25,4 +25,7 @@ export default StyleSheet.create({
     fontSize: 18,
     color: '#3a2d4d',
   },
+ 
 });
+
+export default UsersListScreen_styles;
