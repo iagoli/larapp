@@ -27,7 +27,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-        <HomeScreen></HomeScreen>
+        <LoadingScreen></LoadingScreen>
 
         <StatusBar style="auto" />
       </View>
