@@ -9,15 +9,16 @@ const MessageBubble = ({ text, time, isMyMessage }) => (
       isMyMessage && chatStyles.messageRowReverse
     ]}
   >
-    <View style={[chatStyles.bubbleContainer, isMyMessage && chatStyles.myBubble]}>
-      <Text style={chatStyles.messageText}>{text}</Text>
-    </View>
-    <View style={chatStyles.timestampContainer}>
+    <View
+      style={[
+        chatStyles.bubbleContainer,
+        isMyMessage && chatStyles.myBubble
+      ]}
+    >
+      <Text style={chatStyles.messageText}>{text.replace(/[\n\r]+$/, '').trim()}</Text>
       <Text style={chatStyles.timestampText}>{time}</Text>
     </View>
   </View>
 );
-
-  
 
 export default MessageBubble;

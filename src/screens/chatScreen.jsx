@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import ChatBackground from '../components/ChatBackground';
 import ChatContainer from '../components/ChatContainer';
-import dayjs from 'dayjs';
+//import dayjs from 'dayjs';
 
 
 const ChatScreen = () => {

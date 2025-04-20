@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import Label from '../components/Label';
 import TextInputField from '../components/TextInputField';
-import SaveButton from '../components/SaveButton';;
+import SaveButton from '../components/SaveButton';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
+import DateTimeInput from '../components/DateTimeInput'; 
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateAtividadesScreen = () => {
   const [atividade, setAtividade] = useState('');
-  const [dataHora, setDataHora] = useState('');
+  const [dataHora, setDataHora] = useState(new Date()); 
   const [descricao, setDescricao] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
 
   const handleSave = () => {
     console.log({
       atividade,
-      dataHora,
+      dataHora: dataHora.toISOString(), 
       descricao,
     });
   };
@@ -37,11 +38,9 @@ const CreateAtividadesScreen = () => {
         />
 
         <Label>Data/Hora</Label>
-        <TextInputField
+        <DateTimeInput
           value={dataHora}
-          onChangeText={setDataHora}
-          placeholder="Digite data e hora"
-          keyboardType="numeric"
+          onChange={setDataHora}
         />
 
         <Label>Descrição</Label>

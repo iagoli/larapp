@@ -5,16 +5,20 @@ import TextInputField from '../components/TextInputField';
 import SaveButton from '../components/SaveButton';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
+import DateTimeInput from '../components/DateTimeInput';
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateCuidadosScreen = () => {
   const [acao, setAcao] = useState('');
-  const [dataHora, setDataHora] = useState('');
+  const [dataHora, setDataHora] = useState(new Date()); 
   const [descricao, setDescricao] = useState('');
   const [activeTab, setActiveTab] = useState('Home'); 
 
   const handleSave = () => {
-    console.log({ acao, dataHora, descricao });
+    console.log({ 
+      acao, 
+      dataHora: dataHora.toISOString(), 
+      descricao });
   };
 
   const handleBack = () => console.log('Voltar');
@@ -34,11 +38,9 @@ const CreateCuidadosScreen = () => {
         />
 
         <Label>Data/Hora</Label>
-        <TextInputField
+        <DateTimeInput
           value={dataHora}
-          onChangeText={setDataHora}
-          placeholder="Digite data e hora"
-          keyboardType="numeric"
+          onChange={setDataHora}
         />
 
         <Label>Descrição</Label>

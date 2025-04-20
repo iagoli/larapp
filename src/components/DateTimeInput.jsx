@@ -12,12 +12,14 @@ const DateTimeInput = ({ value, onChange }) => {
   };
 
   return Platform.OS === 'web' ? (
-    <input
-      type="datetime-local"
-      value={value.toISOString().slice(0, 16)}
-      onChange={handleWebChange}
-      style={styles.webInput}
-    />
+    <div style={styles.webInputWrapper}>
+      <input
+        type="datetime-local"
+        value={value.toISOString().slice(0, 16)}
+        onChange={handleWebChange}
+        style={styles.webInput}
+      />
+    </div>
   ) : (
     <>
       <TextInput
@@ -27,6 +29,9 @@ const DateTimeInput = ({ value, onChange }) => {
         editable={false}
         style={styles.input}
         right={<TextInput.Icon icon="calendar" onPress={() => setShowPicker(true)} />}
+        outlineColor="#ccc"
+        activeOutlineColor="#6a1b9a"
+        textColor="#3a2d4d"
       />
       {showPicker && (
         <DateTimePicker

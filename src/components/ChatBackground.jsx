@@ -4,7 +4,7 @@ import chatStyles from '../styles/chatScreen_styles';
 
 const ChatBackground = () => (
   <Image
-    source={require('../../assets/loading.png')}
+    //source={require('../assets/loading.png')}
     style={chatStyles.bgImage}
   />
 );
