@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, Platform, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Label from './label';
-import Inputstyles from '../styles/';
+import Inputstyles from '../styles/textInput_styles';
 
 const formatDate = (date) => {
   if (!date) return '';

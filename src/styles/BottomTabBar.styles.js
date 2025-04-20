@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+const Styles = StyleSheet.create({
+  
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -29,3 +30,5 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+export default Styles;

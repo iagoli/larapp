@@ -28,7 +28,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <NewRoomScreen/>
+      <CreateCuidadosScreen/>
 
         <StatusBar style="auto" />
       </View>
