@@ -17,7 +17,7 @@ import CreateMedicacaoScreen from './src/screens/createMedicacaoScreen';
 import CreateAtividadesScreen from './src/screens/createAtividadesScreen';
 import CreateCuidadosScreen from './src/screens/createCuidadosScreen';
 import CreateObservacoesScreen from './src/screens/createObservacoesScreen';
-/* import CreateAlimentacoesScreen from './src/screens/createAlimentacoesScreen'; */
+import CreateAlimentacoesScreen from './src/screens/createAlimentacoesScreen';
 import UtenteDetailsScreen from './src/screens/utenteDetailsScreen';
 import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
 import UtenteAtividadeScreen from './src/screens/utenteAtividadeScreen';
@@ -29,7 +29,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <CreateMedicacaoScreen/>
+      <CreateAlimentacoesScreen/>
 
         <StatusBar style="auto" />
       </View>

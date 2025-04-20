@@ -5,6 +5,8 @@ import TextInputField from '../components/TextInputField';
 import SaveButton from '../components/SaveButton';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
+import DateTimeInput from '../components/DateTimeInput'; 
+import Label from '../components/Label';
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateAlimentacoesScreen = () => {
@@ -29,8 +31,8 @@ const CreateAlimentacoesScreen = () => {
 
         <Title>Alimentações</Title>
 
-        <DateTimePickerField
-          label="Data/Hora"
+        <Label>Data/Hora</Label>
+        <DateTimeInput
           value={dataHora}
           onChange={setDataHora}
         />
@@ -39,6 +41,7 @@ const CreateAlimentacoesScreen = () => {
           value={prato}
           onChangeText={setPrato}
           placeholder="Prato"
+          style={{ marginTop: 16 }}
         />
 
         <SaveButton onPress={handleSave} />
