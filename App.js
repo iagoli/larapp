@@ -2,8 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppStyles from './src/styles/app_styles';
-import UsersListScreen from './src/screens/UsersListScreen';
-import LoginScreen from './src/screens/login';
+import LoginScreen from './src/screens/loginScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './src/screens/homeScreen';
 import MenuScreen from './src/screens/homePageNavegation';
@@ -22,6 +21,7 @@ import UtenteDetailsScreen from './src/screens/utenteDetailsScreen';
 import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
 import UtenteAtividadeScreen from './src/screens/utenteAtividadeScreen';
 import ChatScreen from './src/screens/chatScreen';
+import UsersListScreen from './src/screens/userListScreen';
 
 export default function App() {
   return (
@@ -29,7 +29,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <UtentesListScreen/>
+      <UtentesListScreen></UtentesListScreen>
 
         <StatusBar style="auto" />
       </View>
