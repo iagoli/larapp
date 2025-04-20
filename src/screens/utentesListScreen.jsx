@@ -21,7 +21,7 @@ const users = [
 
 const UtentesListScreen = () => {
   const [checkedItems, setCheckedItems] = useState(
-    Object.fromEntries(users.map(user => [user.id, true]))
+    Object.fromEntries(users.map(user => [user.id, false]))
   );
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
