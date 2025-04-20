@@ -1,31 +1,20 @@
 import { StyleSheet } from 'react-native';
 
- const UsersListScreen_styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9efff',
-    paddingTop: 40,
+    backgroundColor: 'white',
     paddingHorizontal: 16,
   },
-  itemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f9efff',
-    marginBottom: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 12,
+  headerSection: {
+    marginBottom: 10,
+    backgroundColor: 'white',
   },
-  avatar: {
-    backgroundColor: '#e0cfff',
-    marginRight: 10,
-  },
-  itemText: {
+  listSection: {
     flex: 1,
-    fontSize: 18,
-    color: '#3a2d4d',
+    paddingBottom: 100,
   },
- 
+  listContent: {
+    paddingBottom: 16,
+  },
 });
-
-export default UsersListScreen_styles;

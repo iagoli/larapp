@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, FlatList } from 'react-native';
-import HeaderWithIcons from '../components/HeaderWithIcons';
+import { SafeAreaView, View, FlatList } from 'react-native';
+import Header from '../components/Header';
+import UserItem from '../components/UserItem';
 import ConfirmDialog from '../components/ConfirmDialog';
-import ListItemRow from '../components/ListItemRow';
+import BottomTabBar from '../components/BottomTabBar';
 import styles from '../styles/usersListScreen_styles';
 
 const users = [
@@ -22,44 +23,54 @@ const UsersListScreen = () => {
   const [checkedItems, setCheckedItems] = useState(
     Object.fromEntries(users.map(user => [user.id, false]))
   );
+
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [activeTab, setActiveTab] = useState('Utilizadores');
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
-    <View style={styles.container}>
-      <HeaderWithIcons
-        title="Utilizadores"
-        onEdit={() => console.log('Edit pressed')}
-        onDelete={() => setShowDeleteDialog(true)}
-        onAdd={() => console.log('Add pressed')}
-      />
-
-      <FlatList
-        data={users}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <ListItemRow
-            item={item}
-            checked={checkedItems[item.id]}
-            onToggle={toggleCheckbox}
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={styles.container}>
+        <View style={styles.headerSection}>
+          <Header
+            title="Utilizadores"
+            onEdit={() => console.log('Edit')}
+            onDelete={() => setShowDeleteDialog(true)}
+            onAdd={() => console.log('Add')}
           />
-        )}
-      />
+        </View>
 
-      <ConfirmDialog
-        visible={showDeleteDialog}
-        onDismiss={() => setShowDeleteDialog(false)}
-        onConfirm={() => {
-          console.log('Deleting users...');
-          setShowDeleteDialog(false);
-        }}
-        title="Confirmar"
-        message="Tem a certeza que quer remover o utente selecionado?"
-      />
-    </View>
+        <View style={styles.listSection}>
+          <FlatList
+            data={users}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <UserItem
+                item={item}
+                checked={checkedItems[item.id]}
+                onToggle={() => toggleCheckbox(item.id)}
+              />
+            )}
+            contentContainerStyle={styles.listContent}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+
+        <ConfirmDialog
+          visible={showDeleteDialog}
+          onCancel={() => setShowDeleteDialog(false)}
+          onConfirm={() => {
+            console.log('Deleting users...');
+            setShowDeleteDialog(false);
+          }}
+        />
+      </View>
+
+      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
+    </SafeAreaView>
   );
 };
 
