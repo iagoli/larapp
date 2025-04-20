@@ -31,12 +31,10 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <ChatScreen></ChatScreen>
+      <UtenteDetailsScreen/>
 
         <StatusBar style="auto" />
       </View>
     </PaperProvider>
   );
-
-
 };
