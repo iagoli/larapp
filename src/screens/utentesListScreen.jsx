@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import UserItem from '../components/UserItem';
 import ConfirmDialog from '../components/ConfirmDialog';
+import BottomTabBar from '../components/BottomTabBar';
 
 const users = [
   { id: '1', name: 'João' },
@@ -23,49 +24,56 @@ const UtentesListScreen = () => {
   );
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [activeTab, setActiveTab] = useState('Utentes');
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
-    <View style={styles.container}>
-      {/* Área de cabeçalho separada */}
-      <View style={styles.headerSection}>
-        <Header
-          title="Utentes" 
-          onEdit={() => console.log('Edit pressed')}
-          onDelete={() => setShowDeleteDialog(true)}
-          onAdd={() => console.log('Add pressed')}
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={styles.container}>
+        {/* Cabeçalho */}
+        <View style={styles.headerSection}>
+          <Header
+            title="Utentes"
+            onEdit={() => console.log('Edit pressed')}
+            onDelete={() => setShowDeleteDialog(true)}
+            onAdd={() => console.log('Add pressed')}
+          />
+        </View>
+
+        {/* Lista */}
+        <View style={styles.listSection}>
+          <FlatList
+            data={users}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <UserItem
+                item={item}
+                checked={checkedItems[item.id]}
+                onToggle={() => toggleCheckbox(item.id)}
+              />
+            )}
+            contentContainerStyle={styles.listContent}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+
+        {/* Diálogo de confirmação */}
+        <ConfirmDialog
+          visible={showDeleteDialog}
+          onCancel={() => setShowDeleteDialog(false)}
+          onConfirm={() => {
+            console.log('Deleting users...');
+            setShowDeleteDialog(false);
+          }}
         />
       </View>
 
-      {/* Área de listagem */}
-      <View style={styles.listSection}>
-        <FlatList
-          data={users}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <UserItem
-              item={item}
-              checked={checkedItems[item.id]}
-              onToggle={() => toggleCheckbox(item.id)}
-            />
-          )}
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-
-      <ConfirmDialog
-        visible={showDeleteDialog}
-        onCancel={() => setShowDeleteDialog(false)}
-        onConfirm={() => {
-          console.log('Deleting users...');
-          setShowDeleteDialog(false);
-        }}
-      />
-    </View>
+      {/* Navegação Inferior */}
+      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
+    </SafeAreaView>
   );
 };
 
@@ -75,7 +83,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 0,
     paddingHorizontal: 16,
   },
   headerSection: {
@@ -84,8 +91,9 @@ const styles = StyleSheet.create({
   },
   listSection: {
     flex: 1,
+    paddingBottom: 100, 
   },
   listContent: {
-    paddingBottom: 0,
+    paddingBottom: 16,
   },
 });
