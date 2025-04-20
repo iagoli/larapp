@@ -20,9 +20,7 @@ import CreateObservacoesScreen from './src/screens/createObservacoesScreen';
 /* import CreateAlimentacoesScreen from './src/screens/createAlimentacoesScreen'; */
 import UtenteDetailsScreen from './src/screens/utenteDetailsScreen';
 import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
-import MedicationForm from './src/screens/medicationForm';
 import UtenteAtividadeScreen from './src/screens/utenteAtividadeScreen';
-import AtividadeForm from './src/screens/atividadeForm';
 import ChatScreen from './src/screens/chatScreen';
 
 export default function App() {
