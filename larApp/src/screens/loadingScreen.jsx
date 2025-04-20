@@ -1,16 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import LottieView from 'lottie-react';
+// import LottieView from 'lottie-react';
 
 const LoadingScreen = () => {
   return (
     <View style={styles.container}>
-      <LottieView
-        animationData={require('../../assets/AnimationLoading.json')}
-        loop
-        autoplay
-        style={styles.animation}
-      />
+     
       <Text style={styles.loadingText}>LOADING</Text>
     </View>
   );
@@ -34,5 +29,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#555',
     letterSpacing: 1.5,
-  },
+  }
 });

@@ -56,6 +56,26 @@ const chatStyles = StyleSheet.create({
     color: colors.primary,
     fontWeight: 'bold',
   },
+  bubbleContainer: {
+    width: '80%',
+    padding: 10,
+    borderRadius: 12,
+    backgroundColor: '#e0e0e0',
+  },
+  myBubble: {
+    backgroundColor: '#d1e7dd',
+  },
+  timestampContainer: {
+    width: '20%',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    paddingRight: 5,
+  },
+  timestampText: {
+    fontSize: 10,
+    color: '#888',
+  },
+
 });
 
 export default chatStyles;
