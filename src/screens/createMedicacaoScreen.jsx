@@ -5,18 +5,19 @@ import TextInputField from '../components/TextInputField';
 import SaveButton from '../components/SaveButton';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
+import DateTimeInput from '../components/DateTimeInput'
 import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateMedicacaoScreen = () => {
   const [medicamento, setMedicamento] = useState('');
-  const [dataHora, setDataHora] = useState('');
+  const [dataHora, setDataHora] = useState(new Date()); 
   const [quantidade, setQuantidade] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
 
   const handleSave = () => {
     console.log({
       medicamento,
-      dataHora,
+      dataHora: dataHora.toISOString(),
       quantidade,
     });
   };
@@ -36,12 +37,10 @@ const CreateMedicacaoScreen = () => {
           placeholder="Value"
         />
 
-        <Label>Data/Hora Administrada</Label>
-        <TextInputField
+        <Label>Data/Hora</Label>
+        <DateTimeInput
           value={dataHora}
-          onChangeText={setDataHora}
-          placeholder="Value"
-          keyboardType="numeric"
+          onChange={setDataHora}
         />
 
         <Label>Quantidade</Label>

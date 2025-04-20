@@ -5,8 +5,8 @@ import TextInputField from '../components/TextInputField';
 import SaveButton from '../components/SaveButton';
 import HeaderButtons from '../components/HeaderButtons';
 import BottomTabBar from '../components/BottomTabBar';
-import userScreenStyles from '../styles/userScreen_styles';
 import DateTimeInput from '../components/DateTimeInput'; 
+import userScreenStyles from '../styles/userScreen_styles';
 
 const CreateAtividadesScreen = () => {
   const [atividade, setAtividade] = useState('');
