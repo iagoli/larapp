@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text, Avatar, Checkbox } from 'react-native-paper';
-import styles from '../styles/UserItem_styles';
+import styles from '../styles/userItem_styles';
 
 const UserItem = ({ item, checked, onToggle, avatarLabel }) => (
   <View style={styles.itemRow}>
