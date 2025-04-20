@@ -1,61 +1,66 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Dimensions } from 'react-native';
-import HeaderWithIcons from '../components/HeaderWithIcons';
-import ConfirmDialog from '../components/ConfirmDialog';
-import MedicationTableHeader from '../components/MedicationTableHeader';
-import MedicationRow from '../components/MedicationRow';
-import styles from '../styles/utenteMedicacaoScreen_styles';
+import { StyleSheet } from 'react-native';
 
-const dummyMedications = [
-  { id: '1', name: 'Paracetamol', date: '2025-04-18', quantity: '1x/dia' },
-  { id: '2', name: 'Ibuprofeno', date: '2025-04-19', quantity: '2x/dia' },
-];
-
-const UtenteMedicacaoScreen = () => {
-  const [selectedItems, setSelectedItems] = useState({});
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const isCompact = Dimensions.get('window').width < 360;
-
-  const toggleCheckbox = (id) => {
-    setSelectedItems(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  return (
-    <View style={styles.container}>
-      <ScrollView>
-        <HeaderWithIcons
-          title="Utente Medicação"
-          onEdit={() => {}}
-          onDelete={() => setShowDeleteDialog(true)}
-          onAdd={() => console.log('Add')}
-          compact={isCompact}
-          buttonLabel="Agendar"
-        />
-
-        <MedicationTableHeader />
-
-        {dummyMedications.map((item) => (
-          <MedicationRow
-            key={item.id}
-            item={item}
-            checked={selectedItems[item.id]}
-            onToggle={toggleCheckbox}
-          />
-        ))}
-      </ScrollView>
-
-      <ConfirmDialog
-        visible={showDeleteDialog}
-        onDismiss={() => setShowDeleteDialog(false)}
-        onConfirm={() => {
-          console.log('Deleting...');
-          setShowDeleteDialog(false);
-        }}
-        title="Confirmar Remoção"
-        message="Tem a certeza que deseja remover os itens selecionados?"
-      />
-    </View>
-  );
-};
-
-export default UtenteMedicacaoScreen;
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#5e3b7f',
+    marginBottom: 16,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 8,
+  },
+  avatar: {
+    backgroundColor: '#e0cfff',
+  },
+  scheduleButton: {
+    flex: 1,
+    borderColor: '#5e3b7f',
+    borderRadius: 20,
+    justifyContent: 'center',
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#f9efff',
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    color: '#5e3b7f',
+    fontSize: 14,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    backgroundColor: '#f4f0fa',
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    borderRadius: 8,
+  },
+  cell: {
+    fontSize: 14,
+    color: '#333',
+  },
+  columnMedicamento: {
+    flex: 1.2,
+  },
+  columnData: {
+    flex: 1,
+  },
+  columnQuantidade: {
+    flex: 1,
+  },
+});
