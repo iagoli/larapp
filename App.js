@@ -22,6 +22,9 @@ import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
 import UtenteAtividadeScreen from './src/screens/utenteAtividadeScreen';
 import ChatScreen from './src/screens/chatScreen';
 import UsersListScreen from './src/screens/userListScreen';
+import UtenteObservacoesScreen from './src/screens/UtenteObservacoesScreen';
+import UtenteRefeicoesScreen from './src/screens/UtenteRefeicoesScreen';
+import UtenteCuidadosScreen from './src/screens/UtenteCuidadosScreen';
 
 export default function App() {
   return (
@@ -29,7 +32,7 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <UtentesListScreen></UtentesListScreen>
+      <UtenteCuidadosScreen></UtenteCuidadosScreen>
 
         <StatusBar style="auto" />
       </View>
