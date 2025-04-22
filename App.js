@@ -35,27 +35,36 @@ export default function App() {
         {/* Para comentar vscode, CTRL K +  C
         Para descomentar CTRL K + CTRL U */}
 
-        {/* <ChatScreen></ChatScreen> */}
-        {/* <CreateAlimentacoesScreen></CreateAlimentacoesScreen> */}
-        {/* <CreateAtividadesScreen></CreateAtividadesScreen> */}
-        {/* <CreateCuidadosScreen></CreateCuidadosScreen> */}
-        {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
-        {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
-        {/* <CreateQuarto></CreateQuarto> */}
-        {/* <CreateUserScreen></CreateUserScreen> */}
-        {/* <CreateUtente></CreateUtente> */}
-        {/* <HomeScreen></HomeScreen> */}
-        {/* <LoadingScreen></LoadingScreen> */}
         {/* <LoginScreen></LoginScreen> */}
+        {/* <LoadingScreen></LoadingScreen> */}
+        {/* <HomeScreen></HomeScreen> */}
+        {/* <ChatScreen></ChatScreen>  */}
+
         {/* <RoomsListScreen></RoomsListScreen> */}
-        {/* <UsersListScreen></UsersListScreen> */}
-        {/* <UtenteAtividadeScreen></UtenteAtividadeScreen> */}
-        {/* <UtenteCuidadosScreen></UtenteCuidadosScreen> */}
-        {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}
-        {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
-        {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
-        {/* <UtenteRefeicoesScreen></UtenteRefeicoesScreen> */}
+        {/* <CreateQuarto></CreateQuarto> */}
+
         {/* <UtentesListScreen></UtentesListScreen> */}
+        {/* <CreateUtente></CreateUtente> */}
+
+        {/* <UsersListScreen></UsersListScreen> */}
+        {/* <CreateUserScreen></CreateUserScreen> */}
+
+        {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}
+
+        {/* <UtenteAtividadeScreen></UtenteAtividadeScreen> */}
+        {/* <CreateAtividadesScreen></CreateAtividadesScreen> */}
+
+        {/* <UtenteCuidadosScreen></UtenteCuidadosScreen> */}
+        {/* <CreateCuidadosScreen></CreateCuidadosScreen> */}
+
+        {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
+        {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
+
+        {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
+        {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
+
+        {/* <UtenteRefeicoesScreen></UtenteRefeicoesScreen> */}
+        {/* <CreateAlimentacoesScreen></CreateAlimentacoesScreen> */}
 
         <StatusBar style="auto" />
       </View>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet } from 'react-native';
-import Header from '../components/Header';
-import RoomItem from '../components/RoomItem';
-import ConfirmDialog from '../components/ConfirmDialog';
-import BottomTabBar from '../components/BottomTabBar';
+import Header from '../components/header';
+import RoomItem from '../components/roomItem';
+import ConfirmDialog from '../components/confirmDialog';
+import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/roomsListScreen_styles';
 
 const rooms = [

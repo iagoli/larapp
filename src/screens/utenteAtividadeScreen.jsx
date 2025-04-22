@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteAtividadeScreen_styles';
-import AtividadeRow from '../components/AtividadeRow';
-import AtividadeTableHeader from '../components/AtividadeTableHeader';
-import ConfirmDialog from '../components/ConfirmDialog';
+import AtividadeRow from '../components/atividadeRow';
+import AtividadeTableHeader from '../components/atividadeTableHeader';
+import ConfirmDialog from '../components/confirmDialog';
 
 const dummyAtividades = [
   { id: '1', atividade: 'Leitura', date: '2025-04-18', observacoes: 'Leu durante 30 min' },
