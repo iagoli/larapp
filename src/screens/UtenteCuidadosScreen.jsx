@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteCuidadosScreen_styles';
-import CuidadosRow from '../components/CuidadosRow';
-import CuidadosTableHeader from '../components/CuidadosTableHeader';
+import CuidadosRow from '../components/cuidadosRow';
+import CuidadosTableHeader from '../components/cuidadosTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 
 const dummyCuidados = [
