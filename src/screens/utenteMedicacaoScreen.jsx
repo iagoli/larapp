@@ -32,7 +32,7 @@ const UtenteMedicacaoScreen = () => {
             style={styles.scheduleButton}
             onPress={() => console.log('Agendar')}
           >
-            {!isCompact && 'Agendar'}
+            {!isCompact && 'Agendar Medicação'}
           </Button>
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />
           <IconButton icon="plus" onPress={() => console.log('Add')} />

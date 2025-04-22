@@ -33,9 +33,9 @@ const UtenteAtividadeScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar Atividade')}
+            onPress={() => console.log('Agendar Cuidado')}
           >
-            {!isCompact && <Text style={styles.buttonText}>Agendar Atividade</Text>}
+            {!isCompact && 'Agendar Atividade'}
           </Button>
 
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />

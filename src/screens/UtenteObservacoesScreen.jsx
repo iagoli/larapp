@@ -33,9 +33,9 @@ const UtenteObservacoesScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar')}
+            onPress={() => console.log('Agendar Cuidado')}
           >
-            {!isCompact && <Text style={styles.buttonText}>Agendar</Text>}
+            {!isCompact && 'Agendar Observação'}
           </Button>
 
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />

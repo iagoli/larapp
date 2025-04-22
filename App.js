@@ -22,9 +22,9 @@ import UtenteMedicacaoScreen from './src/screens/utenteMedicacaoScreen';
 import UtenteAtividadeScreen from './src/screens/utenteAtividadeScreen';
 import ChatScreen from './src/screens/chatScreen';
 import UsersListScreen from './src/screens/userListScreen';
-import UtenteObservacoesScreen from './src/screens/UtenteObservacoesScreen';
-import UtenteRefeicoesScreen from './src/screens/UtenteRefeicoesScreen';
-import UtenteCuidadosScreen from './src/screens/UtenteCuidadosScreen';
+import UtenteObservacoesScreen from './src/screens/utenteObservacoesScreen';
+import UtenteRefeicoesScreen from './src/screens/utenteRefeicoesScreen';
+import UtenteCuidadosScreen from './src/screens/utenteCuidadosScreen';
 
 export default function App() {
   return (
@@ -32,7 +32,30 @@ export default function App() {
     <PaperProvider>
       <View style={AppStyles.container}>
 
-      <UtenteCuidadosScreen></UtenteCuidadosScreen>
+        {/* Para comentar vscode, CTRL K +  C
+        Para descomentar CTRL K + CTRL U */}
+
+        {/* <ChatScreen></ChatScreen> */}
+        {/* <CreateAlimentacoesScreen></CreateAlimentacoesScreen> */}
+        {/* <CreateAtividadesScreen></CreateAtividadesScreen> */}
+        {/* <CreateCuidadosScreen></CreateCuidadosScreen> */}
+        {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
+        {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
+        {/* <CreateQuarto></CreateQuarto> */}
+        {/* <CreateUserScreen></CreateUserScreen> */}
+        {/* <CreateUtente></CreateUtente> */}
+        {/* <HomeScreen></HomeScreen> */}
+        {/* <LoadingScreen></LoadingScreen> */}
+        {/* <LoginScreen></LoginScreen> */}
+        {/* <RoomsListScreen></RoomsListScreen> */}
+        {/* <UsersListScreen></UsersListScreen> */}
+        {/* <UtenteAtividadeScreen></UtenteAtividadeScreen> */}
+        {/* <UtenteCuidadosScreen></UtenteCuidadosScreen> */}
+        {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}
+        {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
+        {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
+        {/* <UtenteRefeicoesScreen></UtenteRefeicoesScreen> */}
+        {/* <UtentesListScreen></UtentesListScreen> */}
 
         <StatusBar style="auto" />
       </View>
