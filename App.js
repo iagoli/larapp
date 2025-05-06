@@ -25,17 +25,40 @@ import UsersListScreen from './src/screens/userListScreen';
 import UtenteObservacoesScreen from './src/screens/utenteObservacoesScreen';
 import UtenteRefeicoesScreen from './src/screens/utenteRefeicoesScreen';
 import UtenteCuidadosScreen from './src/screens/utenteCuidadosScreen';
+import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import { useEffect } from 'react';
+import { app } from './firebase.config';
 
 export default function App() {
+
+  useEffect(() => {
+    const fff = async () => {
+      try {// Gets FirebaseApp and returns Auth object
+        const auth = getAuth(app); // Access to authentication service
+        onAuthStateChanged(auth, async (user) => {
+          // Signin as anonymous
+          if (user === null) await signInAnonymously(auth);
+          // Access to data that does not require personal authenticationgetPublicData();
+          console.log(user);
+          
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fff();
+  }, []);
+
   return (
 
     <PaperProvider>
+
       <View style={AppStyles.container}>
 
         {/* Para comentar vscode, CTRL K +  C
         Para descomentar CTRL K + CTRL U */}
 
-        {/* <LoginScreen></LoginScreen> */}
+        <LoginScreen></LoginScreen>
         {/* <LoadingScreen></LoadingScreen> */}
         {/* <HomeScreen></HomeScreen> */}
         {/* <ChatScreen></ChatScreen>  */}

@@ -3,19 +3,22 @@ import { SafeAreaView, ScrollView } from 'react-native';
 import Title from '../components/title';
 import Label from '../components/label';
 import TextInputField from '../components/textInputField';
-import SelectInput from '../components/selectInput'; 
+import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
-import PhotoUploader from '../components/photoUploader'; 
+import PhotoUploader from '../components/photoUploader';
 import HeaderButtons from '../components/headerButtons';
 import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification }
+  from "firebase/auth";
+import { app } from '../../firebase.config';
 
 const CreateUserScreen = () => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [telemovel, setTelemovel] = useState('');
   const [morada, setMorada] = useState('');
-  const [tipoUsuario, setTipoUsuario] = useState(''); 
+  const [tipoUsuario, setTipoUsuario] = useState('');
   const [utenteAssociado, setUtenteAssociado] = useState('');
   const [activeTab, setActiveTab] = useState('Utilizadores');
 
@@ -26,7 +29,11 @@ const CreateUserScreen = () => {
     { label: 'Utente', value: 'utente' },
   ];
 
-  const handleSave = () => {
+  const  handleSave = async () => {
+
+    const auth = getAuth(app); // Get authentication instance
+    const userCredential = await createUserWithEmailAndPassword(auth, email, '123456'); // Replace '123456' by your
+
     console.log({
       nome,
       email,
@@ -41,6 +48,7 @@ const CreateUserScreen = () => {
   const handleMenu = () => console.log('Mais opções');
 
   return (
+
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <ScrollView contentContainerStyle={[userScreenStyles.container, { paddingBottom: 100 }]}>
         <HeaderButtons onBackPress={handleBack} onMenuPress={handleMenu} />
@@ -69,7 +77,7 @@ const CreateUserScreen = () => {
         <Label>Utente Associado</Label>
         <TextInputField value={utenteAssociado} onChangeText={setUtenteAssociado} placeholder="Value" />
 
-        <PhotoUploader /> 
+        <PhotoUploader />
 
         <SaveButton onPress={handleSave} />
       </ScrollView>
