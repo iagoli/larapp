@@ -58,12 +58,12 @@ export default function App() {
         {/* Para comentar vscode, CTRL K +  C
         Para descomentar CTRL K + CTRL U */}
 
-        <LoginScreen></LoginScreen>
+        {/* <LoginScreen></LoginScreen> */}
         {/* <LoadingScreen></LoadingScreen> */}
         {/* <HomeScreen></HomeScreen> */}
         {/* <ChatScreen></ChatScreen>  */}
 
-        {/* <RoomsListScreen></RoomsListScreen> */}
+        <RoomsListScreen></RoomsListScreen>
         {/* <CreateQuarto></CreateQuarto> */}
 
         {/* <UtentesListScreen></UtentesListScreen> */}

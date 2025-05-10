@@ -1,29 +1,43 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/header';
 import RoomItem from '../components/roomItem';
 import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/roomsListScreen_styles';
 
-const rooms = [
-  { id: '1', name: '101', availability: 'Disponível' },
-  { id: '2', name: '102', availability: 'Ocupado' },
-  { id: '3', name: '103', availability: 'Ocupado' },
-  { id: '4', name: '104', availability: 'Disponível' },
-  { id: '5', name: '105', availability: 'Ocupado' },
-  { id: '6', name: '106', availability: 'Manutenção' },
-  { id: '7', name: '107', availability: 'Disponível' },
-  { id: '8', name: '108', availability: 'Manutenção' },
-];
+import { db } from '../../firebase.config';
+import { collection, getDocs } from 'firebase/firestore';
 
 const RoomsListScreen = () => {
-  const [checkedItems, setCheckedItems] = useState(
-    Object.fromEntries(rooms.map(room => [room.id, false]))
-  );
-
+  const [rooms, setRooms] = useState([]);
+  const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [activeTab, setActiveTab] = useState('Quartos');
+
+  // Fetch rooms from Firestore
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'rooms'));
+        const firebaseRooms = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        setRooms(firebaseRooms);
+
+        const initialChecked = Object.fromEntries(
+          firebaseRooms.map(room => [room.id, false])
+        );
+        setCheckedItems(initialChecked);
+      } catch (error) {
+        console.error('Erro ao buscar quartos:', error);
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
@@ -47,7 +61,11 @@ const RoomsListScreen = () => {
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <RoomItem
-                room={item}
+                room={{
+                  id: item.id,
+                  number: item.number || 'Sem número',
+                  availability: item.availability || 'desconhecido'
+                }}
                 checked={checkedItems[item.id]}
                 onToggle={toggleCheckbox}
               />

@@ -31,7 +31,7 @@ const CreateUserScreen = () => {
 
   const  handleSave = async () => {
 
-    const auth = getAuth(app); // Get authentication instance
+    const auth = getAuth(app);
     const userCredential = await createUserWithEmailAndPassword(auth, email, '123456'); // Replace '123456' by your
 
     console.log({
