@@ -15,7 +15,6 @@ const RoomsListScreen = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [activeTab, setActiveTab] = useState('Quartos');
 
-  // Fetch rooms from Firestore
   useEffect(() => {
     const fetchRooms = async () => {
       try {

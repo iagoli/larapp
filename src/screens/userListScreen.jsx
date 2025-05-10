@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/header';
 import UserItem from '../components/userItem';
@@ -6,26 +6,29 @@ import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/usersListScreen_styles';
 
-const users = [
-  { id: '1', name: 'Maniche' },
-  { id: '2', name: 'Derlei' },
-  { id: '3', name: 'Jardel' },
-  { id: '4', name: 'Deco' },
-  { id: '5', name: 'Figo' },
-  { id: '6', name: 'Boby Robson' },
-  { id: '7', name: 'Brahimi' },
-  { id: '8', name: 'Bobby Charlton' },
-  { id: '9', name: 'Fernando Couto' },
-  { id: '10', name: 'Jorge Costa' },
-];
+import { db } from '../../firebase.config';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 
 const UsersListScreen = () => {
-  const [checkedItems, setCheckedItems] = useState(
-    Object.fromEntries(users.map(user => [user.id, false]))
-  );
-
+  const [users, setUsers] = useState([]);
+  const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [activeTab, setActiveTab] = useState('Utilizadores');
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
+      const userList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setUsers(userList);
+
+      setCheckedItems(Object.fromEntries(userList.map(user => [user.id, false])));
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
