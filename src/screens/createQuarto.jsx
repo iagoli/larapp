@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView, Alert } from 'react-native';
 import Title from '../components/title';
 import Label from '../components/label';
 import TextInputField from '../components/textInputField';
-import SelectInput from '../components/selectInput'; 
+import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import HeaderButtons from '../components/headerButtons';
 import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
+
+import { db } from '../../firebase.config';
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  where,
+  getDocs
+} from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { app } from '../../firebase.config';
 
 const CreateQuarto = () => {
   const [camas, setCamas] = useState('');
@@ -22,27 +34,46 @@ const CreateQuarto = () => {
     { label: 'Em Manutenção', value: 'manutencao' },
   ];
 
-  const quartoOptions = [
-    { label: 'Selecione uma opção', value: '' },
-    { label: '1', value: 1 },
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
-    { label: '6', value: 6 },
-    { label: '7', value: 7 },
-    { label: '8', value: 8 },
-    { label: '9', value: 9 },
-    { label: '10', value: 10 },
-  ];
+  const handleSave = async () => {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
 
-  const handleSave = () => {
-    console.log({
-      camas,
-      numero,
-      disponibilidade
-    });
-    // Lógica para salvar os dados do quarto futuramente
+    if (!user) {
+      Alert.alert('Erro', 'Usuário não está autenticado.');
+      return;
+    }
+
+    if (!camas || !numero || !disponibilidade) {
+      Alert.alert('Campos obrigatórios', 'Preencha todos os campos antes de salvar.');
+      return;
+    }
+
+    try {
+      const quartosRef = collection(db, 'rooms');
+      const q = query(quartosRef, where('numero', '==', numero));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        Alert.alert('Erro', `O quarto número ${numero} já existe.`);
+        return;
+      }
+
+      await addDoc(quartosRef, {
+        camas,
+        numero,
+        disponibilidade,
+        createdAt: serverTimestamp(),
+        userId: user.uid,
+      });
+
+      Alert.alert('Sucesso', 'Quarto adicionado com sucesso!');
+      setCamas('');
+      setNumero('');
+      setDisponibilidade('');
+    } catch (error) {
+      console.error('Erro ao salvar quarto:', error);
+      Alert.alert('Erro', 'Erro ao salvar. Tente novamente.');
+    }
   };
 
   const handleBack = () => console.log('Voltar');
@@ -56,18 +87,19 @@ const CreateQuarto = () => {
         <Title>Novo Quarto</Title>
 
         <Label>Camas</Label>
-        <TextInputField 
-          value={camas} 
-          onChangeText={setCamas} 
+        <TextInputField
+          value={camas}
+          onChangeText={setCamas}
           placeholder="Digite a quantidade de camas"
-          keyboardType="numeric" 
+          keyboardType="numeric"
         />
 
         <Label>Número</Label>
-        <SelectInput
-          selectedValue={numero}
-          onValueChange={setNumero}
-          items={quartoOptions} 
+        <TextInputField
+          value={numero}
+          onChangeText={setNumero}
+          placeholder="Digite o número do quarto"
+          keyboardType="numeric"
         />
 
         <Label>Disponibilidade</Label>

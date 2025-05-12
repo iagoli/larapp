@@ -9,9 +9,15 @@ const AtividadeRow = ({ item, selected, onToggle }) => (
       status={selected ? 'checked' : 'unchecked'}
       onPress={onToggle}
     />
-    <Text style={[styles.cell, styles.columnAtividade]}>{item.atividade}</Text>
-    <Text style={[styles.cell, styles.columnData]}>{item.date}</Text>
-    <Text style={[styles.cell, styles.columnObs]}>{item.observacoes}</Text>
+    <Text style={[styles.cell, styles.columnAtividade]}>
+      {item.atividade || 'Sem atividade'}
+    </Text>
+    <Text style={[styles.cell, styles.columnData]}>
+      {item.date || 'Sem data'}
+    </Text>
+    <Text style={[styles.cell, styles.columnObs]}>
+      {item.observacoes || 'Sem observações'}
+    </Text>
   </View>
 );
 

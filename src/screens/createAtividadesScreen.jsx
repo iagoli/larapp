@@ -7,19 +7,41 @@ import HeaderButtons from '../components/headerButtons';
 import BottomTabBar from '../components/bottomTabBar';
 import DateTimeInput from '../components/dateTimeInput'; 
 import userScreenStyles from '../styles/userScreen_styles';
+import { db } from '../../firebase.config';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { app } from '../../firebase.config';
 
 const CreateAtividadesScreen = () => {
+  const utenteId = 'UTENTE_TESTE_123'; // temporary hardcoded value
+
   const [atividade, setAtividade] = useState('');
   const [dataHora, setDataHora] = useState(new Date()); 
   const [descricao, setDescricao] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
 
-  const handleSave = () => {
-    console.log({
-      atividade,
-      dataHora: dataHora.toISOString(), 
-      descricao,
-    });
+  const handleSave = async () => {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.warn('User not logged in');
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, 'atividades'), {
+        atividade,
+        dataHora: dataHora.toISOString(),
+        descricao,
+        createdAt: serverTimestamp(),
+        userId: user.uid,
+        utenteId, // now saved with the document
+      });
+      console.log('Atividade adicionada com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar atividade:', error);
+    }
   };
 
   const handleBack = () => console.log('Voltar');

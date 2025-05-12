@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import PhotoUploader_style from '../styles/photoUploader_styles';
 
-const PhotoUploader = () => {
+const PhotoUploader = ({ onImageSelected }) => {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
@@ -19,7 +19,11 @@ const PhotoUploader = () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const selectedUri = result.assets[0].uri;
+      setImage(selectedUri);
+      if (onImageSelected) {
+        onImageSelected(selectedUri);
+      }
     }
   };
 

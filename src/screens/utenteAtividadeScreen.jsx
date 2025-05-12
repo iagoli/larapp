@@ -1,25 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteAtividadeScreen_styles';
 import AtividadeRow from '../components/atividadeRow';
 import AtividadeTableHeader from '../components/atividadeTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
-
-const dummyAtividades = [
-  { id: '1', atividade: 'Leitura', date: '2025-04-18', observacoes: 'Leu durante 30 min' },
-  { id: '2', atividade: 'Caminhada', date: '2025-04-19', observacoes: '20 min ao sol' },
-];
+import { db } from '../../firebase.config';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 
 const UtenteAtividadeScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
+  const [atividades, setAtividades] = useState([]);
 
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+
+  useEffect(() => {
+    const fetchAtividades = async () => {
+      try {
+        const querySnapshot = await getDocs(q);
+        const fetched = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setAtividades(fetched);
+      } catch (error) {
+        console.error('Erro ao buscar atividades:', error);
+      }
+    };
+
+    fetchAtividades();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -44,7 +59,7 @@ const UtenteAtividadeScreen = () => {
 
         <AtividadeTableHeader />
 
-        {dummyAtividades.map((item) => (
+        {atividades.map((item) => (
           <AtividadeRow
             key={item.id}
             item={item}
