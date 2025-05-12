@@ -3,6 +3,7 @@ import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/Header';
 import RoomItem from '../components/RoomItem';
 import ConfirmDialog from '../components/ConfirmDialog';
+import RoomDetailsModal from '../components/RoomDetailsModal'; 
 import BottomTabBar from '../components/BottomTabBar';
 import styles from '../styles/roomsListScreen_styles';
 
@@ -13,6 +14,8 @@ const RoomsListScreen = () => {
   const [rooms, setRooms] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false); 
+  const [selectedRoom, setSelectedRoom] = useState(null); 
   const [activeTab, setActiveTab] = useState('Quartos');
 
   useEffect(() => {
@@ -42,6 +45,11 @@ const RoomsListScreen = () => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  const handleShowDetails = (room) => {
+    setSelectedRoom(room); 
+    setShowDetailsModal(true); 
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={styles.container}>
@@ -67,6 +75,7 @@ const RoomsListScreen = () => {
                 }}
                 checked={checkedItems[item.id]}
                 onToggle={toggleCheckbox}
+                onPress={handleShowDetails} 
               />
             )}
             contentContainerStyle={styles.listContent}
@@ -83,6 +92,13 @@ const RoomsListScreen = () => {
           }}
           title="Confirmar remoção"
           message="Tem a certeza que quer remover o item selecionado?"
+        />
+
+        {/* Modal de detalhes do quarto */}
+        <RoomDetailsModal
+          visible={showDetailsModal}
+          room={selectedRoom}
+          onClose={() => setShowDetailsModal(false)}
         />
       </View>
 
