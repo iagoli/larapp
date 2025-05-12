@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteObservacoesScreen_styles';
-import ConfirmDialog from '../components/confirmDialog';
-import ObservacaoTableHeader from '../components/observacaoTableHeader';
-import ObservacaoRow from '../components/observacaoRow';
+import ConfirmDialog from '../components/ConfirmDialog';
+import ObservacaoTableHeader from '../components/ObservacaoTableHeader';
+import ObservacaoRow from '../components/ObservacaoRow';
 
 const dummyObservacoes = [
   { id: '1', descricao: 'Não quis comer', date: '2025-04-20' },

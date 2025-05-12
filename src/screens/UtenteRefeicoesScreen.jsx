@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteRefeicoesScreen_styles';
-import RefeicaoRow from '../components/refeicaoRow';
-import RefeicaoTableHeader from '../components/refeicaoTableHeader';
-import ConfirmDialog from '../components/confirmDialog';
+import RefeicaoRow from '../components/RefeicaoRow';
+import RefeicaoTableHeader from '../components/RefeicaoTableHeader';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const dummyRefeicoes = [
   { id: '1', prato: 'Sopa de legumes', date: '2025-04-18' },

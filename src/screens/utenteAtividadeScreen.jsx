@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteAtividadeScreen_styles';
-import AtividadeRow from '../components/atividadeRow';
-import AtividadeTableHeader from '../components/atividadeTableHeader';
-import ConfirmDialog from '../components/confirmDialog';
+import AtividadeRow from '../components/AtividadeRow';
+import AtividadeTableHeader from '../components/AtividadeTableHeader';
+import ConfirmDialog from '../components/ConfirmDialog';
 import { db } from '../../firebase.config';
 import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 

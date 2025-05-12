@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, Alert } from 'react-native';
-import Title from '../components/title';
-import Label from '../components/label';
-import TextInputField from '../components/textInputField';
-import SelectInput from '../components/selectInput';
-import SaveButton from '../components/saveButton';
-import PhotoUploader from '../components/photoUploader';
-import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
+import Title from '../components/Title';
+import Label from '../components/Label';
+import TextInputField from '../components/TextInputField';
+import SelectInput from '../components/SelectInput';
+import SaveButton from '../components/SaveButton';
+import PhotoUploader from '../components/PhotoUploader';
+import HeaderButtons from '../components/HeaderButtons';
+import BottomTabBar from '../components/BottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';

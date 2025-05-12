@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import UtenteHeader from '../components/utenteHeader';
-import UtenteCard from '../components/utenteCard';
+import UtenteHeader from '../components/UtenteHeader';
+import UtenteCard from '../components/UtenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
 
 const data = [

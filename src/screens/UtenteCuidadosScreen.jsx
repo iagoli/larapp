@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteCuidadosScreen_styles';
-import CuidadosRow from '../components/cuidadosRow';
-import CuidadosTableHeader from '../components/cuidadosTableHeader';
-import ConfirmDialog from '../components/confirmDialog';
+import CuidadosRow from '../components/CuidadosRow';
+import CuidadosTableHeader from '../components/CuidadosTableHeader';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const dummyCuidados = [
   { id: '1', acao: 'Curativo', date: '2025-04-18', descricao: 'Curativo no braço direito' },

@@ -5,8 +5,8 @@ import {
   FlatList,
 } from 'react-native';
 import chatStyles from '../styles/chatScreen_styles';
-import MessageBubble from './messageBubble';
-import ChatInput from './chatInput';
+import MessageBubble from './MessageBubble';
+import ChatInput from './ChatInput';
 
 const ChatContainer = ({ messages, onSend }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button, Checkbox } from 'react-native-paper';
-import ConfirmDialog from '../components/confirmDialog';
+import ConfirmDialog from '../components/ConfirmDialog';
 import styles from '../styles/utenteMedicacaoScreen_styles';
 
 const dummyMedications = [
