@@ -4,15 +4,20 @@ import Header from '../components/Header';
 import UserItem from '../components/UserItem';
 import ConfirmDialog from '../components/ConfirmDialog';
 import BottomTabBar from '../components/BottomTabBar';
+import UserDetailsModal from '../components/UserDetailsModal';
+import EditUserModal from '../components/EditUserModal';
 import styles from '../styles/usersListScreen_styles';
 
 import { db } from '../../firebase.config';
-import { collection, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
 const UsersListScreen = () => {
   const [users, setUsers] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [activeTab, setActiveTab] = useState('Utilizadores');
 
   useEffect(() => {
@@ -23,7 +28,6 @@ const UsersListScreen = () => {
       }));
 
       setUsers(userList);
-
       setCheckedItems(Object.fromEntries(userList.map(user => [user.id, false])));
     });
 
@@ -34,13 +38,41 @@ const UsersListScreen = () => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  const handleShowDetails = (user) => {
+    setSelectedUser(user);
+    setShowDetailsModal(true);
+  };
+
+  const handleEdit = () => {
+    const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
+    if (selectedId) {
+      const userToEdit = users.find(user => user.id === selectedId);
+      if (userToEdit) {
+        setSelectedUser(userToEdit);
+        setShowEditModal(true);
+      }
+    }
+  };
+
+  const handleDelete = async () => {
+    const idsToDelete = Object.entries(checkedItems)
+      .filter(([_, checked]) => checked)
+      .map(([id]) => id);
+
+    for (const id of idsToDelete) {
+      await deleteDoc(doc(db, 'users', id));
+    }
+
+    setShowDeleteDialog(false);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={styles.container}>
         <View style={styles.headerSection}>
           <Header
             title="Utilizadores"
-            onEdit={() => console.log('Edit')}
+            onEdit={handleEdit}
             onDelete={() => setShowDeleteDialog(true)}
             onAdd={() => console.log('Add')}
           />
@@ -55,6 +87,7 @@ const UsersListScreen = () => {
                 item={item}
                 checked={checkedItems[item.id]}
                 onToggle={() => toggleCheckbox(item.id)}
+                onPress={() => handleShowDetails(item)}
               />
             )}
             contentContainerStyle={styles.listContent}
@@ -62,14 +95,27 @@ const UsersListScreen = () => {
           />
         </View>
 
+        {/* Modal de confirmação de exclusão */}
         <ConfirmDialog
           visible={showDeleteDialog}
           onCancel={() => setShowDeleteDialog(false)}
-          onConfirm={() => {
-            console.log('Deleting users...');
-            setShowDeleteDialog(false);
-          }}
+          onConfirm={handleDelete}
         />
+
+        {/* Modal de detalhes do usuário */}
+        <UserDetailsModal
+          visible={showDetailsModal}
+          user={selectedUser}
+          onClose={() => setShowDetailsModal(false)}
+        />
+
+        {/* Modal de edição do usuário */}
+        <EditUserModal
+          visible={showEditModal}
+          user={selectedUser}
+          onClose={() => setShowEditModal(false)}
+        />
+
       </View>
 
       <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
