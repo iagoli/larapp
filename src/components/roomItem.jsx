@@ -5,11 +5,11 @@ import styles from '../styles/listItemRow_styles';
 
 const getAvatarLabel = (availability) => {
   switch (availability?.toLowerCase()) {
-    case 'disponível':
+    case 'disponivel':
       return 'D';
     case 'ocupado':
       return 'O';
-    case 'manutenção':
+    case 'manutencao':
       return 'M';
     default:
       return '?';
@@ -18,11 +18,11 @@ const getAvatarLabel = (availability) => {
 
 const getAvatarColor = (availability) => {
   switch (availability?.toLowerCase()) {
-    case 'disponível':
+    case 'disponivel':
       return '#A5D6A7';
     case 'ocupado':
       return '#EF9A9A';
-    case 'manutenção':
+    case 'manutencao':
       return '#FFF59D';
     default:
       return '#E0E0E0';

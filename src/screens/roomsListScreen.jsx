@@ -70,8 +70,8 @@ const RoomsListScreen = () => {
               <RoomItem
                 room={{
                   id: item.id,
-                  number: item.number || 'Sem número',
-                  availability: item.availability || 'desconhecido'
+                  number: item.numero || 'Sem número',
+                  availability: item.disponibilidade  || 'desconhecido'
                 }}
                 checked={checkedItems[item.id]}
                 onToggle={toggleCheckbox}
