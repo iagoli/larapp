@@ -23,6 +23,7 @@ import * as uuid from 'uuid';
 
 const CreateUserScreen = () => {
   const [nome, setNome] = useState('');
+  const [idade, setIdade] = useState('');
   const [email, setEmail] = useState('');
   const [telemovel, setTelemovel] = useState('');
   const [morada, setMorada] = useState('');
@@ -88,6 +89,7 @@ const CreateUserScreen = () => {
       // Save user data to Firestore
       await addDoc(collection(db, 'users'), {
         nome,
+        idade,
         email,
         telemovel,
         morada,
@@ -102,6 +104,7 @@ const CreateUserScreen = () => {
 
       // Reset form
       setNome('');
+      setIdade('')
       setEmail('');
       setTelemovel('');
       setMorada('');
@@ -127,7 +130,15 @@ const CreateUserScreen = () => {
 
         <Label>Nome</Label>
         <TextInputField value={nome} onChangeText={setNome} placeholder="Nome" />
-
+       
+        <Label>Idade</Label>
+        <TextInputField
+          value={idade}
+          onChangeText={setIdade}
+          placeholder="Idade"
+          keyboardType="numeric"
+        />
+       
         <Label>Email</Label>
         <TextInputField value={email} onChangeText={setEmail} placeholder="Email" keyboardType="email-address" />
 

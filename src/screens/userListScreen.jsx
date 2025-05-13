@@ -5,6 +5,8 @@ import UserItem from '../components/userItem';
 import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/usersListScreen_styles';
+import UserDetailsModal from '../components/userDetailsModal'
+import EditUserModal from '../components/editRoomModal'
 
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
