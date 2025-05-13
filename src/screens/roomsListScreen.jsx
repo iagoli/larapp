@@ -5,6 +5,7 @@ import RoomItem from '../components/roomItem';
 import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/roomsListScreen_styles';
+import RoomDetailsModal from '../components/RoomDetailsModal';
 
 import { db } from '../../firebase.config';
 import { collection, getDocs } from 'firebase/firestore';
