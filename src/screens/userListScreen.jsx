@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList } from 'react-native';
-import Header from '../components/Header';
-import UserItem from '../components/UserItem';
-import ConfirmDialog from '../components/ConfirmDialog';
-import BottomTabBar from '../components/BottomTabBar';
-import UserDetailsModal from '../components/UserDetailsModal';
-import EditUserModal from '../components/EditUserModal';
+import Header from '../components/header';
+import UserItem from '../components/userItem';
+import ConfirmDialog from '../components/confirmDialog';
+import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/usersListScreen_styles';
 
 import { db } from '../../firebase.config';

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList } from 'react-native';
-import Header from '../components/Header';
-import RoomItem from '../components/RoomItem';
-import ConfirmDialog from '../components/ConfirmDialog';
-import RoomDetailsModal from '../components/RoomDetailsModal'; 
-import BottomTabBar from '../components/BottomTabBar';
+import Header from '../components/header';
+import RoomItem from '../components/roomItem';
+import ConfirmDialog from '../components/confirmDialog';
+import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/roomsListScreen_styles';
 
 import { db } from '../../firebase.config';

@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import selectInputstyles from '../styles/selectInput_styles';
-import Label from './Label';
+import Label from './label';
 
 
 const SelectInput = ({ label, selectedValue, onValueChange, items }) => {

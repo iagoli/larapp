@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/homePage_styles';
-import BottomTabBar from '../components/BottomTabBar';
+import BottomTabBar from '../components/bottomTabBar';
 
 const HomeScreen = () => {
   const [activeTab, setActiveTab] = useState('Home');
