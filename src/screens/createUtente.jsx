@@ -10,10 +10,9 @@ import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
 import { db } from '../../firebase.config';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
-
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as uuid from 'uuid';
 
@@ -51,7 +50,11 @@ const CreateUtente = () => {
         photoUrl = await getDownloadURL(imageRef);
       }
 
-      await addDoc(collection(db, 'utentes'), {
+      // Generate a new document with a custom ID
+      const docRef = doc(collection(db, 'utentes'));
+
+      await setDoc(docRef, {
+        utenteId: docRef.id,
         nome,
         quarto,
         idade,
