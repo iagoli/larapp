@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/header';
 import UserItem from '../components/userItem';
@@ -6,26 +6,28 @@ import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/utentesListScreen_styles';
 
-const users = [
-  { id: '1', name: 'João' },
-  { id: '2', name: 'Derlei' },
-  { id: '3', name: 'Jardel' },
-  { id: '4', name: 'Deco' },
-  { id: '5', name: 'Figo' },
-  { id: '6', name: 'Boby Robson' },
-  { id: '7', name: 'Brahimi' },
-  { id: '8', name: 'Bobby Charlton' },
-  { id: '9', name: 'Fernando Couto' },
-  { id: '10', name: 'Jorge Costa' },
-];
+import { db } from '../../firebase.config';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 const UtentesListScreen = () => {
-  const [checkedItems, setCheckedItems] = useState(
-    Object.fromEntries(users.map(user => [user.id, false]))
-  );
-
+  const [utentes, setUtentes] = useState([]);
+  const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [activeTab, setActiveTab] = useState('Utentes');
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'utentes'), (snapshot) => {
+      const list = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setUtentes(list);
+      setCheckedItems(Object.fromEntries(list.map(user => [user.id, false])));
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
@@ -45,7 +47,7 @@ const UtentesListScreen = () => {
 
         <View style={styles.listSection}>
           <FlatList
-            data={users}
+            data={utentes}
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <UserItem
@@ -63,7 +65,7 @@ const UtentesListScreen = () => {
           visible={showDeleteDialog}
           onCancel={() => setShowDeleteDialog(false)}
           onConfirm={() => {
-            console.log('Deleting users...');
+            console.log('Deleting utentes...');
             setShowDeleteDialog(false);
           }}
         />
