@@ -55,21 +55,21 @@ export default function App() {
 
       <View style={AppStyles.container}>
 
-        {/* Para comentar vscode, CTRL K +  C
-        Para descomentar CTRL K + CTRL U */}
+        {/* Para comentar vscode, CTRL K +  C */}
+        {/* Para descomentar CTRL K + CTRL U */}
 
         {/* <LoginScreen></LoginScreen> */}
         {/* <LoadingScreen></LoadingScreen> */}
         {/* <HomeScreen></HomeScreen> */}
         {/* <ChatScreen></ChatScreen>  */}
 
-        <RoomsListScreen></RoomsListScreen>
+        {/* <RoomsListScreen></RoomsListScreen> */}
         {/* <CreateQuarto></CreateQuarto> */}
 
         {/* <UtentesListScreen></UtentesListScreen> */}
         {/* <CreateUtente></CreateUtente> */}
 
-        {/* <UsersListScreen></UsersListScreen> */}
+        <UsersListScreen></UsersListScreen>
         {/* <CreateUserScreen></CreateUserScreen> */}
 
         {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}

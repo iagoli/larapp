@@ -23,12 +23,12 @@ const UsersListScreen = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
       const userList = snapshot.docs.map(doc => ({
-        id: doc.id,
+        id: doc.uid,
         ...doc.data()
       }));
 
       setUsers(userList);
-      setCheckedItems(Object.fromEntries(userList.map(user => [user.id, false])));
+      setCheckedItems(Object.fromEntries(userList.map(user => [user.uid, false])));
     });
 
     return () => unsubscribe();
