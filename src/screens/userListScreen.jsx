@@ -100,8 +100,9 @@ const UsersListScreen = () => {
 
         <ConfirmDialog
           visible={showDeleteDialog}
-          onCancel={() => setShowDeleteDialog(false)}
+          onDismiss={() => setShowDeleteDialog(false)}
           onConfirm={handleDelete}
+          message="Tem certeza que deseja apagar o utilizador selecionado?"
         />
 
         <UserDetailsModal
