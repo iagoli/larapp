@@ -55,8 +55,8 @@ export default function App() {
 
       <View style={AppStyles.container}>
 
-        {/* Para comentar vscode, CTRL K +  C
-        Para descomentar CTRL K + CTRL U */}
+        {/* Para comentar vscode, CTRL K +  C */}
+        {/* Para descomentar CTRL K + CTRL U */}
 
         {/* <LoginScreen></LoginScreen> */}
         {/* <LoadingScreen></LoadingScreen> */}
@@ -69,7 +69,7 @@ export default function App() {
         {/* <UtentesListScreen></UtentesListScreen> */}
         {/* <CreateUtente></CreateUtente> */}
 
-        {/* <UsersListScreen></UsersListScreen> */}
+        <UsersListScreen></UsersListScreen>
         {/* <CreateUserScreen></CreateUserScreen> */}
 
         <UtenteDetailsScreen></UtenteDetailsScreen>

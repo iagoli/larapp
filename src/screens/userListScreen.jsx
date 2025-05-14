@@ -5,8 +5,8 @@ import UserItem from '../components/userItem';
 import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/usersListScreen_styles';
-import UserDetailsModal from '../components/userDetailsModal'
-import EditUserModal from '../components/editRoomModal'
+import UserDetailsModal from '../components/userDetailsModal';
+import EditUserModal from '../components/editUserModal';
 
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
@@ -23,7 +23,7 @@ const UsersListScreen = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
       const userList = snapshot.docs.map(doc => ({
-        id: doc.id,
+        id: doc.id,           // ID real do Firestore
         ...doc.data()
       }));
 
@@ -35,7 +35,10 @@ const UsersListScreen = () => {
   }, []);
 
   const toggleCheckbox = (id) => {
-    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+    setCheckedItems(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const handleShowDetails = (user) => {
@@ -81,7 +84,7 @@ const UsersListScreen = () => {
         <View style={styles.listSection}>
           <FlatList
             data={users}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id} 
             renderItem={({ item }) => (
               <UserItem
                 item={item}
@@ -95,27 +98,24 @@ const UsersListScreen = () => {
           />
         </View>
 
-        {/* Modal de confirmação de exclusão */}
         <ConfirmDialog
           visible={showDeleteDialog}
-          onCancel={() => setShowDeleteDialog(false)}
+          onDismiss={() => setShowDeleteDialog(false)}
           onConfirm={handleDelete}
+          message="Tem certeza que deseja apagar o utilizador selecionado?"
         />
 
-        {/* Modal de detalhes do usuário */}
         <UserDetailsModal
           visible={showDetailsModal}
           user={selectedUser}
           onClose={() => setShowDetailsModal(false)}
         />
 
-        {/* Modal de edição do usuário */}
         <EditUserModal
           visible={showEditModal}
           user={selectedUser}
           onClose={() => setShowEditModal(false)}
         />
-
       </View>
 
       <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
