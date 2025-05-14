@@ -22,7 +22,7 @@ const UtenteDetailsScreen = () => {
   const [idade, setIdade] = useState('');
 
   // Temporary constant utenteId (replace later with route.params.utenteId)
-  const utenteId = 'UTENTE_TESTE_123'; // This should match an actual document ID in Firestore
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // 
 
   useEffect(() => {
     const fetchUtente = async () => {

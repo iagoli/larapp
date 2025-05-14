@@ -9,8 +9,8 @@ const UtenteHeader = ({ selectedTab, roomNumber, nome, idade }) => {
       <Avatar.Icon icon="account" size={48} style={styles.userAvatar} />
 
       <View style={styles.userInfo}>
-        <Text style={styles.userName}>{nome || 'Nome não disponível'}</Text>
-        <Text style={styles.userAge}>Idade: {idade || 'N/A'}</Text>
+        <Text style={styles.userName}>{nome}</Text>
+        <Text style={styles.userAge}>Idade: {idade}</Text>
       </View>
 
       <View style={styles.tabContainer}>

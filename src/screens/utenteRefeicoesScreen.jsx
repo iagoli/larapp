@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteRefeicoesScreen_styles';
@@ -6,12 +6,11 @@ import RefeicaoRow from '../components/refeicaoRow';
 import RefeicaoTableHeader from '../components/refeicaoTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 
-const dummyRefeicoes = [
-  { id: '1', prato: 'Sopa de legumes', date: '2025-04-18' },
-  { id: '2', prato: 'Peixe grelhado', date: '2025-04-19' },
-];
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../firebase.config';
 
 const UtenteRefeicoesScreen = () => {
+  const [refeicoes, setRefeicoes] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const screenWidth = Dimensions.get('window').width;
@@ -20,6 +19,41 @@ const UtenteRefeicoesScreen = () => {
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+
+  // TEMP: swap with dynamic route param later
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD';
+
+  useEffect(() => {
+    const fetchRefeicoes = async () => {
+      try {
+        console.log('🔍 Fetching for utenteId:', utenteId);
+
+        const q = query(collection(db, 'alimentacoes'), where('utenteId', '==', utenteId));
+        const snapshot = await getDocs(q);
+
+        console.log('📄 Docs found:', snapshot.docs.length);
+
+        const data = snapshot.docs.map(doc => {
+          const item = doc.data();
+          console.log('✅ Item:', item);
+
+          return {
+            id: doc.id,
+            prato: item.prato || 'Sem prato',
+            date: item.dataHora
+              ? new Date(item.dataHora).toISOString().split('T')[0]
+              : 'Sem data',
+          };
+        });
+
+        setRefeicoes(data);
+      } catch (err) {
+        console.error('❌ Erro ao buscar refeições:', err);
+      }
+    };
+
+    fetchRefeicoes();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -42,14 +76,18 @@ const UtenteRefeicoesScreen = () => {
 
         <RefeicaoTableHeader />
 
-        {dummyRefeicoes.map((item) => (
-          <RefeicaoRow
-            key={item.id}
-            item={item}
-            selected={selectedItems[item.id]}
-            onToggle={() => toggleCheckbox(item.id)}
-          />
-        ))}
+        {refeicoes.length === 0 ? (
+          <Text style={{ padding: 16, color: 'gray' }}>Nenhuma refeição encontrada</Text>
+        ) : (
+          refeicoes.map((item) => (
+            <RefeicaoRow
+              key={item.id}
+              item={item}
+              selected={selectedItems[item.id]}
+              onToggle={() => toggleCheckbox(item.id)}
+            />
+          ))
+        )}
       </ScrollView>
 
       <ConfirmDialog

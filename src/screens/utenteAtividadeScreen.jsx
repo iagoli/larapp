@@ -5,8 +5,14 @@ import styles from '../styles/utenteAtividadeScreen_styles';
 import AtividadeRow from '../components/atividadeRow';
 import AtividadeTableHeader from '../components/atividadeTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
+
 import { db } from '../../firebase.config';
-import { collection, getDocs, onSnapshot } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  where
+} from 'firebase/firestore';
 
 const UtenteAtividadeScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
@@ -22,11 +28,19 @@ const UtenteAtividadeScreen = () => {
   useEffect(() => {
     const fetchAtividades = async () => {
       try {
+        const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // ← replace with dynamic later
+
+        const q = query(
+          collection(db, 'atividades'),
+          where('utenteId', '==', utenteId)
+        );
+
         const querySnapshot = await getDocs(q);
         const fetched = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }));
+
         setAtividades(fetched);
       } catch (error) {
         console.error('Erro ao buscar atividades:', error);
