@@ -22,25 +22,22 @@ const UsersListScreen = () => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
-      const userList = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          ...data,
-          uid: data.uid || doc.id 
-        };
-      });
+      const userList = snapshot.docs.map(doc => ({
+        id: doc.id,           // ID real do Firestore
+        ...doc.data()
+      }));
 
       setUsers(userList);
-      setCheckedItems(Object.fromEntries(userList.map(user => [user.uid, false])));
+      setCheckedItems(Object.fromEntries(userList.map(user => [user.id, false])));
     });
 
     return () => unsubscribe();
   }, []);
 
-  const toggleCheckbox = (uid) => {
+  const toggleCheckbox = (id) => {
     setCheckedItems(prev => ({
       ...prev,
-      [uid]: !prev[uid],
+      [id]: !prev[id],
     }));
   };
 
@@ -50,9 +47,9 @@ const UsersListScreen = () => {
   };
 
   const handleEdit = () => {
-    const selectedUid = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
-    if (selectedUid) {
-      const userToEdit = users.find(user => user.uid === selectedUid);
+    const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
+    if (selectedId) {
+      const userToEdit = users.find(user => user.id === selectedId);
       if (userToEdit) {
         setSelectedUser(userToEdit);
         setShowEditModal(true);
@@ -61,12 +58,12 @@ const UsersListScreen = () => {
   };
 
   const handleDelete = async () => {
-    const uidsToDelete = Object.entries(checkedItems)
+    const idsToDelete = Object.entries(checkedItems)
       .filter(([_, checked]) => checked)
-      .map(([uid]) => uid);
+      .map(([id]) => id);
 
-    for (const uid of uidsToDelete) {
-      await deleteDoc(doc(db, 'users', uid));
+    for (const id of idsToDelete) {
+      await deleteDoc(doc(db, 'users', id));
     }
 
     setShowDeleteDialog(false);
@@ -87,12 +84,12 @@ const UsersListScreen = () => {
         <View style={styles.listSection}>
           <FlatList
             data={users}
-            keyExtractor={item => item.uid} 
+            keyExtractor={item => item.id} 
             renderItem={({ item }) => (
               <UserItem
                 item={item}
-                checked={checkedItems[item.uid]}
-                onToggle={() => toggleCheckbox(item.uid)}
+                checked={checkedItems[item.id]}
+                onToggle={() => toggleCheckbox(item.id)}
                 onPress={() => handleShowDetails(item)}
               />
             )}
