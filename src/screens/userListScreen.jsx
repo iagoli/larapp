@@ -5,8 +5,8 @@ import UserItem from '../components/userItem';
 import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
 import styles from '../styles/usersListScreen_styles';
-import UserDetailsModal from '../components/userDetailsModal'
-import EditUserModal from '../components/editRoomModal'
+import UserDetailsModal from '../components/userDetailsModal';
+import EditUserModal from '../components/editRoomModal';
 
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
@@ -22,10 +22,13 @@ const UsersListScreen = () => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
-      const userList = snapshot.docs.map(doc => ({
-        id: doc.uid,
-        ...doc.data()
-      }));
+      const userList = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          ...data,
+          uid: data.uid || doc.id 
+        };
+      });
 
       setUsers(userList);
       setCheckedItems(Object.fromEntries(userList.map(user => [user.uid, false])));
@@ -34,8 +37,11 @@ const UsersListScreen = () => {
     return () => unsubscribe();
   }, []);
 
-  const toggleCheckbox = (id) => {
-    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+  const toggleCheckbox = (uid) => {
+    setCheckedItems(prev => ({
+      ...prev,
+      [uid]: !prev[uid],
+    }));
   };
 
   const handleShowDetails = (user) => {
@@ -44,9 +50,9 @@ const UsersListScreen = () => {
   };
 
   const handleEdit = () => {
-    const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
-    if (selectedId) {
-      const userToEdit = users.find(user => user.id === selectedId);
+    const selectedUid = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
+    if (selectedUid) {
+      const userToEdit = users.find(user => user.uid === selectedUid);
       if (userToEdit) {
         setSelectedUser(userToEdit);
         setShowEditModal(true);
@@ -55,12 +61,12 @@ const UsersListScreen = () => {
   };
 
   const handleDelete = async () => {
-    const idsToDelete = Object.entries(checkedItems)
+    const uidsToDelete = Object.entries(checkedItems)
       .filter(([_, checked]) => checked)
-      .map(([id]) => id);
+      .map(([uid]) => uid);
 
-    for (const id of idsToDelete) {
-      await deleteDoc(doc(db, 'users', id));
+    for (const uid of uidsToDelete) {
+      await deleteDoc(doc(db, 'users', uid));
     }
 
     setShowDeleteDialog(false);
@@ -81,12 +87,12 @@ const UsersListScreen = () => {
         <View style={styles.listSection}>
           <FlatList
             data={users}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.uid} 
             renderItem={({ item }) => (
               <UserItem
                 item={item}
-                checked={checkedItems[item.id]}
-                onToggle={() => toggleCheckbox(item.id)}
+                checked={checkedItems[item.uid]}
+                onToggle={() => toggleCheckbox(item.uid)}
                 onPress={() => handleShowDetails(item)}
               />
             )}
@@ -95,27 +101,23 @@ const UsersListScreen = () => {
           />
         </View>
 
-        {/* Modal de confirmação de exclusão */}
         <ConfirmDialog
           visible={showDeleteDialog}
           onCancel={() => setShowDeleteDialog(false)}
           onConfirm={handleDelete}
         />
 
-        {/* Modal de detalhes do usuário */}
         <UserDetailsModal
           visible={showDetailsModal}
           user={selectedUser}
           onClose={() => setShowDetailsModal(false)}
         />
 
-        {/* Modal de edição do usuário */}
         <EditUserModal
           visible={showEditModal}
           user={selectedUser}
           onClose={() => setShowEditModal(false)}
         />
-
       </View>
 
       <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
