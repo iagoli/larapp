@@ -13,7 +13,7 @@ const UtenteMedicacaoScreen = () => {
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
 
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; 
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD';
 
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -63,6 +63,8 @@ const UtenteMedicacaoScreen = () => {
           >
             {!isCompact && 'Agendar Medicação'}
           </Button>
+          
+          <IconButton icon="pencil" onPress={() => console.log('Editar')} />
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />
           <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>
