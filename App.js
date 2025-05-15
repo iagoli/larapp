@@ -83,10 +83,10 @@ export default function App() {
         {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
         {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
 
-        <UtenteObservacoesScreen></UtenteObservacoesScreen>
+        {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
         {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
 
-        {/* <UtenteRefeicoesScreen></UtenteRefeicoesScreen> */}
+        <UtenteRefeicoesScreen></UtenteRefeicoesScreen>
         {/* <CreateAlimentacoesScreen></CreateAlimentacoesScreen> */}
 
         <StatusBar style="auto" />

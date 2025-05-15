@@ -5,55 +5,78 @@ import styles from '../styles/utenteRefeicoesScreen_styles';
 import RefeicaoRow from '../components/refeicaoRow';
 import RefeicaoTableHeader from '../components/refeicaoTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
+import EditAlimentacaoModal from '../components/editAlimentacaoModal'; 
 
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 
 const UtenteRefeicoesScreen = () => {
   const [refeicoes, setRefeicoes] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // TEMP: substitua futuramente com ID dinâmico
+
+  const fetchRefeicoes = async () => {
+    try {
+      const q = query(collection(db, 'alimentacoes'), where('utenteId', '==', utenteId));
+      const snapshot = await getDocs(q);
+
+      const data = snapshot.docs.map(docRef => {
+        const item = docRef.data();
+        return {
+          id: docRef.id,
+          prato: item.prato || 'Sem prato',
+          dataHora: item.dataHora || '',
+          date: item.dataHora ? new Date(item.dataHora).toISOString().split('T')[0] : 'Sem data',
+        };
+      });
+
+      setRefeicoes(data);
+    } catch (err) {
+      console.error('Erro ao buscar refeições:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchRefeicoes();
+  }, []);
 
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // TEMP: swap with dynamic route param later
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD';
+  const handleDelete = async () => {
+    try {
+      const idsToDelete = Object.entries(selectedItems)
+        .filter(([_, isSelected]) => isSelected)
+        .map(([id]) => id);
 
-  useEffect(() => {
-    const fetchRefeicoes = async () => {
-      try {
-        console.log('🔍 Fetching for utenteId:', utenteId);
-
-        const q = query(collection(db, 'alimentacoes'), where('utenteId', '==', utenteId));
-        const snapshot = await getDocs(q);
-
-        console.log('📄 Docs found:', snapshot.docs.length);
-
-        const data = snapshot.docs.map(doc => {
-          const item = doc.data();
-          console.log('✅ Item:', item);
-
-          return {
-            id: doc.id,
-            prato: item.prato || 'Sem prato',
-            date: item.dataHora
-              ? new Date(item.dataHora).toISOString().split('T')[0]
-              : 'Sem data',
-          };
-        });
-
-        setRefeicoes(data);
-      } catch (err) {
-        console.error('❌ Erro ao buscar refeições:', err);
+      for (const id of idsToDelete) {
+        await deleteDoc(doc(db, 'alimentacoes', id));
       }
-    };
 
-    fetchRefeicoes();
-  }, []);
+      setSelectedItems({});
+      setShowDeleteDialog(false);
+      await fetchRefeicoes();
+    } catch (err) {
+      console.error('Erro ao deletar refeições:', err);
+    }
+  };
+
+  const openEditModal = () => {
+    const selectedId = Object.entries(selectedItems).find(([_, selected]) => selected)?.[0];
+
+    if (selectedId) {
+      const itemToEdit = refeicoes.find((r) => r.id === selectedId);
+      setEditingItem(itemToEdit);
+      setEditModalVisible(true);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -71,7 +94,7 @@ const UtenteRefeicoesScreen = () => {
             {!isCompact && 'Agendar Refeição'}
           </Button>
 
-          <IconButton icon="pencil" onPress={() => console.log('Editar')} />
+          <IconButton icon="pencil" onPress={openEditModal} />
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />
           <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>
@@ -95,12 +118,16 @@ const UtenteRefeicoesScreen = () => {
       <ConfirmDialog
         visible={showDeleteDialog}
         onDismiss={() => setShowDeleteDialog(false)}
-        onConfirm={() => {
-          console.log('Refeições removidas...');
-          setShowDeleteDialog(false);
-        }}
+        onConfirm={handleDelete}
         title="Confirmar Remoção"
         message="Tem a certeza que deseja remover os itens selecionados?"
+      />
+
+      <EditAlimentacaoModal
+        visible={editModalVisible}
+        alimentacao={editingItem}
+        onClose={() => setEditModalVisible(false)}
+        onSaved={fetchRefeicoes}
       />
     </View>
   );

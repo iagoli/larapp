@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, TextInput, Pressable } from 'react-native';
+import { Modal, View, Text, Pressable } from 'react-native';
 import styles from '../styles/editRoomModal_styles'; 
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
+import DateTimeInput from '../components/dateTimeInput';
+import TextInputField from '../components/textInputField';
+import Label from '../components/label';
 
 const EditAlimentacaoModal = ({ visible, alimentacao, onClose, onSaved }) => {
   const [prato, setPrato] = useState('');
-  const [dataHora, setDataHora] = useState('');
+  const [dataHora, setDataHora] = useState(new Date());
 
   useEffect(() => {
     if (alimentacao) {
       setPrato(alimentacao.prato || '');
-      setDataHora(alimentacao.dataHora || '');
+      setDataHora(alimentacao.dataHora ? new Date(alimentacao.dataHora) : new Date());
     }
   }, [alimentacao]);
 
@@ -21,7 +24,7 @@ const EditAlimentacaoModal = ({ visible, alimentacao, onClose, onSaved }) => {
     try {
       await updateDoc(doc(db, 'alimentacoes', alimentacao.id), {
         prato,
-        dataHora,
+        dataHora: dataHora.toISOString(),
       });
 
       onClose();
@@ -42,19 +45,15 @@ const EditAlimentacaoModal = ({ visible, alimentacao, onClose, onSaved }) => {
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Editar Alimentação</Text>
 
-          <Text style={styles.label}>Prato</Text>
-          <TextInput
+          <Label>Prato</Label>
+          <TextInputField
             value={prato}
             onChangeText={setPrato}
-            style={styles.input}
+            placeholder="Prato"
           />
 
-          <Text style={styles.label}>Data/Hora</Text>
-          <TextInput
-            value={dataHora}
-            onChangeText={setDataHora}
-            style={styles.input}
-          />
+          <Label style={{ marginTop: 16 }}>Data/Hora</Label>
+          <DateTimeInput value={dataHora} onChange={setDataHora} />
 
           <View style={styles.buttonRow}>
             <Pressable onPress={onClose} style={styles.cancelButton}>

@@ -18,7 +18,6 @@ const CreateAlimentacoesScreen = () => {
   const [prato, setPrato] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
 
-  // UtenteId temporário (vai ser substituído pela navegação mais tarde)
   const utenteId = 'UTENTE_TESTE_123'; // Temporary hardcoded ID
 
   const handleSave = async () => {
