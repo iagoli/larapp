@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
-import EditAlimentacaoModal from '../components/editAlimentacaoModal';
 import styles from '../styles/utenteDetailsScreen_styles';
 
 import { doc, getDoc } from 'firebase/firestore';
@@ -21,7 +20,6 @@ const UtenteDetailsScreen = () => {
   const [roomNumber, setRoomNumber] = useState('');
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
-  const [isEditAlimentacaoVisible, setIsEditAlimentacaoVisible] = useState(false);
   const [alimentacaoSelecionada, setAlimentacaoSelecionada] = useState(null);
 
   // ID temporário do utente 
@@ -54,21 +52,6 @@ const UtenteDetailsScreen = () => {
     fetchUtente();
   }, [utenteId]);
 
-  const handleEdit = (section) => {
-    if (section === 'Alimentação') {
-      // busca dados reais do Firestore
-      const exemplo = {
-        id: 'exemploId123',
-        prato: 'Sopa de legumes',
-        dataHora: '2024-05-01T12:00:00',
-      };
-
-      setAlimentacaoSelecionada(exemplo);
-      setIsEditAlimentacaoVisible(true);
-    }
-
-    // Futuras seções 
-  };
 
   return (
     <ScrollView style={styles.container}>
@@ -89,16 +72,7 @@ const UtenteDetailsScreen = () => {
           onPress={() => console.log('Card pressed')}
         />
       ))}
-
-      <EditAlimentacaoModal
-        visible={isEditAlimentacaoVisible}
-        alimentacao={alimentacaoSelecionada}
-        onClose={() => setIsEditAlimentacaoVisible(false)}
-        onSaved={() => {
-          setIsEditAlimentacaoVisible(false);
-          console.log('Alimentação atualizada');
-        }}
-      />
+      
     </ScrollView>
   );
 };
