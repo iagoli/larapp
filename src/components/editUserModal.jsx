@@ -1,61 +1,127 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TextInput, Pressable } from 'react-native';
-import { updateDoc, doc } from 'firebase/firestore';
+import { Picker } from '@react-native-picker/picker';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
+import styles from '../styles/editRoomModal_styles'; // Reutiliza os estilos
 
-const EditUserModal = ({ visible, user, onClose }) => {
+const EditUserModal = ({ visible, user, onClose, onSaved }) => {
   const [nome, setNome] = useState('');
-  const [quarto, setQuarto] = useState('');
+  const [email, setEmail] = useState('');
+  const [telemovel, setTelemovel] = useState('');
+  const [morada, setMorada] = useState('');
   const [idade, setIdade] = useState('');
+  const [tipoUsuario, setTipoUsuario] = useState('');
 
   useEffect(() => {
     if (user) {
       setNome(user.nome || '');
-      setQuarto(user.quarto || '');
+      setEmail(user.email || '');
+      setTelemovel(user.telemovel || '');
+      setMorada(user.morada || '');
       setIdade(String(user.idade || ''));
+      setTipoUsuario(user.tipoUsuario || '');
     }
   }, [user]);
 
   const handleSave = async () => {
-    if (!user?.uid) return;
+    if (!user?.id) return;
 
-    const userRef = doc(db, 'users', user.id);
-    await updateDoc(userRef, {
-      nome,
-      quarto,
-      idade: Number(idade),
-    });
+    try {
+      await updateDoc(doc(db, 'users', user.id), {
+        nome,
+        email,
+        telemovel,
+        morada,
+        idade: Number(idade),
+        tipoUsuario,
+      });
 
-    onClose(); 
+      onClose();
+      if (onSaved) onSaved();
+    } catch (error) {
+      console.error('Erro ao salvar as alterações:', error);
+    }
   };
 
   return (
-    <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 10, width: '80%' }}>
-          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Editar Utilizador</Text>
+    <Modal
+      animationType="slide"
+      transparent
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <View style={styles.overlay}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.title}>Editar Utilizador</Text>
 
-          <Text> Nome:</Text>
-          <TextInput value={nome} onChangeText={setNome} style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }} />
+          <Text style={styles.label}>Nome</Text>
+          <TextInput
+            value={nome}
+            onChangeText={setNome}
+            placeholder="Nome completo"
+            style={styles.input}
+          />
 
-          <Text> Quarto:</Text>
-          <TextInput value={quarto} onChangeText={setQuarto} style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }} />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="email@exemplo.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={styles.input}
+          />
 
-          <Text> Idade:</Text>
+          <Text style={styles.label}>Telemóvel</Text>
+          <TextInput
+            value={telemovel}
+            onChangeText={setTelemovel}
+            placeholder="Telefone"
+            keyboardType="phone-pad"
+            style={styles.input}
+          />
+
+          <Text style={styles.label}>Morada</Text>
+          <TextInput
+            value={morada}
+            onChangeText={setMorada}
+            placeholder="Rua, cidade..."
+            style={styles.input}
+          />
+
+          <Text style={styles.label}>Idade</Text>
           <TextInput
             value={idade}
             onChangeText={setIdade}
             keyboardType="numeric"
-            style={{ borderBottomWidth: 1, marginBottom: 20, padding: 5}}
+            placeholder="Idade"
+            style={styles.input}
           />
 
-          <Pressable onPress={handleSave} style={{ backgroundColor: '#5e3b7f', padding: 10, borderRadius: 5 }}>
-            <Text style={{ color: '#fff', textAlign: 'center' }}>Salvar</Text>
-          </Pressable>
+          <Text style={styles.label}>Tipo de Usuário</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={tipoUsuario}
+              onValueChange={(itemValue) => setTipoUsuario(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Selecione uma opção" value="" />
+              <Picker.Item label="Administrador" value="admin" />
+              <Picker.Item label="Enfermeiro" value="enfermeiro" />
+              <Picker.Item label="Utente" value="utente" />
+            </Picker>
+          </View>
 
-          <Pressable onPress={onClose} style={{ marginTop: 10 }}>
-            <Text style={{ color: '#5e3b7f', textAlign: 'center' }}>Cancelar</Text>
-          </Pressable>
+          <View style={styles.buttonRow}>
+            <Pressable onPress={onClose} style={styles.cancelButton}>
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </Pressable>
+
+            <Pressable onPress={handleSave} style={styles.saveButton}>
+              <Text style={styles.buttonText}>Salvar</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </Modal>

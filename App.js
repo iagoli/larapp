@@ -69,8 +69,8 @@ export default function App() {
         {/* <UtentesListScreen></UtentesListScreen> */}
         {/* <CreateUtente></CreateUtente> */}
 
-        {/* <UsersListScreen></UsersListScreen> */}
-        <CreateUserScreen></CreateUserScreen>
+        <UsersListScreen></UsersListScreen>
+        {/* <CreateUserScreen></CreateUserScreen> */}
 
         {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}
 

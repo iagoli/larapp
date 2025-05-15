@@ -19,19 +19,30 @@ const UserDetailsModal = ({ visible, user, onClose }) => {
           backgroundColor: '#fff',
           padding: 20,
           borderRadius: 10,
-          width: '80%'
+          width: '85%'
         }}>
           {user && (
             <>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Informações</Text>
-              <Text> Nome: {user.nome}</Text>
-              <Text> Quarto: {user.quarto}</Text>
-              <Text> Idade: {user.idade}</Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>
+                Informações do Utilizador
+              </Text>
+              <Text>Nome: {user.nome || 'N/A'}</Text>
+              <Text>Idade: {user.idade || 'N/A'}</Text>
+              <Text>Email: {user.email || 'N/A'}</Text>
+              <Text>Telemóvel: {user.telemovel || 'N/A'}</Text>
+              <Text>Morada: {user.morada || 'N/A'}</Text>
+              <Text>Tipo de Usuário: {user.tipoUsuario || 'N/A'}</Text>
+              <Text>Utente Associado: {user.utenteId || 'N/A'}</Text>
             </>
           )}
 
           <Pressable
-            style={{ marginTop: 20, backgroundColor: '#5e3b7f', padding: 10, borderRadius: 5 }}
+            style={{
+              marginTop: 20,
+              backgroundColor: '#5e3b7f',
+              padding: 10,
+              borderRadius: 5
+            }}
             onPress={onClose}
           >
             <Text style={{ color: '#fff', textAlign: 'center' }}>Fechar</Text>
