@@ -15,8 +15,9 @@ const RoomDetailsModal = ({ visible, room, onClose }) => {
           {room && (
             <>
               <Text style={styles.title}>Detalhes do Quarto</Text>
-              <Text style={styles.text}> Número: {room.number}</Text>
-              <Text style={styles.text}> Disponibilidade: {room.availability}</Text>
+              <Text style={styles.text}>Número: {room.numero}</Text>
+              <Text style={styles.text}>Disponibilidade: {room.disponibilidade}</Text>
+              <Text style={styles.text}>Camas: {room.camas}</Text>
             </>
           )}
 

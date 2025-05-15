@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TextInput, Pressable } from 'react-native';
+import { Picker } from '@react-native-picker/picker'; 
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
-import styles from '../styles/editRoomModal_styles'; 
+import styles from '../styles/editRoomModal_styles';
 
 const EditRoomModal = ({ visible, room, onClose, onSaved }) => {
-  const [number, setNumber] = useState('');
-  const [availability, setAvailability] = useState('');
+  const [numero, setNumero] = useState('');
+  const [disponibilidade, setDisponibilidade] = useState('');
+  const [camas, setCamas] = useState('');
 
   useEffect(() => {
     if (room) {
-      setNumber(room.number || '');
-      setAvailability(room.availability || '');
+      setNumero(room.numero || '');
+      setDisponibilidade(room.disponibilidade || '');
+      setCamas(room.camas || '');
     }
   }, [room]);
 
@@ -20,12 +23,13 @@ const EditRoomModal = ({ visible, room, onClose, onSaved }) => {
 
     try {
       await updateDoc(doc(db, 'rooms', room.id), {
-        number,
-        availability,
+        numero,
+        disponibilidade,
+        camas,
       });
 
       onClose();
-      if (onSaved) onSaved(); 
+      if (onSaved) onSaved();
     } catch (error) {
       console.error('Erro ao salvar as alterações:', error);
     }
@@ -44,19 +48,34 @@ const EditRoomModal = ({ visible, room, onClose, onSaved }) => {
 
           <Text style={styles.label}>Número do Quarto</Text>
           <TextInput
-            value={number}
-            onChangeText={setNumber}
+            value={numero}
+            onChangeText={setNumero}
             placeholder="Ex: 101"
             style={styles.input}
           />
 
-          <Text style={styles.label}>Disponibilidade</Text>
+          <Text style={styles.label}>Número de Camas</Text>
           <TextInput
-            value={availability}
-            onChangeText={setAvailability}
-            placeholder="Ex: disponível / ocupado"
+            value={camas}
+            onChangeText={setCamas}
+            placeholder="Ex: 3"
+            keyboardType="numeric"
             style={styles.input}
           />
+
+          <Text style={styles.label}>Disponibilidade</Text>
+          <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={disponibilidade}
+            onValueChange={(itemValue) => setAvailability(itemValue)}
+            style={styles.picker}
+          >
+            <Picker.Item label="Selecione uma opção" value="" />
+            <Picker.Item label="Disponível" value="disponivel" />
+            <Picker.Item label="Ocupado" value="ocupado" />
+            <Picker.Item label="Em Manutenção" value="manutencao" />
+          </Picker>
+        </View>
 
           <View style={styles.buttonRow}>
             <Pressable onPress={onClose} style={styles.cancelButton}>

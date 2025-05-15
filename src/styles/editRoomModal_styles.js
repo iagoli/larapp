@@ -28,6 +28,18 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 15,
   },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 15,
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    backgroundColor: '#f9f9f9',
+    color: '#333',
+  },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',

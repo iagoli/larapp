@@ -4,41 +4,33 @@ import Header from '../components/header';
 import RoomItem from '../components/roomItem';
 import ConfirmDialog from '../components/confirmDialog';
 import BottomTabBar from '../components/bottomTabBar';
-import styles from '../styles/roomsListScreen_styles';
 import RoomDetailsModal from '../components/roomDetailsModal';
+import EditRoomModal from '../components/editRoomModal';
+import styles from '../styles/roomsListScreen_styles';
 
 import { db } from '../../firebase.config';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
 const RoomsListScreen = () => {
   const [rooms, setRooms] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [showDetailsModal, setShowDetailsModal] = useState(false); 
-  const [selectedRoom, setSelectedRoom] = useState(null); 
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const [activeTab, setActiveTab] = useState('Quartos');
 
   useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const snapshot = await getDocs(collection(db, 'rooms'));
-        const firebaseRooms = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+    const unsubscribe = onSnapshot(collection(db, 'rooms'), (snapshot) => {
+      const roomList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setRooms(roomList);
+      setCheckedItems(Object.fromEntries(roomList.map(room => [room.id, false])));
+    });
 
-        setRooms(firebaseRooms);
-
-        const initialChecked = Object.fromEntries(
-          firebaseRooms.map(room => [room.id, false])
-        );
-        setCheckedItems(initialChecked);
-      } catch (error) {
-        console.error('Erro ao buscar quartos:', error);
-      }
-    };
-
-    fetchRooms();
+    return () => unsubscribe();
   }, []);
 
   const toggleCheckbox = (id) => {
@@ -46,8 +38,31 @@ const RoomsListScreen = () => {
   };
 
   const handleShowDetails = (room) => {
-    setSelectedRoom(room); 
-    setShowDetailsModal(true); 
+    setSelectedRoom(room);
+    setShowDetailsModal(true);
+  };
+
+  const handleEdit = () => {
+    const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
+    if (selectedId) {
+      const roomToEdit = rooms.find(room => room.id === selectedId);
+      if (roomToEdit) {
+        setSelectedRoom(roomToEdit);
+        setShowEditModal(true);
+      }
+    }
+  };
+
+  const handleDelete = async () => {
+    const idsToDelete = Object.entries(checkedItems)
+      .filter(([_, checked]) => checked)
+      .map(([id]) => id);
+
+    for (const id of idsToDelete) {
+      await deleteDoc(doc(db, 'rooms', id));
+    }
+
+    setShowDeleteDialog(false);
   };
 
   return (
@@ -56,7 +71,7 @@ const RoomsListScreen = () => {
         <View style={styles.headerSection}>
           <Header
             title="Quartos"
-            onEdit={() => console.log('Edit pressed')}
+            onEdit={handleEdit}
             onDelete={() => setShowDeleteDialog(true)}
             onAdd={() => console.log('Add pressed')}
           />
@@ -71,11 +86,11 @@ const RoomsListScreen = () => {
                 room={{
                   id: item.id,
                   number: item.numero || 'Sem número',
-                  availability: item.disponibilidade  || 'desconhecido'
+                  availability: item.disponibilidade || 'desconhecido'
                 }}
                 checked={checkedItems[item.id]}
-                onToggle={toggleCheckbox}
-                onPress={handleShowDetails} 
+                onToggle={() => toggleCheckbox(item.id)}
+                onPress={() => handleShowDetails(item)}
               />
             )}
             contentContainerStyle={styles.listContent}
@@ -86,19 +101,21 @@ const RoomsListScreen = () => {
         <ConfirmDialog
           visible={showDeleteDialog}
           onDismiss={() => setShowDeleteDialog(false)}
-          onConfirm={() => {
-            console.log('Deleting...');
-            setShowDeleteDialog(false);
-          }}
+          onConfirm={handleDelete}
           title="Confirmar remoção"
-          message="Tem a certeza que quer remover o item selecionado?"
+          message="Tem certeza que deseja apagar o(s) quarto(s) selecionado(s)?"
         />
 
-        {/* Modal de detalhes do quarto */}
         <RoomDetailsModal
           visible={showDetailsModal}
           room={selectedRoom}
           onClose={() => setShowDetailsModal(false)}
+        />
+
+        <EditRoomModal
+          visible={showEditModal}
+          room={selectedRoom}
+          onClose={() => setShowEditModal(false)}
         />
       </View>
 
