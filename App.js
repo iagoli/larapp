@@ -63,7 +63,7 @@ export default function App() {
         {/* <HomeScreen></HomeScreen> */}
         {/* <ChatScreen></ChatScreen>  */}
 
-        {/* <RoomsListScreen></RoomsListScreen> */}
+        <RoomsListScreen></RoomsListScreen>
         {/* <CreateQuarto></CreateQuarto> */}
 
         {/* <UtentesListScreen></UtentesListScreen> */}
@@ -86,7 +86,7 @@ export default function App() {
         {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
         {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
 
-        <UtenteRefeicoesScreen></UtenteRefeicoesScreen>
+        {/* <UtenteRefeicoesScreen></UtenteRefeicoesScreen> */}
         {/* <CreateAlimentacoesScreen></CreateAlimentacoesScreen> */}
 
         <StatusBar style="auto" />
