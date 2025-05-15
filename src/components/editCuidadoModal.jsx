@@ -23,7 +23,7 @@ const EditCuidadoModal = ({ visible, onClose, onSave, cuidado }) => {
       dataHora,
       descricao,
     });
-    onClose(); // fecha o modal após salvar
+    onClose(); 
   };
 
   return (

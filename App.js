@@ -77,8 +77,8 @@ export default function App() {
         {/* <UtenteAtividadeScreen></UtenteAtividadeScreen> */}
         {/* <CreateAtividadesScreen></CreateAtividadesScreen> */}
 
-        <UtenteCuidadosScreen></UtenteCuidadosScreen>
-        {/* <CreateCuidadosScreen></CreateCuidadosScreen> */}
+        {/* <UtenteCuidadosScreen></UtenteCuidadosScreen> */}
+        <CreateCuidadosScreen></CreateCuidadosScreen>
 
         {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
         {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
