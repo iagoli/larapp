@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
+import EditAlimentacaoModal from '../components/editAlimentacaoModal';
 import styles from '../styles/utenteDetailsScreen_styles';
 
 import { doc, getDoc } from 'firebase/firestore';
@@ -20,9 +21,11 @@ const UtenteDetailsScreen = () => {
   const [roomNumber, setRoomNumber] = useState('');
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
+  const [isEditAlimentacaoVisible, setIsEditAlimentacaoVisible] = useState(false);
+  const [alimentacaoSelecionada, setAlimentacaoSelecionada] = useState(null);
 
-  // Temporary constant utenteId (replace later with route.params.utenteId)
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // 
+  // ID temporário do utente 
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD';
 
   useEffect(() => {
     const fetchUtente = async () => {
@@ -51,6 +54,22 @@ const UtenteDetailsScreen = () => {
     fetchUtente();
   }, [utenteId]);
 
+  const handleEdit = (section) => {
+    if (section === 'Alimentação') {
+      // busca dados reais do Firestore
+      const exemplo = {
+        id: 'exemploId123',
+        prato: 'Sopa de legumes',
+        dataHora: '2024-05-01T12:00:00',
+      };
+
+      setAlimentacaoSelecionada(exemplo);
+      setIsEditAlimentacaoVisible(true);
+    }
+
+    // Futuras seções 
+  };
+
   return (
     <ScrollView style={styles.container}>
       <UtenteHeader
@@ -66,10 +85,20 @@ const UtenteDetailsScreen = () => {
           title={item.title}
           icon={item.icon}
           onAdd={() => console.log('Add', item.title)}
-          onEdit={() => console.log('Edit', item.title)}
+          onEdit={() => handleEdit(item.title)}
           onPress={() => console.log('Card pressed')}
         />
       ))}
+
+      <EditAlimentacaoModal
+        visible={isEditAlimentacaoVisible}
+        alimentacao={alimentacaoSelecionada}
+        onClose={() => setIsEditAlimentacaoVisible(false)}
+        onSaved={() => {
+          setIsEditAlimentacaoVisible(false);
+          console.log('Alimentação atualizada');
+        }}
+      />
     </ScrollView>
   );
 };
