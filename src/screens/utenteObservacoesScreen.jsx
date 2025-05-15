@@ -56,6 +56,8 @@ const UtenteObservacoesScreen = () => {
           >
             {!isCompact && 'Agendar Observação'}
           </Button>
+
+          <IconButton icon="pencil" onPress={() => console.log('Editar')} />
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />
           <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>

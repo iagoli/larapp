@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TextInput, Pressable } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; 
+import { Picker } from '@react-native-picker/picker';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 import styles from '../styles/editRoomModal_styles';
@@ -65,17 +65,17 @@ const EditRoomModal = ({ visible, room, onClose, onSaved }) => {
 
           <Text style={styles.label}>Disponibilidade</Text>
           <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={disponibilidade}
-            onValueChange={(itemValue) => setAvailability(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Selecione uma opção" value="" />
-            <Picker.Item label="Disponível" value="disponivel" />
-            <Picker.Item label="Ocupado" value="ocupado" />
-            <Picker.Item label="Em Manutenção" value="manutencao" />
-          </Picker>
-        </View>
+            <Picker
+              selectedValue={disponibilidade}
+              onValueChange={(itemValue) => setDisponibilidade(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Selecione uma opção" value="" />
+              <Picker.Item label="Disponível" value="disponivel" />
+              <Picker.Item label="Ocupado" value="ocupado" />
+              <Picker.Item label="Em Manutenção" value="manutencao" />
+            </Picker>
+          </View>
 
           <View style={styles.buttonRow}>
             <Pressable onPress={onClose} style={styles.cancelButton}>
