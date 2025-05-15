@@ -5,17 +5,27 @@ import styles from '../styles/utenteObservacoesScreen_styles';
 import ConfirmDialog from '../components/confirmDialog';
 import ObservacaoTableHeader from '../components/observacaoTableHeader';
 import ObservacaoRow from '../components/observacaoRow';
+import EditObservacaoModal from '../components/editObservacaoModal';
 
 import { db } from '../../firebase.config';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc
+} from 'firebase/firestore';
 
 const UtenteObservacoesScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [observacoes, setObservacoes] = useState([]);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [observacaoSelecionada, setObservacaoSelecionada] = useState(null);
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
-
   const utenteId = 'LTfg1FuEmt0qrTspXFrD';
 
   const toggleCheckbox = (id) => {
@@ -29,22 +39,58 @@ const UtenteObservacoesScreen = () => {
         const snapshot = await getDocs(q);
         const fetched = snapshot.docs.map(doc => ({
           id: doc.id,
-          descricao: doc.data().descricao || 'Sem descrição',
+          descricao: doc.data().descricao || 'Sem descricao',
+          dataHora: doc.data().dataHora || '',
           date: doc.data().dataHora ? doc.data().dataHora.split('T')[0] : 'Sem data',
         }));
         setObservacoes(fetched);
       } catch (error) {
-        console.error('Erro ao buscar observações:', error);
+        console.error('Erro ao buscar observacoes:', error);
       }
     };
-
     fetchObservacoes();
   }, []);
+
+  const handleEditPress = () => {
+    const selectedId = Object.keys(selectedItems).find(id => selectedItems[id]);
+    if (selectedId) {
+      const obs = observacoes.find(o => o.id === selectedId);
+      setObservacaoSelecionada(obs);
+      setShowEditModal(true);
+    }
+  };
+
+  const handleSaveEdicao = async (updatedObs) => {
+    try {
+      await updateDoc(doc(db, 'observacoes', updatedObs.id), {
+        descricao: updatedObs.descricao,
+        dataHora: updatedObs.dataHora.toISOString(),
+      });
+      setObservacoes(prev =>
+        prev.map(o => (o.id === updatedObs.id ? { ...o, ...updatedObs } : o))
+      );
+    } catch (error) {
+      console.error('Erro ao atualizar:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const idsToDelete = Object.keys(selectedItems).filter(id => selectedItems[id]);
+      for (const id of idsToDelete) {
+        await deleteDoc(doc(db, 'observacoes', id));
+      }
+      setObservacoes(prev => prev.filter(o => !idsToDelete.includes(o.id)));
+      setSelectedItems({});
+    } catch (error) {
+      console.error('Erro ao deletar:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Text style={styles.title}>Utente Observações</Text>
+        <Text style={styles.title}>Utente Observacoes</Text>
 
         <View style={styles.header}>
           <Avatar.Icon icon="account" size={48} style={styles.avatar} />
@@ -52,12 +98,12 @@ const UtenteObservacoesScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar Observação')}
+            onPress={() => console.log('Agendar Observacao')}
           >
-            {!isCompact && 'Agendar Observação'}
+            {!isCompact && 'Agendar Observacao'}
           </Button>
 
-          <IconButton icon="pencil" onPress={() => console.log('Editar')} />
+          <IconButton icon="pencil" onPress={handleEditPress} />
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />
           <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>
@@ -78,11 +124,18 @@ const UtenteObservacoesScreen = () => {
         visible={showDeleteDialog}
         onDismiss={() => setShowDeleteDialog(false)}
         onConfirm={() => {
-          console.log('Observações removidas...');
+          handleDelete();
           setShowDeleteDialog(false);
         }}
-        title="Confirmar Remoção"
+        title="Confirmar Remocao"
         message="Tem a certeza que deseja remover os itens selecionados?"
+      />
+
+      <EditObservacaoModal
+        visible={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSave={handleSaveEdicao}
+        observacao={observacaoSelecionada}
       />
     </View>
   );

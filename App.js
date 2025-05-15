@@ -80,10 +80,10 @@ export default function App() {
         {/* <UtenteCuidadosScreen></UtenteCuidadosScreen> */}
         {/* <CreateCuidadosScreen></CreateCuidadosScreen> */}
 
-        <UtenteMedicacaoScreen></UtenteMedicacaoScreen>
+        {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
         {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
 
-        {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
+        <UtenteObservacoesScreen></UtenteObservacoesScreen>
         {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
 
         {/* <UtenteRefeicoesScreen></UtenteRefeicoesScreen> */}
