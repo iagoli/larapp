@@ -14,7 +14,7 @@ import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
 
 const CreateObservacoesScreen = () => {
-  const utenteId = 'UTENTE_TESTE_123'; // Temporary hardcoded ID
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // Temporary hardcoded ID
 
   const [dataHora, setDataHora] = useState(new Date());
   const [descricao, setDescricao] = useState('');

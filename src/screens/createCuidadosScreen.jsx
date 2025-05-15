@@ -13,7 +13,7 @@ import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
 
 const CreateCuidadosScreen = () => {
-  const utenteId = 'UTENTE_TESTE_123'; // valor fixo temporário
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // valor fixo temporário
 
   const [acao, setAcao] = useState('');
   const [dataHora, setDataHora] = useState(new Date());

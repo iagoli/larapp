@@ -13,7 +13,7 @@ import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
 
 const CreateAtividadesScreen = () => {
-  const utenteId = 'UTENTE_TESTE_123'; // temporary hardcoded value
+  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // temporary hardcoded value
 
   const [atividade, setAtividade] = useState('');
   const [dataHora, setDataHora] = useState(new Date()); 
