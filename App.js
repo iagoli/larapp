@@ -66,13 +66,13 @@ export default function App() {
         {/* <RoomsListScreen></RoomsListScreen> */}
         {/* <CreateQuarto></CreateQuarto> */}
 
-        {/* <UtentesListScreen></UtentesListScreen> */}
+        <UtentesListScreen></UtentesListScreen>
         {/* <CreateUtente></CreateUtente> */}
 
-        <UsersListScreen></UsersListScreen>
+        {/* <UsersListScreen></UsersListScreen> */}
         {/* <CreateUserScreen></CreateUserScreen> */}
 
-        <UtenteDetailsScreen></UtenteDetailsScreen>
+        {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}
 
         {/* <UtenteAtividadeScreen></UtenteAtividadeScreen> */}
         {/* <CreateAtividadesScreen></CreateAtividadesScreen> */}
