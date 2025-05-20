@@ -57,4 +57,20 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  userInfo: {
+    marginLeft: 12,
+    flex: 1,
+  },
+  userName: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#3a2d4d',
+    marginBottom: 2,
+  },
+
+  userAge: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#3a2d4d',
+  },
 });

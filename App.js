@@ -67,7 +67,7 @@ export default function App() {
         {/* <CreateQuarto></CreateQuarto> */}
 
         {/* <UtentesListScreen></UtentesListScreen> */}
-        {/* <CreateUtente></CreateUtente> */}
+        <CreateUtente></CreateUtente>
 
         {/* <UsersListScreen></UsersListScreen> */}
         {/* <CreateUserScreen></CreateUserScreen> */}
