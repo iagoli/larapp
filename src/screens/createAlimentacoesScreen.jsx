@@ -18,8 +18,6 @@ const CreateAlimentacoesScreen = () => {
   const [prato, setPrato] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
 
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // Temporary hardcoded ID
-
   const handleSave = async () => {
     const auth = getAuth(app);
     const user = auth.currentUser;

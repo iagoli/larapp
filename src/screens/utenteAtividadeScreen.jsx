@@ -27,7 +27,6 @@ const UtenteAtividadeScreen = () => {
   const isCompact = screenWidth < 360;
   const [atividades, setAtividades] = useState([]);
 
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; 
 
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));

@@ -13,7 +13,6 @@ import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
 
 const CreateMedicacaoScreen = () => {
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; // Temporary hardcoded ID
 
   const [medicamento, setMedicamento] = useState('');
   const [dataHora, setDataHora] = useState(new Date()); 

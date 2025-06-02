@@ -22,8 +22,6 @@ const UtenteDetailsScreen = () => {
   const [idade, setIdade] = useState('');
   const [alimentacaoSelecionada, setAlimentacaoSelecionada] = useState(null);
 
-  // ID temporário do utente 
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD';
 
   useEffect(() => {
     const fetchUtente = async () => {

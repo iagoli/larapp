@@ -28,7 +28,6 @@ const UtenteCuidadosScreen = () => {
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
 
-  const utenteId = 'LTfg1FuEmt0qrTspXFrD'; 
 
   const fetchCuidados = async () => {
     try {
