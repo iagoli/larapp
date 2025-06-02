@@ -7,11 +7,9 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 
 const LoginScreen = () => {
 
-  // Estados para armazenar os valores dos inputs
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  // Função que será chamada quando o botão Login for pressionado
   const handleLogin = async () => {
     try {
       const auth = getAuth(app);
@@ -27,7 +25,6 @@ const LoginScreen = () => {
     }
   };
 
-  // Função para o botão "Esqueci a senha"
   const handleForgotPassword = async () => {
     if (!email) {
       alert('Por favor, insira seu email para redefinir a senha.');
