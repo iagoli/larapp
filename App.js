@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppStyles from './src/styles/app_styles';
 import LoginScreen from './src/screens/loginScreen';
-import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './src/screens/homeScreen';
 import MenuScreen from './src/screens/homePageNavegation';
 import CreateUserScreen from './src/screens/createUserScreen';
@@ -29,6 +30,9 @@ import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { useEffect } from 'react';
 import { app } from './firebase.config';
 
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
 
   useEffect(() => {
@@ -52,45 +56,38 @@ export default function App() {
   return (
 
     <PaperProvider>
+      <NavigationContainer>
 
-      <View style={AppStyles.container}>
+              {/* Para comentar vscode, CTRL K +  C */}
+              {/* Para descomentar CTRL K + CTRL U */}
 
-        {/* Para comentar vscode, CTRL K +  C */}
-        {/* Para descomentar CTRL K + CTRL U */}
-
-        {/* <LoginScreen></LoginScreen> */}
-        {/* <LoadingScreen></LoadingScreen> */}
-        {/* <HomeScreen></HomeScreen> */}
-        {/* <ChatScreen></ChatScreen>  */}
-
-        {/* <RoomsListScreen></RoomsListScreen> */}
-        {/* <CreateQuarto></CreateQuarto> */}
-
-        {/* <UtentesListScreen></UtentesListScreen> */}
-        <CreateUtente></CreateUtente>
-
-        {/* <UsersListScreen></UsersListScreen> */}
-        {/* <CreateUserScreen></CreateUserScreen> */}
-
-        {/* <UtenteDetailsScreen></UtenteDetailsScreen> */}
-
-        {/* <UtenteAtividadeScreen></UtenteAtividadeScreen> */}
-        {/* <CreateAtividadesScreen></CreateAtividadesScreen> */}
-
-        {/* <UtenteCuidadosScreen></UtenteCuidadosScreen> */}
-        {/* <CreateCuidadosScreen></CreateCuidadosScreen> */}
-
-        {/* <UtenteMedicacaoScreen></UtenteMedicacaoScreen> */}
-        {/* <CreateMedicacaoScreen></CreateMedicacaoScreen> */}
-
-        {/* <UtenteObservacoesScreen></UtenteObservacoesScreen> */}
-        {/* <CreateObservacoesScreen></CreateObservacoesScreen> */}
-
-        <UtenteRefeicoesScreen></UtenteRefeicoesScreen>
-        {/* <CreateAlimentacoesScreen></CreateAlimentacoesScreen> */}
+        <Stack.Navigator initialRouteName="Login">
+          {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
+          {/* <Stack.Screen name="Loading" component={LoadingScreen} /> */}
+          {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+          {/* <Stack.Screen name="Menu" component={MenuScreen} /> */}
+          {/* <Stack.Screen name="CreateUser" component={CreateUserScreen} /> */}
+          {/* <Stack.Screen name="CreateUtente" component={CreateUtente} /> */}
+          {/* <Stack.Screen name="CreateQuarto" component={CreateQuarto} /> */}
+          {/* <Stack.Screen name="UtentesList" component={UtentesListScreen} /> */}
+          {/* <Stack.Screen name="RoomsList" component={RoomsListScreen} /> */}
+          {/* <Stack.Screen name="CreateMedicacao" component={CreateMedicacaoScreen} /> */}
+          {/* <Stack.Screen name="CreateAtividade" component={CreateAtividadesScreen} /> */}
+          {/* <Stack.Screen name="CreateCuidados" component={CreateCuidadosScreen} /> */}
+          {/* <Stack.Screen name="CreateObservacoes" component={CreateObservacoesScreen} /> */}
+          {/* <Stack.Screen name="CreateAlimentacoes" component={CreateAlimentacoesScreen} /> */}
+          {/* <Stack.Screen name="UtenteDetails" component={UtenteDetailsScreen} /> */}
+          {/* <Stack.Screen name="UtenteMedicacao" component={UtenteMedicacaoScreen} /> */}
+          {/* <Stack.Screen name="UtenteAtividade" component={UtenteAtividadeScreen} /> */}
+          {/* <Stack.Screen name="Chat" component={ChatScreen} /> */}
+          {/* <Stack.Screen name="UsersList" component={UsersListScreen} /> */}
+          {/* <Stack.Screen name="UtenteObservacoes" component={UtenteObservacoesScreen} /> */}
+          {/* <Stack.Screen name="UtenteRefeicoes" component={UtenteRefeicoesScreen} /> */}
+          {/* <Stack.Screen name="UtenteCuidados" component={UtenteCuidadosScreen} /> */}
+        </Stack.Navigator>
 
         <StatusBar style="auto" />
-      </View>
+      </NavigationContainer>
     </PaperProvider>
   );
-};
+}

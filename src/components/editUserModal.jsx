@@ -3,7 +3,7 @@ import { Modal, View, Text, TextInput, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
-import styles from '../styles/editRoomModal_styles'; // Reutiliza os estilos
+import styles from '../styles/editRoomModal_styles'; 
 
 const EditUserModal = ({ visible, user, onClose, onSaved }) => {
   const [nome, setNome] = useState('');
