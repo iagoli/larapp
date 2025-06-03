@@ -11,7 +11,7 @@ import CreateUtente from '../screens/createUtente';
 import UsersListScreen from '../screens/userListScreen';
 import CreateUserScreen from '../screens/createUserScreen'
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen';
-
+  
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {

@@ -8,6 +8,9 @@ import RoomsListScreen from '../screens/roomsListScreen';
 import UtentesListScreen from '../screens/utentesListScreen';
 import UsersListScreen from '../screens/userListScreen';
 import CustomDrawer from '../components/customDrawer';
+import ChannelListScreen from '../screens/channelListScreen';
+import ChatScreen from '../screens/chatScreen';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -21,6 +24,8 @@ const AppDrawer = () => {
       <Drawer.Screen name="Quartos" component={RoomsListScreen} />
       <Drawer.Screen name="Utentes" component={UtentesListScreen} />
       <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
+      <Drawer.Screen name="Canais de Chat" component={ChannelListScreen} />
+      <Drawer.Screen name="Chat" component={ChatScreen} />
     </Drawer.Navigator>
   );
 };

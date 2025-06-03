@@ -2,6 +2,8 @@ import React, { createContext, useEffect, useState, useContext } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { app, db } from '../../firebase.config';
+import { StreamChat } from 'stream-chat';
+const chatClient = StreamChat.getInstance('1392612');
 
 const AuthContext = createContext();
 
@@ -60,5 +62,14 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+await chatClient.connectUser(
+  {
+    id: user.uid,
+    name: user.displayName,
+    image: user.photoURL,
+  },
+  'SEU_CHAT_TOKEN' // gerado no backend
+);
 
 export const useAuth = () => useContext(AuthContext);
