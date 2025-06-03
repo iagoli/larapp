@@ -5,8 +5,8 @@ import MenuScreen from '../screens/homePageNavegation';
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen';
 import ChatScreen from '../screens/chatScreen';
 import RoomsListScreen from '../screens/roomsListScreen';
-import UtentesListScreen from '../screens/utentesListScreen';
-import UsersListScreen from '../screens/userListScreen';
+import UtentesListScreen from '../screens/utentesListScreen'
+import UsersListScreen from '../screens/userListScreen'
 import CustomDrawer from '../components/customDrawer';
 import ChannelListScreen from '../screens/channelListScreen';
 import ChatScreen from '../screens/chatScreen';
