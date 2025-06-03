@@ -24,7 +24,6 @@ const AppDrawer = () => {
       <Drawer.Screen name="Utentes" component={UtentesListScreen} />
       <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
       <Drawer.Screen name="Canais de Chat" component={ChannelListScreen} />
-      <Drawer.Screen name="Chat" component={ChatScreen} />
     </Drawer.Navigator>
   );
 };

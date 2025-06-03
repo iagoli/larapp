@@ -10,7 +10,7 @@ import { OverlayProvider, Chat } from 'stream-chat-expo';
 import AppNavigator from './src/navigation/AppNavigator';
 import { AuthProvider } from './src/contexts/AuthContext';
 
-const API_KEY = '1392612'; 
+const API_KEY = '69ssgm79wbf6'; 
 const chatClient = StreamChat.getInstance(API_KEY);
 
 export default function App() {

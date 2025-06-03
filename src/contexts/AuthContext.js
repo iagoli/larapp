@@ -3,8 +3,9 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { app, db } from '../../firebase.config';
 import { StreamChat } from 'stream-chat';
-const chatClient = StreamChat.getInstance('1392612');
+import { fetchChatToken } from '../services/chatTokenService'; 
 
+const chatClient = StreamChat.getInstance('69ssgm79wbf6'); 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -19,24 +20,47 @@ export const AuthProvider = ({ children }) => {
         try {
           console.log('Logged in UID:', firebaseUser.uid);
 
-          // Query the "users" collection for matching UID
+          // 🔍 Buscar o documento do usuário no Firestore
+          
           const q = query(collection(db, 'users'), where('uid', '==', firebaseUser.uid));
           const querySnapshot = await getDocs(q);
 
           if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
-            console.log('User found in Firestore:', userDoc.data());
-            setUser({ uid: firebaseUser.uid, ...userDoc.data() });
+            const userData = userDoc.data();
+            console.log('User found in Firestore:', userData);
+
+            const completeUser = { uid: firebaseUser.uid, ...userData };
+            setUser(completeUser);
+
+            try {
+
+              // 🔑 Buscar o token no backend para autenticar com o Stream Chat
+              const token = await fetchChatToken(firebaseUser.uid);
+
+              await chatClient.connectUser(
+                {
+                  id: firebaseUser.uid,
+                  name: userData.displayName ?? 'Usuário',
+                  image: userData.photoURL ?? undefined,
+                },
+                token
+              );
+
+              console.log('Usuário conectado ao chat Stream');
+            } catch (chatError) {
+              console.error('Erro ao conectar ao chat:', chatError);
+            }
           } else {
             console.warn('No user document found in Firestore.');
             setUser(null);
           }
         } catch (error) {
-          console.error('Error fetching user from Firestore:', error);
+          console.error('Erro ao buscar usuário no Firestore:', error);
           setUser(null);
         }
       } else {
-        console.log('No user is logged in.');
+        console.log('Nenhum usuário logado.');
         setUser(null);
       }
 
@@ -62,14 +86,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-await chatClient.connectUser(
-  {
-    id: user.uid,
-    name: user.displayName,
-    image: user.photoURL,
-  },
-  'SEU_CHAT_TOKEN' // gerado no backend
-);
 
 export const useAuth = () => useContext(AuthContext);
