@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
-import { useRoute } from '@react-navigation/native';
+import { useAuth } from '../contexts/AuthContext';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -16,16 +16,20 @@ const data = [
   { id: 5, title: 'Observações', icon: 'comment-text-outline' },
 ];
 
-const UtenteDetailsScreen = ({navigation}) => {
+const UtenteDetailsScreen = () => {
+  const { user } = useAuth();
+  const utenteId = user?.utenteId;
+  const role = user?.role;
+
   const [selectedTab, setSelectedTab] = useState('quarto');
   const [roomNumber, setRoomNumber] = useState('');
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
-  const [alimentacaoSelecionada, setAlimentacaoSelecionada] = useState(null);
-  const { utenteId } = useRoute().params;
 
   useEffect(() => {
     const fetchUtente = async () => {
+      if (!utenteId) return;
+
       try {
         const docRef = doc(db, 'utentes', utenteId);
         const docSnap = await getDoc(docRef);
@@ -51,6 +55,9 @@ const UtenteDetailsScreen = ({navigation}) => {
     fetchUtente();
   }, [utenteId]);
 
+  const handleEdit = (title) => {
+    console.log('Editando:', title);
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -66,13 +73,11 @@ const UtenteDetailsScreen = ({navigation}) => {
           key={item.id}
           title={item.title}
           icon={item.icon}
-          onAdd={() => console.log('Add', item.title)}
-          onEdit={() => handleEdit(item.title)}
+          onAdd={role !== 'utente' ? () => console.log('Add', item.title) : null}
+          onEdit={role !== 'utente' ? () => handleEdit(item.title) : null}
           onPress={() => console.log('Card pressed')}
-          
         />
       ))}
-      
     </ScrollView>
   );
 };
