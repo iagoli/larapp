@@ -3,8 +3,8 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { app, db } from '../../firebase.config';
 import { StreamChat } from 'stream-chat';
-const chatClient = StreamChat.getInstance('1392612');
 
+const chatClient = StreamChat.getInstance('1392612');
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -19,14 +19,21 @@ export const AuthProvider = ({ children }) => {
         try {
           console.log('Logged in UID:', firebaseUser.uid);
 
-          // Query the "users" collection for matching UID
           const q = query(collection(db, 'users'), where('uid', '==', firebaseUser.uid));
           const querySnapshot = await getDocs(q);
 
           if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
-            console.log('User found in Firestore:', userDoc.data());
-            setUser({ uid: firebaseUser.uid, ...userDoc.data() });
+            const data = userDoc.data();
+
+            console.log('User found in Firestore:', data);
+
+            
+            setUser({
+              uid: firebaseUser.uid,
+              ...data,
+              role: data.tipoUsuario, 
+            });
           } else {
             console.warn('No user document found in Firestore.');
             setUser(null);
@@ -62,14 +69,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-await chatClient.connectUser(
-  {
-    id: user.uid,
-    name: user.displayName,
-    image: user.photoURL,
-  },
-  'SEU_CHAT_TOKEN' // gerado no backend
-);
 
 export const useAuth = () => useContext(AuthContext);
