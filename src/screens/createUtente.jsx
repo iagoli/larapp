@@ -16,7 +16,7 @@ import { app } from '../../firebase.config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as uuid from 'uuid';
 
-const CreateUtente = () => {
+const CreateUtente = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [quarto, setQuarto] = useState('');
   const [idade, setIdade] = useState('');
@@ -103,7 +103,7 @@ const CreateUtente = () => {
     }
   };
 
-  const handleBack = () => console.log('Voltar');
+  const handleBack = () => navigation.goBack();
   const handleMenu = () => console.log('Mais opções');
 
   return (

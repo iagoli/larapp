@@ -11,7 +11,7 @@ import EditUserModal from '../components/editUserModal';
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
-const UsersListScreen = () => {
+const UsersListScreen = ({navigation}) => {
   const [users, setUsers] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -77,7 +77,7 @@ const UsersListScreen = () => {
             title="Utilizadores"
             onEdit={handleEdit}
             onDelete={() => setShowDeleteDialog(true)}
-            onAdd={() => console.log('Add')}
+            onAdd={() => navigation.navigate('CreateUserScreen')}
           />
         </View>
 

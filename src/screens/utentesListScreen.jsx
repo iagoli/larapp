@@ -7,11 +7,10 @@ import BottomTabBar from '../components/bottomTabBar';
 import UtenteDetailsModal from '../components/utenteDetailsModal'; 
 import EditUtenteModal from '../components/editUtenteModal';      
 import styles from '../styles/utentesListScreen_styles';
-
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
-const UtentesListScreen = () => {
+const UtentesListScreen = ({ navigation }) => {
   const [utentes, setUtentes] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -74,7 +73,7 @@ const UtentesListScreen = () => {
             title="Utentes"
             onEdit={handleEdit}
             onDelete={() => setShowDeleteDialog(true)}
-            onAdd={() => console.log('Add pressed')}
+            onAdd={() => navigation.navigate('CreateUtente')}
           />
         </View>
 

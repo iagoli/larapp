@@ -4,6 +4,12 @@ import { useAuth } from '../contexts/AuthContext';
 import LoginScreen from '../screens/loginScreen';
 import LoadingScreen from '../screens/loadingScreen';
 import AppDrawer from './AppDrawer';
+import CreateQuarto from '../screens/createQuarto';
+import RoomsListScreen from '../screens/roomsListScreen';
+import UtentesListScreen from '../screens/utentesListScreen';
+import CreateUtente from '../screens/createUtente';
+import UsersListScreen from '../screens/userListScreen';
+import CreateUserScreen from '../screens/createUserScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +21,15 @@ const AppNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
-        <Stack.Screen name="AppDrawer" component={AppDrawer} />
+        <>
+          <Stack.Screen name="AppDrawer" component={AppDrawer} />
+          <Stack.Screen name="CreateQuarto" component={CreateQuarto} />
+          <Stack.Screen name="RoomListScreen" component={RoomsListScreen} />
+          <Stack.Screen name="UtenteListScreen" component={UtentesListScreen} />
+          <Stack.Screen name="CreateUtente" component={CreateUtente} />
+          <Stack.Screen name="CreateUserScreen" component={CreateUserScreen} />
+
+        </>
       ) : (
         <Stack.Screen name="Login" component={LoginScreen} />
       )}
