@@ -21,7 +21,7 @@ import {
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as uuid from 'uuid';
 
-const CreateUserScreen = () => {
+const CreateUserScreen = ({navigation}) => {
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
   const [email, setEmail] = useState('');
@@ -118,7 +118,7 @@ const CreateUserScreen = () => {
     }
   };
 
-  const handleBack = () => console.log('Voltar');
+  const handleBack = () => navigation.goBack();
   const handleMenu = () => console.log('Mais opções');
 
   return (

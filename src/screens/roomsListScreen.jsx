@@ -11,7 +11,7 @@ import styles from '../styles/roomsListScreen_styles';
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
-const RoomsListScreen = () => {
+const RoomsListScreen = ({ navigation }) => {
   const [rooms, setRooms] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -73,7 +73,7 @@ const RoomsListScreen = () => {
             title="Quartos"
             onEdit={handleEdit}
             onDelete={() => setShowDeleteDialog(true)}
-            onAdd={() => console.log('Add pressed')}
+            onAdd={() => navigation.navigate('CreateQuarto')}
           />
         </View>
 

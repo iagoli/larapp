@@ -8,7 +8,7 @@ import SaveButton from '../components/saveButton';
 import HeaderButtons from '../components/headerButtons';
 import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
-
+import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase.config';
 import {
   collection,
@@ -21,12 +21,12 @@ import {
 import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
 
-const CreateQuarto = () => {
+const CreateQuarto = ({ navigation }) => {
   const [camas, setCamas] = useState('');
   const [numero, setNumero] = useState('');
   const [disponibilidade, setDisponibilidade] = useState('');
   const [activeTab, setActiveTab] = useState('Quarto');
-
+  
   const disponibilidadeOptions = [
     { label: 'Selecione uma opção', value: '' },
     { label: 'Disponível', value: 'disponivel' },
@@ -76,7 +76,7 @@ const CreateQuarto = () => {
     }
   };
 
-  const handleBack = () => console.log('Voltar');
+  const handleBack = () =>  navigation.goBack();
   const handleMenu = () => console.log('Mais opções');
 
   return (
