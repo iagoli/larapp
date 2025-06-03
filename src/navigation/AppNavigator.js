@@ -1,56 +1,26 @@
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
+import { useAuth } from '../contexts/AuthContext';
+import LoginScreen from '../screens/loginScreen';
+import LoadingScreen from '../screens/loadingScreen';
+import AppDrawer from './AppDrawer';
 
 const Stack = createNativeStackNavigator();
 
-export default function AppNavigator() {
+const AppNavigator = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <LoadingScreen />;
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {user ? (
+        <Stack.Screen name="AppDrawer" component={AppDrawer} />
+      ) : (
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import HomeScreen from '../screens/homeScreen';
-import RoomsListScreen from '../screens/roomsListScreen';
-import UtentesListScreen from '../screens/utentesListScreen';
-import UsersListScreen from '../screens/userListScreen';
-import { useAuth } from '../contexts/AuthContext';
-
-const Drawer = createDrawerNavigator();
-
-const AppDrawer = () => {
-  const { user, logout } = useAuth();
-
-  return (
-    <Drawer.Navigator screenOptions={{ headerShown: true }}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
-
-      {/* Only for Administrador and Enfermeiro */}
-      {(user?.tipoUsuario === 'Administrador' || user?.tipoUsuario === 'Enfermeiro') && (
-        <>
-          <Drawer.Screen name="Quartos" component={RoomsListScreen} />
-          <Drawer.Screen name="Utentes" component={UtentesListScreen} />
-          <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
-        </>
       )}
-
-      <Drawer.Screen
-        name="Logout"
-        component={() => {
-          logout();
-          return null;
-        }}
-        options={{ drawerLabel: 'Sair' }}
-      />
-    </Drawer.Navigator>
+    </Stack.Navigator>
   );
 };
 
-export default AppDrawer;
+export default AppNavigator;
