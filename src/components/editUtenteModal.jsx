@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TextInput, Pressable } from 'react-native';
 import { updateDoc, doc } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase.config';
 
-const EditUtenteModal = ({ visible, utente, onClose }) => {
+const EditUtenteModal = ({ visible, utente, onClose, navigation }) => {
   const [nome, setNome] = useState('');
   const [quarto, setQuarto] = useState('');
   const [idade, setIdade] = useState('');
@@ -26,7 +27,7 @@ const EditUtenteModal = ({ visible, utente, onClose }) => {
       idade: Number(idade),
     });
 
-    onClose(); 
+    onClose();
   };
 
   return (

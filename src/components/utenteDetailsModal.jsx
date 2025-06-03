@@ -1,7 +1,18 @@
 import React from 'react';
 import { Modal, View, Text, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
-const UtenteDetailsModal = ({ visible, utente, onClose }) => {
+const UtenteDetailsModal = ({ visible, utente, onClose}) => {
+  const navigation = useNavigation();
+
+  const handleSeeDetails = () => {
+    onClose(); 
+    if (utente?.id) {
+      navigation.navigate('UtenteDetailsScreen', { utenteId: utente.id });
+    }
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -36,6 +47,15 @@ const UtenteDetailsModal = ({ visible, utente, onClose }) => {
           >
             <Text style={{ color: '#fff', textAlign: 'center' }}>Fechar</Text>
           </Pressable>
+
+          {utente?.id && (
+            <Pressable
+              style={{ marginTop: 10, backgroundColor: '#5e3b7f', padding: 10, borderRadius: 5 }}
+              onPress={handleSeeDetails}
+            >
+              <Text style={{ color: '#fff', textAlign: 'center' }}>Ver</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </Modal>

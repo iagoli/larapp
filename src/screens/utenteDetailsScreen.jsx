@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
+import { useRoute } from '@react-navigation/native';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -15,13 +16,13 @@ const data = [
   { id: 5, title: 'Observações', icon: 'comment-text-outline' },
 ];
 
-const UtenteDetailsScreen = () => {
+const UtenteDetailsScreen = ({navigation}) => {
   const [selectedTab, setSelectedTab] = useState('quarto');
   const [roomNumber, setRoomNumber] = useState('');
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
   const [alimentacaoSelecionada, setAlimentacaoSelecionada] = useState(null);
-
+  const { utenteId } = useRoute().params;
 
   useEffect(() => {
     const fetchUtente = async () => {
@@ -68,6 +69,7 @@ const UtenteDetailsScreen = () => {
           onAdd={() => console.log('Add', item.title)}
           onEdit={() => handleEdit(item.title)}
           onPress={() => console.log('Card pressed')}
+          
         />
       ))}
       
