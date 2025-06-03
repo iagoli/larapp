@@ -112,7 +112,6 @@ const CreateQuarto = () => {
         <SaveButton onPress={handleSave} />
       </ScrollView>
 
-      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
     </SafeAreaView>
   );
 };

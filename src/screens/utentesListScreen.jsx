@@ -115,7 +115,6 @@ const UtentesListScreen = () => {
         />
       </View>
 
-      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
     </SafeAreaView>
   );
 };

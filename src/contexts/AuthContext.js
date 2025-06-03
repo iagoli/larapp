@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { app, db } from '../../firebase.config';
 
 const AuthContext = createContext();
@@ -11,22 +11,33 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const auth = getAuth(app);
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
-          if (userDoc.exists()) {
+          console.log('Logged in UID:', firebaseUser.uid);
+
+          // Query the "users" collection for matching UID
+          const q = query(collection(db, 'users'), where('uid', '==', firebaseUser.uid));
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            console.log('User found in Firestore:', userDoc.data());
             setUser({ uid: firebaseUser.uid, ...userDoc.data() });
           } else {
+            console.warn('No user document found in Firestore.');
             setUser(null);
           }
         } catch (error) {
-          console.error('Erro ao buscar usuário:', error);
+          console.error('Error fetching user from Firestore:', error);
           setUser(null);
         }
       } else {
+        console.log('No user is logged in.');
         setUser(null);
       }
+
       setLoading(false);
     });
 
@@ -34,9 +45,13 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = async () => {
-    const auth = getAuth(app);
-    await signOut(auth);
-    setUser(null);
+    try {
+      const auth = getAuth(app);
+      await signOut(auth);
+      setUser(null);
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
   };
 
   return (

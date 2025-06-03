@@ -12,7 +12,6 @@ const HomeScreen = () => {
     <View style={{ flex: 1 }}>
       <View style={HomeStyles.container}>
         <View style={HomeStyles.header}>
-          <TextInput placeholder="Buscar..." style={HomeStyles.search} />
           <Text style={HomeStyles.welcome}>Welcome!</Text>
           <Text style={HomeStyles.sub}>How are you?</Text>
         </View>
@@ -73,7 +72,6 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
     </View>
   );
 };

@@ -119,7 +119,6 @@ const RoomsListScreen = () => {
         />
       </View>
 
-      <BottomTabBar activeTab={activeTab} setActiveTab={setActiveTab} />
     </SafeAreaView>
   );
 };
