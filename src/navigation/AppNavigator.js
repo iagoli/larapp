@@ -11,7 +11,7 @@ import CreateUtente from '../screens/createUtente';
 import UsersListScreen from '../screens/userListScreen';
 import CreateUserScreen from '../screens/createUserScreen'
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen';
-  
+
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -29,7 +29,11 @@ const AppNavigator = () => {
           <Stack.Screen name="UtenteListScreen" component={UtentesListScreen} />
           <Stack.Screen name="CreateUtente" component={CreateUtente} />
           <Stack.Screen name="CreateUserScreen" component={CreateUserScreen} />
-          <Stack.Screen name="UtenteDetailsScreen" component={UtenteDetailsScreen} />
+          <Stack.Screen
+            name="UtenteDetailsScreen"
+            component={UtenteDetailsScreen}
+            options={{ headerShown: true, title: 'Detalhes do Utente' }}
+          />
         </>
       ) : (
         <Stack.Screen name="Login" component={LoginScreen} />
