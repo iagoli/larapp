@@ -12,11 +12,15 @@ import { db } from '../../firebase.config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
+import { useRoute } from '@react-navigation/native';
 
 const CreateAlimentacoesScreen = () => {
   const [dataHora, setDataHora] = useState(new Date());
   const [prato, setPrato] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
+
+  const route = useRoute();
+  const utenteId = route.params?.utenteId;
 
   const handleSave = async () => {
     const auth = getAuth(app);
@@ -32,7 +36,7 @@ const CreateAlimentacoesScreen = () => {
         dataHora: dataHora.toISOString(),
         prato,
         createdAt: serverTimestamp(),
-        createdBy: user.uid,     
+        createdBy: user.uid,
         utenteId,
       });
       console.log('Alimentação adicionada com sucesso!');

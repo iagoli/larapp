@@ -12,13 +12,15 @@ import { db } from '../../firebase.config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
+import { useRoute } from '@react-navigation/native';
 
 const CreateObservacoesScreen = () => {
 
   const [dataHora, setDataHora] = useState(new Date());
   const [descricao, setDescricao] = useState('');
   const [activeTab, setActiveTab] = useState('Home');
-
+  const route = useRoute();
+  const utenteId = route.params?.utenteId;
   const handleSave = async () => {
     const auth = getAuth(app);
     const user = auth.currentUser;
