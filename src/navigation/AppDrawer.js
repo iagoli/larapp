@@ -10,7 +10,6 @@ import UsersListScreen from '../screens/userListScreen';
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen'; 
 import CustomDrawer from '../components/customDrawer';
 import ChannelListScreen from '../screens/channelListScreen';
-import ChatScreen from '../screens/chatScreen';
 
 
 const Drawer = createDrawerNavigator();
