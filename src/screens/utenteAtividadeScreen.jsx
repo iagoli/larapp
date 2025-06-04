@@ -6,6 +6,7 @@ import AtividadeRow from '../components/atividadeRow';
 import AtividadeTableHeader from '../components/atividadeTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditAtividadeModal from '../components/editAtividadeModal';
+import { useRoute } from '@react-navigation/native';
 
 import { db } from '../../firebase.config';
 import {
@@ -26,6 +27,9 @@ const UtenteAtividadeScreen = () => {
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
   const [atividades, setAtividades] = useState([]);
+  
+  const route = useRoute();
+  const { utenteId } = route.params;
 
 
   const toggleCheckbox = (id) => {

@@ -6,6 +6,7 @@ import RefeicaoRow from '../components/refeicaoRow';
 import RefeicaoTableHeader from '../components/refeicaoTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditAlimentacaoModal from '../components/editAlimentacaoModal'; 
+import { useRoute } from '@react-navigation/native';
 
 import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -19,6 +20,9 @@ const UtenteRefeicoesScreen = () => {
 
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
+
+  const route = useRoute();
+  const { utenteId } = route.params;
 
   const fetchRefeicoes = async () => {
     try {

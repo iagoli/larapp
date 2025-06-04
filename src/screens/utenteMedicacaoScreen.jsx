@@ -15,6 +15,9 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 
+import { useRoute } from '@react-navigation/native';
+
+
 const UtenteMedicacaoScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -29,6 +32,9 @@ const UtenteMedicacaoScreen = () => {
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
 
+  const route = useRoute();
+  const { utenteId } = route.params;
+  
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };

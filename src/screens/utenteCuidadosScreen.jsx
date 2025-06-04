@@ -6,6 +6,7 @@ import CuidadosRow from '../components/cuidadosRow';
 import CuidadosTableHeader from '../components/cuidadosTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditCuidadoModal from '../components/editCuidadoModal';
+import { useRoute } from '@react-navigation/native';
 
 import { db } from '../../firebase.config';
 import {
@@ -28,6 +29,8 @@ const UtenteCuidadosScreen = () => {
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
 
+  const route = useRoute();
+  const { utenteId } = route.params;
 
   const fetchCuidados = async () => {
     try {

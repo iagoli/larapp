@@ -5,21 +5,24 @@ import UtenteCard from '../components/utenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
 import { useAuth } from '../contexts/AuthContext';
 import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 
 const data = [
-  { id: 1, title: 'Medicação', icon: 'pill' },
-  { id: 2, title: 'Atividades Diárias', icon: 'calendar-check' },
-  { id: 3, title: 'Alimentação', icon: 'food' },
-  { id: 4, title: 'Cuidados Médicos', icon: 'hospital-box-outline' },
-  { id: 5, title: 'Observações', icon: 'comment-text-outline' },
+  { id: 1, title: 'Medicação', icon: 'pill', screen: 'UtenteMedicacaoSreen' },
+  { id: 2, title: 'Atividades Diárias', icon: 'calendar-check', screen: 'UtenteAtividadeScreen' },
+  { id: 3, title: 'Alimentação', icon: 'food', screen: 'UtenteRefeicoesScreen' },
+  { id: 4, title: 'Cuidados Médicos', icon: 'hospital-box-outline', screen: 'UtenteCuidadosScreen' },
+  { id: 5, title: 'Observações', icon: 'comment-text-outline', screen: 'UtenteObservacoesScreen' },
 ];
 
 const UtenteDetailsScreen = () => {
   const { user } = useAuth();
   const route = useRoute();
+  const navigation = useNavigation();
+
   const utenteId = route.params?.utenteId || user?.utenteId;
 
   const [selectedTab, setSelectedTab] = useState('quarto');
@@ -77,7 +80,7 @@ const UtenteDetailsScreen = () => {
           icon={item.icon}
           onAdd={() => console.log('Add', item.title)}
           onEdit={() => handleEdit(item.title)}
-          onPress={() => console.log('Card pressed')}
+          onPress={() => navigation.navigate(item.screen, { utenteId })}
         />
       ))}
     </ScrollView>

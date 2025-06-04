@@ -6,6 +6,7 @@ import ConfirmDialog from '../components/confirmDialog';
 import ObservacaoTableHeader from '../components/observacaoTableHeader';
 import ObservacaoRow from '../components/observacaoRow';
 import EditObservacaoModal from '../components/editObservacaoModal';
+import { useRoute } from '@react-navigation/native';
 
 import { db } from '../../firebase.config';
 import {
@@ -27,6 +28,9 @@ const UtenteObservacoesScreen = () => {
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
 
+  const route = useRoute();
+  const { utenteId } = route.params;
+  
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
