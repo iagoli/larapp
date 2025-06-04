@@ -11,11 +11,11 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 
 const data = [
-  { id: 1, title: 'Medicação', icon: 'pill', screen: 'UtenteMedicacaoSreen' },
-  { id: 2, title: 'Atividades Diárias', icon: 'calendar-check', screen: 'UtenteAtividadeScreen' },
-  { id: 3, title: 'Alimentação', icon: 'food', screen: 'UtenteRefeicoesScreen' },
-  { id: 4, title: 'Cuidados Médicos', icon: 'hospital-box-outline', screen: 'UtenteCuidadosScreen' },
-  { id: 5, title: 'Observações', icon: 'comment-text-outline', screen: 'UtenteObservacoesScreen' },
+  { id: 1, title: 'Medicação', icon: 'pill', screen: 'UtenteMedicacaoSreen', createScreen: 'CreateMedicacaoScreen' },
+  { id: 2, title: 'Atividades Diárias', icon: 'calendar-check', screen: 'UtenteAtividadeScreen', createScreen: 'CreateAtividadesScreen' },
+  { id: 3, title: 'Alimentação', icon: 'food', screen: 'UtenteRefeicoesScreen', createScreen: 'CreateAlimentacoesScreen' },
+  { id: 4, title: 'Cuidados Médicos', icon: 'hospital-box-outline', screen: 'UtenteCuidadosScreen', createScreen: 'CreateCuidadoScreen' },
+  { id: 5, title: 'Observações', icon: 'comment-text-outline', screen: 'UtenteObservacoesScreen', createScreen: 'CreateObservacoesScreen' },
 ];
 
 const UtenteDetailsScreen = () => {
@@ -78,7 +78,7 @@ const UtenteDetailsScreen = () => {
           key={item.id}
           title={item.title}
           icon={item.icon}
-          onAdd={() => console.log('Add', item.title)}
+          onAdd={() => navigation.navigate(item.createScreen, { utenteId })}
           onEdit={() => handleEdit(item.title)}
           onPress={() => navigation.navigate(item.screen, { utenteId })}
         />
