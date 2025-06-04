@@ -128,7 +128,6 @@ const UtenteCuidadosScreen = () => {
 
           <IconButton icon="pencil" onPress={handleEdit} />
           <IconButton icon="delete" onPress={() => setShowDeleteDialog(true)} />
-          <IconButton icon="plus" onPress={() => console.log('Adicionar cuidado')} />
         </View>
 
         <CuidadosTableHeader />

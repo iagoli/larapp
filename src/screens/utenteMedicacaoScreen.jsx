@@ -132,7 +132,6 @@ const UtenteMedicacaoScreen = () => {
             onPress={() => setShowDeleteDialog(true)}
             disabled={!Object.values(selectedItems).includes(true)}
           />
-          <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>
 
         <View style={styles.tableHeader}>
