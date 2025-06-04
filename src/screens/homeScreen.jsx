@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'; 
 import HomeStyles from '../styles/homePage_styles';
-import BottomTabBar from '../components/bottomTabBar';
+import EmergencyModal from '../components/emergencyModal'; 
 
 const HomeScreen = () => {
   const [activeTab, setActiveTab] = useState('Home');
+  const [modalVisible, setModalVisible] = useState(false); 
+  const navigation = useNavigation(); 
 
   return (
     <View style={{ flex: 1 }}>
@@ -63,15 +66,27 @@ const HomeScreen = () => {
 
         {/* Floating Action Buttons */}
         <View style={HomeStyles.fabContainer}>
-          <TouchableOpacity style={HomeStyles.fab}>
+          <TouchableOpacity
+            style={HomeStyles.fab}
+            onPress={() => navigation.navigate('Chat')} 
+          >
             <FontAwesome5 name="headset" size={30} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity style={HomeStyles.sos}>
+
+          <TouchableOpacity
+            style={HomeStyles.sos}
+            onPress={() => setModalVisible(true)} 
+          >
             <Text style={HomeStyles.sosText}>SOS</Text>
           </TouchableOpacity>
         </View>
       </View>
 
+      {/* Modal de emergência */}
+      <EmergencyModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 };

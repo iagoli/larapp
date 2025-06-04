@@ -3,9 +3,8 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { app, db } from '../../firebase.config';
 import { StreamChat } from 'stream-chat';
-import { fetchChatToken } from '../services/chatTokenService'; 
+const chatClient = StreamChat.getInstance('1392612');
 
-const chatClient = StreamChat.getInstance('69ssgm79wbf6'); 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -20,37 +19,13 @@ export const AuthProvider = ({ children }) => {
         try {
           console.log('Logged in UID:', firebaseUser.uid);
 
-          // 🔍 Buscar o documento do usuário no Firestore
-          
           const q = query(collection(db, 'users'), where('uid', '==', firebaseUser.uid));
           const querySnapshot = await getDocs(q);
 
           if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
-            const userData = userDoc.data();
-            console.log('User found in Firestore:', userData);
-
-            const completeUser = { uid: firebaseUser.uid, ...userData };
-            setUser(completeUser);
-
-            try {
-
-              // 🔑 Buscar o token no backend para autenticar com o Stream Chat
-              const token = await fetchChatToken(firebaseUser.uid);
-
-              await chatClient.connectUser(
-                {
-                  id: firebaseUser.uid,
-                  name: userData.displayName ?? 'Usuário',
-                  image: userData.photoURL ?? undefined,
-                },
-                token
-              );
-
-              console.log('Usuário conectado ao chat Stream');
-            } catch (chatError) {
-              console.error('Erro ao conectar ao chat:', chatError);
-            }
+            console.log('User found in Firestore:', userDoc.data());
+            setUser({ uid: firebaseUser.uid, ...userDoc.data() });
           } else {
             console.warn('No user document found in Firestore.');
             setUser(null);
