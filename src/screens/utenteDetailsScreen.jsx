@@ -4,6 +4,7 @@ import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
 import { useAuth } from '../contexts/AuthContext';
+import { useRoute } from '@react-navigation/native';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -18,8 +19,8 @@ const data = [
 
 const UtenteDetailsScreen = () => {
   const { user } = useAuth();
-  const utenteId = user?.utenteId;
-  const role = user?.role;
+  const route = useRoute();
+  const utenteId = route.params?.utenteId || user?.utenteId;
 
   const [selectedTab, setSelectedTab] = useState('quarto');
   const [roomNumber, setRoomNumber] = useState('');
@@ -27,6 +28,7 @@ const UtenteDetailsScreen = () => {
   const [idade, setIdade] = useState('');
 
   useEffect(() => {
+
     const fetchUtente = async () => {
       if (!utenteId) return;
 
@@ -73,8 +75,8 @@ const UtenteDetailsScreen = () => {
           key={item.id}
           title={item.title}
           icon={item.icon}
-          onAdd={role !== 'utente' ? () => console.log('Add', item.title) : null}
-          onEdit={role !== 'utente' ? () => handleEdit(item.title) : null}
+          onAdd={() => console.log('Add', item.title)}
+          onEdit={() => handleEdit(item.title)}
           onPress={() => console.log('Card pressed')}
         />
       ))}
