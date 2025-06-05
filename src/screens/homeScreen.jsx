@@ -5,12 +5,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; 
 import HomeStyles from '../styles/homePage_styles';
 import EmergencyModal from '../components/emergencyModal'; 
+import { useAuth } from '../contexts/AuthContext';
 
 const HomeScreen = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [modalVisible, setModalVisible] = useState(false); 
   const navigation = useNavigation(); 
-
+ 
+  const { user } = useAuth();
+  const utenteId = user?.utenteId;
+  
   return (
     <View style={{ flex: 1 }}>
       <View style={HomeStyles.container}>
@@ -25,7 +29,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => console.log('Botão Atividade pressionado')}
+            onPress={() => navigation.navigate('UtenteAtividadeScreen', { utenteId })}
           >
             <FontAwesome5 name="walking" size={28} color="#000" marginLeft={5} />
             <Text style={HomeStyles.itemText}>Atividade</Text>
@@ -33,15 +37,15 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => console.log('Botão Consulta pressionado')}
+            onPress={() => navigation.navigate('UtenteCuidadosScreen', { utenteId })}
           >
             <MaterialIcons name="event-note" size={24} color="#000" />
-            <Text style={HomeStyles.itemText}>Consulta</Text>
+            <Text style={HomeStyles.itemText}>Cuidados</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => console.log('Botão Refeição pressionado')}
+            onPress={() => navigation.navigate('UtenteRefeicoesScreen', { utenteId })}
           >
             <Ionicons name="time-outline" size={28} color="#000" />
             <Text style={HomeStyles.itemText}>Refeição</Text>
@@ -49,7 +53,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => console.log('Botão Medicação pressionado')}
+            onPress={() => navigation.navigate('UtenteMedicacaoScreen', { utenteId })}
           >
             <MaterialCommunityIcons name="pill" size={26} color="#000" />
             <Text style={HomeStyles.itemText}>Medicação</Text>
@@ -57,7 +61,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => console.log('Botão Observação pressionado')}
+            onPress={() => navigation.navigate('UtenteObservacoesScreen', { utenteId })}
           >
             <MaterialCommunityIcons name="comment-text-outline" size={26} color="#000" />
             <Text style={HomeStyles.itemText}>Observação</Text>

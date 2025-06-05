@@ -41,7 +41,7 @@ const AppNavigator = () => {
           <Stack.Screen name="CreateUtente" component={CreateUtente} />
           <Stack.Screen name="CreateUserScreen" component={CreateUserScreen} />
 
-          <Stack.Screen name="UtenteMedicacaoSreen" component={UtenteMedicacaoSreen} options={{ headerShown: true, title: 'Medicacao do Utente' }} />
+          <Stack.Screen name="UtenteMedicacaoScreen" component={UtenteMedicacaoSreen} options={{ headerShown: true, title: 'Medicacao do Utente' }} />
           <Stack.Screen name="UtenteRefeicoesScreen" component={UtenteRefeicoesScreen} options={{ headerShown: true, title: 'Refeicoes do Utente' }} />
           <Stack.Screen name="UtenteAtividadeScreen" component={UtenteAtividadeScreen} options={{ headerShown: true, title: 'Atividades do Utente' }} />
           <Stack.Screen name="UtenteObservacoesScreen" component={UtenteObservacoesScreen} options={{ headerShown: true, title: 'Observacoes do Utente' }} />

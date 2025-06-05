@@ -11,7 +11,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 
 const data = [
-  { id: 1, title: 'Medicação', icon: 'pill', screen: 'UtenteMedicacaoSreen', createScreen: 'CreateMedicacaoScreen' },
+  { id: 1, title: 'Medicação', icon: 'pill', screen: 'UtenteMedicacaoScreen', createScreen: 'CreateMedicacaoScreen' },
   { id: 2, title: 'Atividades Diárias', icon: 'calendar-check', screen: 'UtenteAtividadeScreen', createScreen: 'CreateAtividadesScreen' },
   { id: 3, title: 'Alimentação', icon: 'food', screen: 'UtenteRefeicoesScreen', createScreen: 'CreateAlimentacoesScreen' },
   { id: 4, title: 'Cuidados Médicos', icon: 'hospital-box-outline', screen: 'UtenteCuidadosScreen', createScreen: 'CreateCuidadoScreen' },
