@@ -10,9 +10,11 @@ const HeaderButtons = ({ onBackPress, onMenuPress }) => {
         <Feather name="arrow-left" size={24} color="#2b2b2b" />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={onMenuPress} style={styles.button}>
-        <Feather name="more-vertical" size={24} color="#2b2b2b" />
-      </TouchableOpacity>
+      {onMenuPress && (
+        <TouchableOpacity onPress={onMenuPress} style={styles.button}>
+          <Feather name="more-vertical" size={24} color="#2b2b2b" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -1,73 +1,49 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import Title from '../components/title';
+import { SafeAreaView, ScrollView, Alert } from 'react-native';
+import Label from '../components/label';
 import TextInputField from '../components/textInputField';
 import SaveButton from '../components/saveButton';
-import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
 import DateTimeInput from '../components/dateTimeInput';
-import Label from '../components/label';
 import userScreenStyles from '../styles/userScreen_styles';
-import { db } from '../../firebase.config';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { app } from '../../firebase.config';
 import { useRoute } from '@react-navigation/native';
+import { useGuardarRegisto } from '../hooks/useGuardarRegisto';
 
 const CreateAlimentacoesScreen = () => {
   const [dataHora, setDataHora] = useState(new Date());
   const [prato, setPrato] = useState('');
-  const [activeTab, setActiveTab] = useState('Home');
 
   const route = useRoute();
   const utenteId = route.params?.utenteId;
+  const { guardar, saving } = useGuardarRegisto('alimentacoes');
 
-  const handleSave = async () => {
-    const auth = getAuth(app);
-    const user = auth.currentUser;
-
-    if (!user) {
-      console.warn('User not logged in');
+  const handleSave = () => {
+    if (!prato.trim()) {
+      Alert.alert('Campo obrigatório', 'Indique o prato.');
       return;
     }
 
-    try {
-      await addDoc(collection(db, 'alimentacoes'), {
-        dataHora: dataHora.toISOString(),
-        prato,
-        createdAt: serverTimestamp(),
-        createdBy: user.uid,
-        utenteId,
-      });
-      console.log('Alimentação adicionada com sucesso!');
-    } catch (error) {
-      console.error('Erro ao salvar alimentação:', error);
-    }
+    guardar({
+      dataHora: dataHora.toISOString(),
+      prato: prato.trim(),
+      utenteId,
+    });
   };
-
-  const handleBack = () => console.log('Voltar');
-  const handleMenu = () => console.log('Mais opções');
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <ScrollView contentContainerStyle={[userScreenStyles.container, { paddingBottom: 100 }]}>
-        <HeaderButtons onBackPress={handleBack} onMenuPress={handleMenu} />
-
-        <Title>Alimentações</Title>
-
         <Label>Data/Hora</Label>
         <DateTimeInput value={dataHora} onChange={setDataHora} />
 
+        <Label>Prato</Label>
         <TextInputField
           value={prato}
           onChangeText={setPrato}
-          placeholder="Prato"
-          style={{ marginTop: 16 }}
+          placeholder="Ex.: Sopa de legumes"
         />
 
-        <SaveButton onPress={handleSave} />
+        <SaveButton onPress={handleSave} loading={saving} />
       </ScrollView>
-
     </SafeAreaView>
   );
 };

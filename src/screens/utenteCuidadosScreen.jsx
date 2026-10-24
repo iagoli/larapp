@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Dimensions, Alert } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteCuidadosScreen_styles';
@@ -8,19 +8,11 @@ import ConfirmDialog from '../components/confirmDialog';
 import EditCuidadoModal from '../components/editCuidadoModal';
 import { useRoute } from '@react-navigation/native';
 
+import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 import { db } from '../../firebase.config';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-  doc,
-  updateDoc
-} from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
 const UtenteCuidadosScreen = () => {
-  const [cuidados, setCuidados] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -32,31 +24,16 @@ const UtenteCuidadosScreen = () => {
   const route = useRoute();
   const { utenteId } = route.params;
 
-  const fetchCuidados = async () => {
-    try {
-      const q = query(collection(db, 'cuidados'), where('utenteId', '==', utenteId));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map(doc => {
-        const item = doc.data();
-        return {
-          id: doc.id,
-          acao: item.acao || 'Sem ação',
-          dataHora: item.dataHora || '',
-          date: item.dataHora
-            ? new Date(item.dataHora).toISOString().split('T')[0]
-            : 'Sem data',
-          descricao: item.descricao || 'Sem descrição',
-        };
-      });
-      setCuidados(data);
-    } catch (error) {
-      console.error('Erro ao buscar cuidados:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCuidados();
-  }, []);
+  const { registos } = useUtenteRegistos('cuidados', utenteId);
+  const cuidados = registos.map((item) => ({
+    id: item.id,
+    acao: item.acao || 'Sem ação',
+    dataHora: item.dataHora || '',
+    date: item.dataHora
+      ? new Date(item.dataHora).toISOString().split('T')[0]
+      : 'Sem data',
+    descricao: item.descricao || 'Sem descrição',
+  }));
 
   const toggleCheckbox = (id) => {
     setSelectedItems(prev => ({ ...prev, [id]: !prev[id] }));
@@ -70,22 +47,16 @@ const UtenteCuidadosScreen = () => {
       );
       setSelectedItems({});
       setShowDeleteDialog(false);
-      fetchCuidados();
     } catch (error) {
       console.error('Erro ao remover cuidados:', error);
     }
   };
 
   const handleEdit = () => {
-    console.log('handleEdit chamado');
-    console.log('selectedItems:', selectedItems);
-
     const idSelecionado = Object.keys(selectedItems).find(id => selectedItems[id]);
-    console.log('idSelecionado:', idSelecionado);
 
     if (idSelecionado) {
       const cuidado = cuidados.find(c => c.id === idSelecionado);
-      console.log('cuidadoSelecionado:', cuidado);
       setCuidadoSelecionado(cuidado);
       setEditModalVisible(true);
     } else {
@@ -95,8 +66,6 @@ const UtenteCuidadosScreen = () => {
 
   const handleSaveEdit = async (cuidadoAtualizado) => {
     try {
-      console.log('Salvando cuidado atualizado:', cuidadoAtualizado);
-
       await updateDoc(doc(db, 'cuidados', cuidadoAtualizado.id), {
         acao: cuidadoAtualizado.acao,
         dataHora: cuidadoAtualizado.dataHora.toISOString(),
@@ -104,7 +73,6 @@ const UtenteCuidadosScreen = () => {
       });
 
       setEditModalVisible(false);
-      fetchCuidados();
     } catch (error) {
       console.error('Erro ao atualizar cuidado:', error);
     }

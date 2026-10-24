@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteObservacoesScreen_styles';
@@ -8,21 +8,13 @@ import ObservacaoRow from '../components/observacaoRow';
 import EditObservacaoModal from '../components/editObservacaoModal';
 import { useRoute } from '@react-navigation/native';
 
+import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 import { db } from '../../firebase.config';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  deleteDoc,
-  updateDoc
-} from 'firebase/firestore';
+import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 const UtenteObservacoesScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [observacoes, setObservacoes] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [observacaoSelecionada, setObservacaoSelecionada] = useState(null);
   const screenWidth = Dimensions.get('window').width;
@@ -35,24 +27,13 @@ const UtenteObservacoesScreen = () => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  useEffect(() => {
-    const fetchObservacoes = async () => {
-      try {
-        const q = query(collection(db, 'observacoes'), where('utenteId', '==', utenteId));
-        const snapshot = await getDocs(q);
-        const fetched = snapshot.docs.map(doc => ({
-          id: doc.id,
-          descricao: doc.data().descricao || 'Sem descricao',
-          dataHora: doc.data().dataHora || '',
-          date: doc.data().dataHora ? doc.data().dataHora.split('T')[0] : 'Sem data',
-        }));
-        setObservacoes(fetched);
-      } catch (error) {
-        console.error('Erro ao buscar observacoes:', error);
-      }
-    };
-    fetchObservacoes();
-  }, []);
+  const { registos } = useUtenteRegistos('observacoes', utenteId);
+  const observacoes = registos.map((item) => ({
+    id: item.id,
+    descricao: item.descricao || 'Sem descricao',
+    dataHora: item.dataHora || '',
+    date: item.dataHora ? item.dataHora.split('T')[0] : 'Sem data',
+  }));
 
   const handleEditPress = () => {
     const selectedId = Object.keys(selectedItems).find(id => selectedItems[id]);
@@ -69,9 +50,6 @@ const UtenteObservacoesScreen = () => {
         descricao: updatedObs.descricao,
         dataHora: updatedObs.dataHora.toISOString(),
       });
-      setObservacoes(prev =>
-        prev.map(o => (o.id === updatedObs.id ? { ...o, ...updatedObs } : o))
-      );
     } catch (error) {
       console.error('Erro ao atualizar:', error);
     }
@@ -83,7 +61,6 @@ const UtenteObservacoesScreen = () => {
       for (const id of idsToDelete) {
         await deleteDoc(doc(db, 'observacoes', id));
       }
-      setObservacoes(prev => prev.filter(o => !idsToDelete.includes(o.id)));
       setSelectedItems({});
     } catch (error) {
       console.error('Erro ao deletar:', error);

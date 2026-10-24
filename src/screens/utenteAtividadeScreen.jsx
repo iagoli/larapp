@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteAtividadeScreen_styles';
@@ -7,17 +7,10 @@ import AtividadeTableHeader from '../components/atividadeTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditAtividadeModal from '../components/editAtividadeModal';
 import { useRoute } from '@react-navigation/native';
+import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 
 import { db } from '../../firebase.config';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  doc,
-  updateDoc,
-  deleteDoc
-} from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 const UtenteAtividadeScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
@@ -26,38 +19,15 @@ const UtenteAtividadeScreen = () => {
   const [currentEditItem, setCurrentEditItem] = useState(null);
   const screenWidth = Dimensions.get('window').width;
   const isCompact = screenWidth < 360;
-  const [atividades, setAtividades] = useState([]);
-  
+
   const route = useRoute();
   const { utenteId } = route.params;
+  const { registos: atividades } = useUtenteRegistos('atividades', utenteId);
 
 
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-
-  const fetchAtividades = async () => {
-    try {
-      const q = query(
-        collection(db, 'atividades'),
-        where('utenteId', '==', utenteId)
-      );
-
-      const querySnapshot = await getDocs(q);
-      const fetched = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      setAtividades(fetched);
-    } catch (error) {
-      console.error('Erro ao buscar atividades:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAtividades();
-  }, []);
 
   const handleDelete = async () => {
     const selectedIds = Object.keys(selectedItems).filter((id) => selectedItems[id]);
@@ -68,7 +38,6 @@ const UtenteAtividadeScreen = () => {
       );
       setShowDeleteDialog(false);
       setSelectedItems({});
-      fetchAtividades();
     } catch (error) {
       console.error('Erro ao excluir atividades:', error);
     }
@@ -85,7 +54,6 @@ const UtenteAtividadeScreen = () => {
 
       setEditModalVisible(false);
       setCurrentEditItem(null);
-      fetchAtividades();
     } catch (error) {
       console.error('Erro ao salvar edição:', error);
     }
