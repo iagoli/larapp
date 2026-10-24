@@ -53,7 +53,7 @@ const AppNavigator = () => {
           <Stack.Screen
             name="UtenteDetailsScreen"
             component={UtenteDetailsScreen}
-            options={{ headerShown: true, title: 'Detalhes do Utente' }}
+            options={{ headerShown: true, title: 'Detalhes do utente' }}
           />
         </>
       ) : (

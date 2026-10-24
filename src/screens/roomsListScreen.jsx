@@ -101,7 +101,7 @@ const RoomsListScreen = ({ navigation }) => {
           onDismiss={() => setShowDeleteDialog(false)}
           onConfirm={handleDelete}
           title="Confirmar remoção"
-          message="Tem certeza que deseja apagar o(s) quarto(s) selecionado(s)?"
+          message="Tem a certeza de que deseja apagar o(s) quarto(s) selecionado(s)?"
         />
 
         <RoomDetailsModal

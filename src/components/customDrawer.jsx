@@ -15,7 +15,7 @@ const CustomDrawer = (props) => {
                     size={48}
                     style={styles.avatar}
                 />
-                <Text style={styles.name}>{user?.nome || 'Usuário'}</Text>
+                <Text style={styles.name}>{user?.nome || 'Utilizador'}</Text>
             </View>
 
             <Divider style={{ marginVertical: 10 }} />

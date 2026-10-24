@@ -96,7 +96,7 @@ const UtentesListScreen = ({ navigation }) => {
           visible={showDeleteDialog}
           onDismiss={() => setShowDeleteDialog(false)}
           onConfirm={handleDelete}
-          message="Tem certeza que deseja apagar o(s) utente(s) selecionado(s)?"
+          message="Tem a certeza de que deseja apagar o(s) utente(s) selecionado(s)?"
         />
 
         <UtenteDetailsModal

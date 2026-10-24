@@ -32,7 +32,7 @@ const PhotoUploader = ({ onImageSelected }) => {
       <TouchableOpacity style={PhotoUploader_style.uploadButton} onPress={pickImage}>
         <View style={PhotoUploader_style.uploadButtonContent}>
           <MaterialIcons name="file-upload" size={20} color="#007BFF" style={{ marginRight: 8 }} />
-          <Text style={PhotoUploader_style.uploadButtonText}>Upload Foto</Text>
+          <Text style={PhotoUploader_style.uploadButtonText}>Carregar fotografia</Text>
         </View>
       </TouchableOpacity>
 

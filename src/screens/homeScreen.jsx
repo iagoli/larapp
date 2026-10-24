@@ -31,8 +31,8 @@ const HomeScreen = () => {
     <View style={{ flex: 1 }}>
       <View style={HomeStyles.container}>
         <View style={HomeStyles.header}>
-          <Text style={HomeStyles.welcome}>Welcome!</Text>
-          <Text style={HomeStyles.sub}>How are you?</Text>
+          <Text style={HomeStyles.welcome}>Olá{user?.nome ? `, ${user.nome.split(' ')[0]}` : ''}!</Text>
+          <Text style={HomeStyles.sub}>Como está hoje?</Text>
         </View>
 
         <ScrollView contentContainerStyle={{ paddingBottom: 180 }}>

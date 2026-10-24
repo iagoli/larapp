@@ -77,7 +77,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
           <TextInput
             value={telemovel}
             onChangeText={setTelemovel}
-            placeholder="Telefone"
+            placeholder="Telemóvel"
             keyboardType="phone-pad"
             style={styles.input}
           />
@@ -99,7 +99,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
             style={styles.input}
           />
 
-          <Text style={styles.label}>Tipo de Usuário</Text>
+          <Text style={styles.label}>Tipo de Utilizador</Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={tipoUsuario}
@@ -119,7 +119,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
             </Pressable>
 
             <Pressable onPress={handleSave} style={styles.saveButton}>
-              <Text style={styles.buttonText}>Salvar</Text>
+              <Text style={styles.buttonText}>Guardar</Text>
             </Pressable>
           </View>
         </View>

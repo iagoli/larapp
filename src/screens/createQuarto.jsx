@@ -37,7 +37,7 @@ const CreateQuarto = ({ navigation }) => {
     const user = auth.currentUser;
 
     if (!user) {
-      Alert.alert('Erro', 'Usuário não está autenticado.');
+      Alert.alert('Erro', 'Sessão expirada. Inicie sessão novamente.');
       return;
     }
 
@@ -87,7 +87,7 @@ const CreateQuarto = ({ navigation }) => {
         <TextInputField
           value={camas}
           onChangeText={setCamas}
-          placeholder="Digite a quantidade de camas"
+          placeholder="Número de camas"
           keyboardType="numeric"
         />
 
@@ -95,7 +95,7 @@ const CreateQuarto = ({ navigation }) => {
         <TextInputField
           value={numero}
           onChangeText={setNumero}
-          placeholder="Digite o número do quarto"
+          placeholder="Ex.: 101"
           keyboardType="numeric"
         />
 

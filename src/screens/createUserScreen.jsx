@@ -58,7 +58,7 @@ const CreateUserScreen = ({navigation}) => {
     }
 
     try {
-      // Upload photo
+      // Carrega a fotografia
       let photoUrl = null;
       if (photoUri) {
         const storage = getStorage(app);
@@ -133,7 +133,7 @@ const CreateUserScreen = ({navigation}) => {
         <TextInputField value={morada} onChangeText={setMorada} placeholder="Morada" />
 
         <SelectInput
-          label="Tipo de Usuário"
+          label="Tipo de Utilizador"
           selectedValue={tipoUsuario}
           onValueChange={setTipoUsuario}
           items={tipoUsuarioOptions}

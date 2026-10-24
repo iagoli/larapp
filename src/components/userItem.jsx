@@ -4,7 +4,7 @@ import { Text, Avatar, Checkbox } from 'react-native-paper';
 import styles from '../styles/userItem_styles';
 
 const UserItem = ({ item, checked, onToggle, avatarLabel, onPress }) => {
-  const displayName = item?.nome || 'Usuário'; // uses `nome` from Firestore
+  const displayName = item?.nome || 'Utilizador'; // uses `nome` from Firestore
   const avatarInitial = avatarLabel || displayName.charAt(0).toUpperCase();
 
   return (

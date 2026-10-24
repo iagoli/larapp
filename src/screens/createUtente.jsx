@@ -61,7 +61,7 @@ const CreateUtente = ({ navigation }) => {
     const user = auth.currentUser;
 
     if (!user) {
-      Alert.alert('Erro', 'Usuário não autenticado.');
+      Alert.alert('Erro', 'Sessão expirada. Inicie sessão novamente.');
       return;
     }
 
@@ -114,7 +114,7 @@ const CreateUtente = ({ navigation }) => {
         <TextInputField 
           value={nome} 
           onChangeText={setNome} 
-          placeholder="Digite o nome" 
+          placeholder="Nome do utente" 
         />
 
         <Label>Quarto</Label>

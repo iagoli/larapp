@@ -83,7 +83,7 @@ const EditRoomModal = ({ visible, room, onClose, onSaved }) => {
             </Pressable>
 
             <Pressable onPress={handleSave} style={styles.saveButton}>
-              <Text style={styles.buttonText}>Salvar</Text>
+              <Text style={styles.buttonText}>Guardar</Text>
             </Pressable>
           </View>
         </View>

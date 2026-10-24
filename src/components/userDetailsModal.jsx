@@ -31,7 +31,7 @@ const UserDetailsModal = ({ visible, user, onClose }) => {
               <Text>Email: {user.email || 'N/A'}</Text>
               <Text>Telemóvel: {user.telemovel || 'N/A'}</Text>
               <Text>Morada: {user.morada || 'N/A'}</Text>
-              <Text>Tipo de Usuário: {user.tipoUsuario || 'N/A'}</Text>
+              <Text>Tipo de Utilizador: {user.tipoUsuario || 'N/A'}</Text>
               <Text>Utente Associado: {user.utenteId || 'N/A'}</Text>
             </>
           )}
