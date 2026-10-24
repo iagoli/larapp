@@ -27,7 +27,9 @@ const RegistosScreen = ({ route, navigation }) => {
   const [emEdicao, setEmEdicao] = useState(null);
 
   const isCompact = Dimensions.get('window').width < 360;
-  const ordenados = [...registos].sort((a, b) => (b.dataHora || '').localeCompare(a.dataHora || ''));
+  const ordenados = [...registos].sort((a, b) =>
+    (b.dataHora || '').localeCompare(a.dataHora || '')
+  );
   const idsSelecionados = Object.keys(selecionados).filter(
     (id) => selecionados[id] && registos.some((r) => r.id === id)
   );

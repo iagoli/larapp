@@ -15,7 +15,11 @@ const UtenteHeader = ({ selectedTab, roomNumber, nome, idade }) => {
 
       <View style={styles.tabContainer}>
         <View style={[styles.tab, selectedTab === 'quarto' && styles.tabActive]}>
-          <IconButton icon="bed" size={16} iconColor={selectedTab === 'quarto' ? '#fff' : '#5e3b7f'} />
+          <IconButton
+            icon="bed"
+            size={16}
+            iconColor={selectedTab === 'quarto' ? '#fff' : '#5e3b7f'}
+          />
           <Text style={[styles.tabText, selectedTab === 'quarto' && styles.tabTextActive]}>
             Quarto {roomNumber}
           </Text>

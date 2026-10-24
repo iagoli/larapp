@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import LoginStyles from '../styles/login_styles';
-import { getAuth, signInWithEmailAndPassword , sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { app } from '../../firebase.config';
 
 const LoginScreen = () => {
-
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -15,7 +14,7 @@ const LoginScreen = () => {
       await signInWithEmailAndPassword(auth, email.trim(), password);
     } catch (error) {
       console.error('Erro no login:', error.code, error.message);
-  
+
       alert('Não foi possível iniciar sessão. Verifique o email e a palavra-passe.');
     }
   };
@@ -25,7 +24,7 @@ const LoginScreen = () => {
       alert('Introduza o seu email para redefinir a palavra-passe.');
       return;
     }
-  
+
     try {
       const auth = getAuth(app);
       await sendPasswordResetEmail(auth, email);
@@ -39,7 +38,6 @@ const LoginScreen = () => {
       }
     }
   };
-
 
   return (
     <View style={LoginStyles.container}>
@@ -59,10 +57,7 @@ const LoginScreen = () => {
         value={password}
         onChangeText={setPassword}
       />
-      <TouchableOpacity
-        style={LoginStyles.loginButton}
-        onPress={handleLogin}
-      >
+      <TouchableOpacity style={LoginStyles.loginButton} onPress={handleLogin}>
         <Text style={LoginStyles.loginText}>Entrar</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>

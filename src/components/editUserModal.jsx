@@ -3,7 +3,7 @@ import { Modal, View, Text, TextInput, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
-import styles from '../styles/editRoomModal_styles'; 
+import styles from '../styles/editRoomModal_styles';
 
 const EditUserModal = ({ visible, user, onClose, onSaved }) => {
   const [nome, setNome] = useState('');
@@ -45,12 +45,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Editar Utilizador</Text>

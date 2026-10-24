@@ -120,7 +120,12 @@ app.get('/chat/contacts', requireAuth, async (req, res) => {
     const contactos = snapshot.docs
       .map((d) => d.data())
       .filter((c) => c.uid && c.uid !== req.uid && podeConversar(perfil, c))
-      .map((c) => ({ uid: c.uid, nome: c.nome, tipoUsuario: c.tipoUsuario, photoUrl: c.photoUrl || null }))
+      .map((c) => ({
+        uid: c.uid,
+        nome: c.nome,
+        tipoUsuario: c.tipoUsuario,
+        photoUrl: c.photoUrl || null,
+      }))
       .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
 
     return res.json({ contactos });
@@ -183,18 +188,21 @@ app.post('/users', requireAuth, requireAdmin, async (req, res) => {
     });
 
     // id do documento = uid, como exigem as firestore.rules
-    await db.collection('users').doc(newUser.uid).set({
-      nome,
-      idade: idade || '',
-      email,
-      telemovel,
-      morada,
-      tipoUsuario,
-      utenteId: utenteId || null,
-      photoUrl: photoUrl || null,
-      createdAt: FieldValue.serverTimestamp(),
-      uid: newUser.uid,
-    });
+    await db
+      .collection('users')
+      .doc(newUser.uid)
+      .set({
+        nome,
+        idade: idade || '',
+        email,
+        telemovel,
+        morada,
+        tipoUsuario,
+        utenteId: utenteId || null,
+        photoUrl: photoUrl || null,
+        createdAt: FieldValue.serverTimestamp(),
+        uid: newUser.uid,
+      });
 
     return res.status(201).json({ uid: newUser.uid });
   } catch (err) {

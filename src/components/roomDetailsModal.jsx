@@ -4,12 +4,7 @@ import styles from '../styles/roomDetailsModal_styles';
 
 const RoomDetailsModal = ({ visible, room, onClose }) => {
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           {room && (

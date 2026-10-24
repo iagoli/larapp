@@ -12,7 +12,7 @@ const LoginStyles = StyleSheet.create({
     fontSize: 40,
     color: colors.title,
     fontWeight: 'bold',
-    fontFamily: "sans-serif-medium",
+    fontFamily: 'sans-serif-medium',
     textAlign: 'center',
     marginBottom: 100,
   },
@@ -23,16 +23,16 @@ const LoginStyles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 20,
     borderRadius: 25,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
-  loginButton: {  
+  loginButton: {
     backgroundColor: '#999999',
     padding: 10,
     borderRadius: 25,
     alignItems: 'center',
     marginTop: 30,
   },
-  loginText: {  
+  loginText: {
     color: '#fff',
     fontWeight: 'bold',
   },

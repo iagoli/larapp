@@ -56,7 +56,11 @@ const NovaConversaScreen = ({ navigation }) => {
             item.photoUrl ? (
               <Avatar.Image size={40} source={{ uri: item.photoUrl }} />
             ) : (
-              <Avatar.Text size={40} label={(item.nome || '?').charAt(0).toUpperCase()} style={styles.avatar} />
+              <Avatar.Text
+                size={40}
+                label={(item.nome || '?').charAt(0).toUpperCase()}
+                style={styles.avatar}
+              />
             )
           }
           right={() => (aAbrir === item.uid ? <ActivityIndicator /> : null)}

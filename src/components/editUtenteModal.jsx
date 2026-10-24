@@ -31,15 +31,30 @@ const EditUtenteModal = ({ visible, utente, onClose, navigation }) => {
 
   return (
     <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
         <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 10, width: '80%' }}>
           <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Editar Utente</Text>
 
           <Text> Nome:</Text>
-          <TextInput value={nome} onChangeText={setNome} style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }} />
+          <TextInput
+            value={nome}
+            onChangeText={setNome}
+            style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }}
+          />
 
           <Text> Quarto:</Text>
-          <TextInput value={quarto} onChangeText={setQuarto} style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }} />
+          <TextInput
+            value={quarto}
+            onChangeText={setQuarto}
+            style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }}
+          />
 
           <Text> Idade:</Text>
           <TextInput
@@ -49,7 +64,10 @@ const EditUtenteModal = ({ visible, utente, onClose, navigation }) => {
             style={{ borderBottomWidth: 1, marginBottom: 20, padding: 5 }}
           />
 
-          <Pressable onPress={handleSave} style={{ backgroundColor: '#5e3b7f', padding: 10, borderRadius: 5 }}>
+          <Pressable
+            onPress={handleSave}
+            style={{ backgroundColor: '#5e3b7f', padding: 10, borderRadius: 5 }}
+          >
             <Text style={{ color: '#fff', textAlign: 'center' }}>Guardar</Text>
           </Pressable>
 

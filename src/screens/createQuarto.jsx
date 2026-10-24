@@ -7,22 +7,15 @@ import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import HeaderButtons from '../components/headerButtons';
 import userScreenStyles from '../styles/userScreen_styles';
-import { db , app } from '../../firebase.config';
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs
-} from 'firebase/firestore';
+import { db, app } from '../../firebase.config';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const CreateQuarto = ({ navigation }) => {
   const [camas, setCamas] = useState('');
   const [numero, setNumero] = useState('');
   const [disponibilidade, setDisponibilidade] = useState('');
-  
+
   const disponibilidadeOptions = [
     { label: 'Selecione uma opção', value: '' },
     { label: 'Disponível', value: 'disponivel' },
@@ -72,7 +65,7 @@ const CreateQuarto = ({ navigation }) => {
     }
   };
 
-  const handleBack = () =>  navigation.goBack();
+  const handleBack = () => navigation.goBack();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -106,7 +99,6 @@ const CreateQuarto = ({ navigation }) => {
 
         <SaveButton onPress={handleSave} />
       </ScrollView>
-
     </SafeAreaView>
   );
 };

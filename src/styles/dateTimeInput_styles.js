@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
   webInput: {
     width: '100%',
-    height: 45, 
+    height: 45,
     padding: '10px 12px',
     borderRadius: 10,
     border: '1px solid #ccc',

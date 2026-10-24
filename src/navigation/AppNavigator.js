@@ -8,7 +8,7 @@ import CreateQuarto from '../screens/createQuarto';
 import RoomsListScreen from '../screens/roomsListScreen';
 import UtentesListScreen from '../screens/utentesListScreen';
 import CreateUtente from '../screens/createUtente';
-import CreateUserScreen from '../screens/createUserScreen'
+import CreateUserScreen from '../screens/createUserScreen';
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen';
 import RegistosScreen from '../screens/registosScreen';
 import CreateRegistoScreen from '../screens/createRegistoScreen';
@@ -37,17 +37,30 @@ const AppNavigator = () => {
           <Stack.Screen
             name="RegistosScreen"
             component={RegistosScreen}
-            options={({ route }) => ({ headerShown: true, title: REGISTOS[route.params.tipo].titulo })}
+            options={({ route }) => ({
+              headerShown: true,
+              title: REGISTOS[route.params.tipo].titulo,
+            })}
           />
           <Stack.Screen
             name="CreateRegistoScreen"
             component={CreateRegistoScreen}
-            options={({ route }) => ({ headerShown: true, title: REGISTOS[route.params.tipo].agendar })}
+            options={({ route }) => ({
+              headerShown: true,
+              title: REGISTOS[route.params.tipo].agendar,
+            })}
           />
 
-
-          <Stack.Screen name="Conversa" component={ChatScreen} options={{ headerShown: true, title: 'Conversa' }} />
-          <Stack.Screen name="NovaConversa" component={NovaConversaScreen} options={{ headerShown: true, title: 'Nova conversa' }} />
+          <Stack.Screen
+            name="Conversa"
+            component={ChatScreen}
+            options={{ headerShown: true, title: 'Conversa' }}
+          />
+          <Stack.Screen
+            name="NovaConversa"
+            component={NovaConversaScreen}
+            options={{ headerShown: true, title: 'Nova conversa' }}
+          />
 
           <Stack.Screen
             name="UtenteDetailsScreen"

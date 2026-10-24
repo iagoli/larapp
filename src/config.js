@@ -13,7 +13,9 @@ const variaveis = {
 
 const emFalta = Object.keys(variaveis).filter((nome) => !variaveis[nome]);
 if (emFalta.length > 0) {
-  throw new Error(`Configuração em falta no .env: ${emFalta.join(', ')}. Copie .env.example para .env.`);
+  throw new Error(
+    `Configuração em falta no .env: ${emFalta.join(', ')}. Copie .env.example para .env.`
+  );
 }
 
 export const API_URL = variaveis.EXPO_PUBLIC_API_URL;

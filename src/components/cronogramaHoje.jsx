@@ -50,7 +50,9 @@ const CronogramaHoje = ({ utenteId }) => {
             <View key={e.id} style={[HomeStyles.item, passado && styles.passado]}>
               <Text style={styles.hora}>{dayjs(e.dataHora).format('HH:mm')}</Text>
               <MaterialCommunityIcons name={e.icon} size={22} color="#4a0072" />
-              <Text style={styles.texto} numberOfLines={2}>{e.texto}</Text>
+              <Text style={styles.texto} numberOfLines={2}>
+                {e.texto}
+              </Text>
             </View>
           );
         })

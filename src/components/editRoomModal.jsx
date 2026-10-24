@@ -36,12 +36,7 @@ const EditRoomModal = ({ visible, room, onClose, onSaved }) => {
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Editar Quarto</Text>

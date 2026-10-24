@@ -10,12 +10,7 @@ const UtenteCard = ({ title, icon, onAdd, onPress }) => {
         title={title}
         titleStyle={styles.cardTitle}
         left={(props) => (
-          <Avatar.Icon
-            {...props}
-            icon={icon}
-            style={styles.cardAvatar}
-            color="#5e3b7f"
-          />
+          <Avatar.Icon {...props} icon={icon} style={styles.cardAvatar} color="#5e3b7f" />
         )}
         right={() => (
           <View style={styles.cardActions}>

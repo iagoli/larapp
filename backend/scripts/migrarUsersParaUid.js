@@ -28,7 +28,9 @@ const main = async () => {
       continue;
     }
 
-    console.log(`${aplicar ? 'A migrar' : '[simulação]'} users/${docSnap.id} → users/${dados.uid} (${dados.nome})`);
+    console.log(
+      `${aplicar ? 'A migrar' : '[simulação]'} users/${docSnap.id} → users/${dados.uid} (${dados.nome})`
+    );
     if (aplicar) {
       const batch = db.batch();
       batch.set(destino, dados);

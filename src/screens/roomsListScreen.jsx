@@ -20,19 +20,19 @@ const RoomsListScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'rooms'), (snapshot) => {
-      const roomList = snapshot.docs.map(doc => ({
+      const roomList = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setRooms(roomList);
-      setCheckedItems(Object.fromEntries(roomList.map(room => [room.id, false])));
+      setCheckedItems(Object.fromEntries(roomList.map((room) => [room.id, false])));
     });
 
     return () => unsubscribe();
   }, []);
 
   const toggleCheckbox = (id) => {
-    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const handleShowDetails = (room) => {
@@ -43,7 +43,7 @@ const RoomsListScreen = ({ navigation }) => {
   const handleEdit = () => {
     const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
     if (selectedId) {
-      const roomToEdit = rooms.find(room => room.id === selectedId);
+      const roomToEdit = rooms.find((room) => room.id === selectedId);
       if (roomToEdit) {
         setSelectedRoom(roomToEdit);
         setShowEditModal(true);
@@ -78,13 +78,13 @@ const RoomsListScreen = ({ navigation }) => {
         <View style={styles.listSection}>
           <FlatList
             data={rooms}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <RoomItem
                 room={{
                   id: item.id,
                   number: item.numero || 'Sem número',
-                  availability: item.disponibilidade || 'desconhecido'
+                  availability: item.disponibilidade || 'desconhecido',
                 }}
                 checked={checkedItems[item.id]}
                 onToggle={() => toggleCheckbox(item.id)}
@@ -116,7 +116,6 @@ const RoomsListScreen = ({ navigation }) => {
           onClose={() => setShowEditModal(false)}
         />
       </View>
-
     </SafeAreaView>
   );
 };

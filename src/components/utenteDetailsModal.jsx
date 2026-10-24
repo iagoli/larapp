@@ -2,38 +2,39 @@ import React from 'react';
 import { Modal, View, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const UtenteDetailsModal = ({ visible, utente, onClose}) => {
+const UtenteDetailsModal = ({ visible, utente, onClose }) => {
   const navigation = useNavigation();
 
   const handleSeeDetails = () => {
-    onClose(); 
+    onClose();
     if (utente?.id) {
       navigation.navigate('UtenteDetailsScreen', { utenteId: utente.id });
     }
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)'
-      }}>
-        <View style={{
-          backgroundColor: '#fff',
-          padding: 20,
-          borderRadius: 10,
-          width: '80%'
-        }}>
+    <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: '#fff',
+            padding: 20,
+            borderRadius: 10,
+            width: '80%',
+          }}
+        >
           {utente && (
             <>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Informações</Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>
+                Informações
+              </Text>
               <Text> Nome: {utente.nome}</Text>
               <Text> Quarto: {utente.quarto}</Text>
               <Text> Idade: {utente.idade}</Text>

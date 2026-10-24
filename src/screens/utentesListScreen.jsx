@@ -3,8 +3,8 @@ import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/header';
 import UserItem from '../components/userItem';
 import ConfirmDialog from '../components/confirmDialog';
-import UtenteDetailsModal from '../components/utenteDetailsModal'; 
-import EditUtenteModal from '../components/editUtenteModal';      
+import UtenteDetailsModal from '../components/utenteDetailsModal';
+import EditUtenteModal from '../components/editUtenteModal';
 import styles from '../styles/utentesListScreen_styles';
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
@@ -19,20 +19,20 @@ const UtentesListScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'utentes'), (snapshot) => {
-      const list = snapshot.docs.map(doc => ({
+      const list = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
 
       setUtentes(list);
-      setCheckedItems(Object.fromEntries(list.map(user => [user.id, false])));
+      setCheckedItems(Object.fromEntries(list.map((user) => [user.id, false])));
     });
 
     return () => unsubscribe();
   }, []);
 
   const toggleCheckbox = (id) => {
-    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const handleShowDetails = (utente) => {
@@ -43,7 +43,7 @@ const UtentesListScreen = ({ navigation }) => {
   const handleEdit = () => {
     const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
     if (selectedId) {
-      const utenteToEdit = utentes.find(u => u.id === selectedId);
+      const utenteToEdit = utentes.find((u) => u.id === selectedId);
       if (utenteToEdit) {
         setSelectedUtente(utenteToEdit);
         setShowEditModal(true);
@@ -78,7 +78,7 @@ const UtentesListScreen = ({ navigation }) => {
         <View style={styles.listSection}>
           <FlatList
             data={utentes}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <UserItem
                 item={item}
@@ -111,7 +111,6 @@ const UtentesListScreen = ({ navigation }) => {
           onClose={() => setShowEditModal(false)}
         />
       </View>
-
     </SafeAreaView>
   );
 };

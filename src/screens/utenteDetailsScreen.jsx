@@ -4,7 +4,7 @@ import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
 import { useAuth } from '../contexts/AuthContext';
-import { useRoute , useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -23,7 +23,6 @@ const UtenteDetailsScreen = () => {
   const [idade, setIdade] = useState('');
 
   useEffect(() => {
-
     const fetchUtente = async () => {
       if (!utenteId) return;
 
@@ -54,12 +53,7 @@ const UtenteDetailsScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <UtenteHeader
-        selectedTab={selectedTab}
-        roomNumber={roomNumber}
-        nome={nome}
-        idade={idade}
-      />
+      <UtenteHeader selectedTab={selectedTab} roomNumber={roomNumber} nome={nome} idade={idade} />
 
       {Object.entries(REGISTOS).map(([tipo, { titulo, icon }]) => (
         <UtenteCard

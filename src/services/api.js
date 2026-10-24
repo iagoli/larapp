@@ -2,7 +2,6 @@ import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
 import { API_URL } from '../config';
 
-
 const request = async (method, path, body) => {
   const currentUser = getAuth(app).currentUser;
   if (!currentUser) {

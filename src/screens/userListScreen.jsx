@@ -10,7 +10,7 @@ import EditUserModal from '../components/editUserModal';
 import { db } from '../../firebase.config';
 import { collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
-const UsersListScreen = ({navigation}) => {
+const UsersListScreen = ({ navigation }) => {
   const [users, setUsers] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -20,20 +20,20 @@ const UsersListScreen = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
-      const userList = snapshot.docs.map(doc => ({
-        id: doc.id,           // ID real do Firestore
-        ...doc.data()
+      const userList = snapshot.docs.map((doc) => ({
+        id: doc.id, // ID real do Firestore
+        ...doc.data(),
       }));
 
       setUsers(userList);
-      setCheckedItems(Object.fromEntries(userList.map(user => [user.id, false])));
+      setCheckedItems(Object.fromEntries(userList.map((user) => [user.id, false])));
     });
 
     return () => unsubscribe();
   }, []);
 
   const toggleCheckbox = (id) => {
-    setCheckedItems(prev => ({
+    setCheckedItems((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
@@ -47,7 +47,7 @@ const UsersListScreen = ({navigation}) => {
   const handleEdit = () => {
     const selectedId = Object.entries(checkedItems).find(([_, checked]) => checked)?.[0];
     if (selectedId) {
-      const userToEdit = users.find(user => user.id === selectedId);
+      const userToEdit = users.find((user) => user.id === selectedId);
       if (userToEdit) {
         setSelectedUser(userToEdit);
         setShowEditModal(true);
@@ -82,7 +82,7 @@ const UsersListScreen = ({navigation}) => {
         <View style={styles.listSection}>
           <FlatList
             data={users}
-            keyExtractor={item => item.id} 
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <UserItem
                 item={item}
@@ -115,7 +115,6 @@ const UsersListScreen = ({navigation}) => {
           onClose={() => setShowEditModal(false)}
         />
       </View>
-
     </SafeAreaView>
   );
 };

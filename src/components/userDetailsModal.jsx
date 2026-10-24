@@ -3,24 +3,23 @@ import { Modal, View, Text, Pressable } from 'react-native';
 
 const UserDetailsModal = ({ visible, user, onClose }) => {
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)'
-      }}>
-        <View style={{
-          backgroundColor: '#fff',
-          padding: 20,
-          borderRadius: 10,
-          width: '85%'
-        }}>
+    <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: '#fff',
+            padding: 20,
+            borderRadius: 10,
+            width: '85%',
+          }}
+        >
           {user && (
             <>
               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>
@@ -41,7 +40,7 @@ const UserDetailsModal = ({ visible, user, onClose }) => {
               marginTop: 20,
               backgroundColor: '#5e3b7f',
               padding: 10,
-              borderRadius: 5
+              borderRadius: 5,
             }}
             onPress={onClose}
           >

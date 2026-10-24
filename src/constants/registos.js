@@ -14,9 +14,22 @@ export const REGISTOS = {
     agendar: 'Agendar Medicação',
     lembrete: true,
     campos: [
-      { campo: 'medicamento', label: 'Medicamento', obrigatorio: true, placeholder: 'Ex.: Paracetamol 500 mg', flex: 1.2 },
+      {
+        campo: 'medicamento',
+        label: 'Medicamento',
+        obrigatorio: true,
+        placeholder: 'Ex.: Paracetamol 500 mg',
+        flex: 1.2,
+      },
       dataHora,
-      { campo: 'quantidade', label: 'Quantidade', obrigatorio: true, teclado: 'numeric', placeholder: 'Ex.: 1', flex: 0.8 },
+      {
+        campo: 'quantidade',
+        label: 'Quantidade',
+        obrigatorio: true,
+        teclado: 'numeric',
+        placeholder: 'Ex.: 1',
+        flex: 0.8,
+      },
     ],
   },
   atividades: {
@@ -25,9 +38,21 @@ export const REGISTOS = {
     icon: 'calendar-check',
     agendar: 'Agendar Atividade',
     campos: [
-      { campo: 'atividade', label: 'Atividade', obrigatorio: true, placeholder: 'Ex.: Caminhada no jardim', flex: 1.2 },
+      {
+        campo: 'atividade',
+        label: 'Atividade',
+        obrigatorio: true,
+        placeholder: 'Ex.: Caminhada no jardim',
+        flex: 1.2,
+      },
       dataHora,
-      { campo: 'descricao', label: 'Descrição', multiline: true, placeholder: 'Detalhes (opcional)', flex: 1.5 },
+      {
+        campo: 'descricao',
+        label: 'Descrição',
+        multiline: true,
+        placeholder: 'Detalhes (opcional)',
+        flex: 1.5,
+      },
     ],
   },
   alimentacoes: {
@@ -37,7 +62,13 @@ export const REGISTOS = {
     agendar: 'Agendar Refeição',
     campos: [
       dataHora,
-      { campo: 'prato', label: 'Prato', obrigatorio: true, placeholder: 'Ex.: Sopa de legumes', flex: 1.4 },
+      {
+        campo: 'prato',
+        label: 'Prato',
+        obrigatorio: true,
+        placeholder: 'Ex.: Sopa de legumes',
+        flex: 1.4,
+      },
     ],
   },
   cuidados: {
@@ -46,9 +77,21 @@ export const REGISTOS = {
     icon: 'hospital-box-outline',
     agendar: 'Agendar Cuidado Médico',
     campos: [
-      { campo: 'acao', label: 'Ação Efetuada', obrigatorio: true, placeholder: 'Ex.: Medição da tensão arterial', flex: 1.2 },
+      {
+        campo: 'acao',
+        label: 'Ação Efetuada',
+        obrigatorio: true,
+        placeholder: 'Ex.: Medição da tensão arterial',
+        flex: 1.2,
+      },
       dataHora,
-      { campo: 'descricao', label: 'Descrição', multiline: true, placeholder: 'Detalhes (opcional)', flex: 1.5 },
+      {
+        campo: 'descricao',
+        label: 'Descrição',
+        multiline: true,
+        placeholder: 'Detalhes (opcional)',
+        flex: 1.5,
+      },
     ],
   },
   observacoes: {
@@ -58,7 +101,14 @@ export const REGISTOS = {
     agendar: 'Agendar Observação',
     campos: [
       dataHora,
-      { campo: 'descricao', label: 'Descrição', obrigatorio: true, multiline: true, placeholder: 'Escreva a observação', flex: 2 },
+      {
+        campo: 'descricao',
+        label: 'Descrição',
+        obrigatorio: true,
+        multiline: true,
+        placeholder: 'Escreva a observação',
+        flex: 2,
+      },
     ],
   },
 };
@@ -69,7 +119,9 @@ export const valoresIniciais = (campos, registo = {}) =>
     campos.map(({ campo, tipo }) => [
       campo,
       tipo === 'dataHora'
-        ? registo[campo] ? new Date(registo[campo]) : new Date()
+        ? registo[campo]
+          ? new Date(registo[campo])
+          : new Date()
         : String(registo[campo] ?? ''),
     ])
   );
