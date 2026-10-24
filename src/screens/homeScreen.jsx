@@ -17,9 +17,9 @@ const HomeScreen = () => {
   const isStaff = user?.tipoUsuario === 'admin' || user?.tipoUsuario === 'enfermeiro';
 
   // Equipa sem utente associado escolhe primeiro o utente na lista
-  const openRegisto = (screen) => {
+  const openRegisto = (tipo) => {
     if (utenteId) {
-      navigation.navigate(screen, { utenteId });
+      navigation.navigate('RegistosScreen', { tipo, utenteId });
     } else if (isStaff) {
       navigation.navigate('Utentes');
     } else {
@@ -44,7 +44,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity
               style={HomeStyles.item}
-              onPress={() => openRegisto('UtenteAtividadeScreen')}
+              onPress={() => openRegisto('atividades')}
             >
               <FontAwesome5 name="walking" size={28} color="#000" marginLeft={5} />
               <Text style={HomeStyles.itemText}>Atividade</Text>
@@ -52,7 +52,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity
               style={HomeStyles.item}
-              onPress={() => openRegisto('UtenteCuidadosScreen')}
+              onPress={() => openRegisto('cuidados')}
             >
               <MaterialIcons name="event-note" size={24} color="#000" />
               <Text style={HomeStyles.itemText}>Cuidados</Text>
@@ -60,7 +60,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity
               style={HomeStyles.item}
-              onPress={() => openRegisto('UtenteRefeicoesScreen')}
+              onPress={() => openRegisto('alimentacoes')}
             >
               <Ionicons name="time-outline" size={28} color="#000" />
               <Text style={HomeStyles.itemText}>Refeição</Text>
@@ -68,7 +68,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity
               style={HomeStyles.item}
-              onPress={() => openRegisto('UtenteMedicacaoScreen')}
+              onPress={() => openRegisto('medicacoes')}
             >
               <MaterialCommunityIcons name="pill" size={26} color="#000" />
               <Text style={HomeStyles.itemText}>Medicação</Text>
@@ -76,7 +76,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity
               style={HomeStyles.item}
-              onPress={() => openRegisto('UtenteObservacoesScreen')}
+              onPress={() => openRegisto('observacoes')}
             >
               <MaterialCommunityIcons name="comment-text-outline" size={26} color="#000" />
               <Text style={HomeStyles.itemText}>Observação</Text>

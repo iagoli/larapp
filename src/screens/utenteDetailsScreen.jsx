@@ -9,14 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
-
-const data = [
-  { id: 1, title: 'Medicação', icon: 'pill', screen: 'UtenteMedicacaoScreen', createScreen: 'CreateMedicacaoScreen' },
-  { id: 2, title: 'Atividades Diárias', icon: 'calendar-check', screen: 'UtenteAtividadeScreen', createScreen: 'CreateAtividadesScreen' },
-  { id: 3, title: 'Alimentação', icon: 'food', screen: 'UtenteRefeicoesScreen', createScreen: 'CreateAlimentacoesScreen' },
-  { id: 4, title: 'Cuidados Médicos', icon: 'hospital-box-outline', screen: 'UtenteCuidadosScreen', createScreen: 'CreateCuidadoScreen' },
-  { id: 5, title: 'Observações', icon: 'comment-text-outline', screen: 'UtenteObservacoesScreen', createScreen: 'CreateObservacoesScreen' },
-];
+import { REGISTOS } from '../constants/registos';
 
 const UtenteDetailsScreen = () => {
   const { user } = useAuth();
@@ -69,13 +62,13 @@ const UtenteDetailsScreen = () => {
         idade={idade}
       />
 
-      {data.map((item) => (
+      {Object.entries(REGISTOS).map(([tipo, { titulo, icon }]) => (
         <UtenteCard
-          key={item.id}
-          title={item.title}
-          icon={item.icon}
-          onAdd={() => navigation.navigate(item.createScreen, { utenteId })}
-          onPress={() => navigation.navigate(item.screen, { utenteId })}
+          key={tipo}
+          title={titulo}
+          icon={icon}
+          onAdd={() => navigation.navigate('CreateRegistoScreen', { tipo, utenteId })}
+          onPress={() => navigation.navigate('RegistosScreen', { tipo, utenteId })}
         />
       ))}
     </ScrollView>
