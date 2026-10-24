@@ -9,13 +9,17 @@ Projeto desenvolvido na unidade curricular **Desenvolvimento Multiplataforma** d
 Superior de Tecnologia e Gestão (ESTiG) do Instituto Politécnico de Bragança (IPB)**, no ano
 letivo 2024/25.
 
-<!--
-Capturas de ecrã: guarde as imagens em docs/screenshots/ e descomente a tabela abaixo.
+## Capturas de ecrã
 
-| Início | Registos do utente | Conversas |
-| :----: | :----------------: | :-------: |
-| <img src="docs/screenshots/home.png" width="220"> | <img src="docs/screenshots/registos.png" width="220"> | <img src="docs/screenshots/chat.png" width="220"> |
--->
+|                                               Início do utente                                                |                                         Contactos de emergência                                         |                                               Login                                               |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img src="docs/screenshots/inicio-utente.png" width="240" alt="Página inicial do utente com o plano de hoje"> |          <img src="docs/screenshots/sos.png" width="240" alt="Botão SOS com o 112 e o SNS 24">          |              <img src="docs/screenshots/login.png" width="240" alt="Ecrã de login">               |
+|                                                  **Utentes**                                                  |                                         **Detalhes do utente**                                          |                                     **Registos de medicação**                                     |
+|                  <img src="docs/screenshots/utentes.png" width="240" alt="Lista de utentes">                  | <img src="docs/screenshots/utente.png" width="240" alt="Detalhes de um utente com os tipos de registo"> |   <img src="docs/screenshots/medicacao.png" width="240" alt="Tabela de medicação de um utente">   |
+|                                             **Agendar medicação**                                             |                                              **Conversas**                                              |                                       **Chat com a equipa**                                       |
+|    <img src="docs/screenshots/agendar-medicacao.png" width="240" alt="Formulário para agendar medicação">     |             <img src="docs/screenshots/conversas.png" width="240" alt="Lista de conversas">             | <img src="docs/screenshots/chat.png" width="240" alt="Conversa direta entre utente e enfermeiro"> |
+
+<sub>Capturas feitas na versão web da app, com os dados de demonstração do `npm run seed`.</sub>
 
 ## Funcionalidades
 
@@ -131,7 +135,7 @@ No `.env`, preencha a configuração web do Firebase e a chave pública do Strea
 
 ### Contas de demonstração
 
-O `npm run seed` cria as contas abaixo, além de 4 quartos, 3 utentes e registos para o dia de hoje:
+O `npm run seed` cria as contas abaixo, além de 8 quartos, 8 utentes e registos para o dia de hoje:
 
 | Perfil        | Email                    | Palavra-passe |
 | ------------- | ------------------------ | ------------- |

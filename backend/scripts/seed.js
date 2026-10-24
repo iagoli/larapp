@@ -38,6 +38,10 @@ const QUARTOS = [
   { id: 'demo-quarto-102', numero: '102', camas: '2', disponibilidade: 'ocupado' },
   { id: 'demo-quarto-103', numero: '103', camas: '2', disponibilidade: 'disponivel' },
   { id: 'demo-quarto-104', numero: '104', camas: '1', disponibilidade: 'manutencao' },
+  { id: 'demo-quarto-105', numero: '105', camas: '2', disponibilidade: 'ocupado' },
+  { id: 'demo-quarto-106', numero: '106', camas: '1', disponibilidade: 'ocupado' },
+  { id: 'demo-quarto-201', numero: '201', camas: '2', disponibilidade: 'ocupado' },
+  { id: 'demo-quarto-202', numero: '202', camas: '1', disponibilidade: 'disponivel' },
 ];
 
 const UTENTES = [
@@ -45,10 +49,15 @@ const UTENTES = [
     id: 'demo-utente-maria',
     nome: 'Maria da Conceição Silva',
     idade: '84',
-    quarto: 'demo-quarto-101',
+    quarto: '101',
   },
-  { id: 'demo-utente-joaquim', nome: 'Joaquim Ferreira', idade: '79', quarto: 'demo-quarto-102' },
-  { id: 'demo-utente-alice', nome: 'Alice Moreira', idade: '88', quarto: 'demo-quarto-102' },
+  { id: 'demo-utente-joaquim', nome: 'Joaquim Ferreira', idade: '79', quarto: '102' },
+  { id: 'demo-utente-alice', nome: 'Alice Moreira', idade: '88', quarto: '102' },
+  { id: 'demo-utente-antonio', nome: 'António Gonçalves', idade: '91', quarto: '105' },
+  { id: 'demo-utente-rosa', nome: 'Rosa Martins', idade: '76', quarto: '105' },
+  { id: 'demo-utente-fernando', nome: 'Fernando Lopes', idade: '82', quarto: '106' },
+  { id: 'demo-utente-gloria', nome: 'Glória Carvalho', idade: '87', quarto: '201' },
+  { id: 'demo-utente-manuel', nome: 'Manuel Pires', idade: '80', quarto: '201' },
 ];
 
 const CONTAS = [
