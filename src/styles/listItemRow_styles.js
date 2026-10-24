@@ -17,7 +17,7 @@ export default StyleSheet.create({
   itemText: {
     flex: 1,
     fontSize: 16,
-    color: '#3a2d4d', 
+    color: '#3a2d4d',
     fontWeight: '500',
   },
 });

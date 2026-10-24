@@ -7,7 +7,6 @@ import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader';
 import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
@@ -17,7 +16,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as uuid from 'uuid';
 import { apiPost } from '../services/api';
 
-const CreateUserScreen = ({navigation}) => {
+const CreateUserScreen = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
   const [email, setEmail] = useState('');
@@ -27,7 +26,6 @@ const CreateUserScreen = ({navigation}) => {
   const [utenteId, setUtenteId] = useState('');
   const [utentes, setUtentes] = useState([]);
   const [photoUri, setPhotoUri] = useState(null);
-  const [activeTab, setActiveTab] = useState('Utilizadores');
 
   const tipoUsuarioOptions = [
     { label: 'Selecione uma opção', value: '' },
@@ -40,7 +38,7 @@ const CreateUserScreen = ({navigation}) => {
     const fetchUtentes = async () => {
       try {
         const snapshot = await getDocs(collection(db, 'utentes'));
-        const options = snapshot.docs.map(doc => ({
+        const options = snapshot.docs.map((doc) => ({
           label: doc.data().nome,
           value: doc.id,
         }));
@@ -60,7 +58,7 @@ const CreateUserScreen = ({navigation}) => {
     }
 
     try {
-      // Upload photo
+      // Carrega a fotografia
       let photoUrl = null;
       if (photoUri) {
         const storage = getStorage(app);
@@ -87,18 +85,20 @@ const CreateUserScreen = ({navigation}) => {
       // O novo utilizador define a própria senha através deste email
       await sendPasswordResetEmail(getAuth(app), email);
 
-      Alert.alert('Sucesso', `Utilizador criado. Foi enviado um email para ${email} para definir a senha.`);
+      Alert.alert(
+        'Sucesso',
+        `Utilizador criado. Foi enviado um email para ${email} para definir a senha.`
+      );
 
       // Reset form
       setNome('');
-      setIdade('')
+      setIdade('');
       setEmail('');
       setTelemovel('');
       setMorada('');
       setTipoUsuario('');
       setUtenteId('');
       setPhotoUri(null);
-
     } catch (error) {
       console.error('Erro ao criar utilizador:', error);
       Alert.alert('Erro', error.message || 'Erro ao criar utilizador.');
@@ -116,7 +116,7 @@ const CreateUserScreen = ({navigation}) => {
 
         <Label>Nome</Label>
         <TextInputField value={nome} onChangeText={setNome} placeholder="Nome" />
-       
+
         <Label>Idade</Label>
         <TextInputField
           value={idade}
@@ -124,18 +124,28 @@ const CreateUserScreen = ({navigation}) => {
           placeholder="Idade"
           keyboardType="numeric"
         />
-       
+
         <Label>Email</Label>
-        <TextInputField value={email} onChangeText={setEmail} placeholder="Email" keyboardType="email-address" />
+        <TextInputField
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+          keyboardType="email-address"
+        />
 
         <Label>Telemóvel</Label>
-        <TextInputField value={telemovel} onChangeText={setTelemovel} placeholder="Telemóvel" keyboardType="phone-pad" />
+        <TextInputField
+          value={telemovel}
+          onChangeText={setTelemovel}
+          placeholder="Telemóvel"
+          keyboardType="phone-pad"
+        />
 
         <Label>Morada</Label>
         <TextInputField value={morada} onChangeText={setMorada} placeholder="Morada" />
 
         <SelectInput
-          label="Tipo de Usuário"
+          label="Tipo de Utilizador"
           selectedValue={tipoUsuario}
           onValueChange={setTipoUsuario}
           items={tipoUsuarioOptions}
@@ -152,7 +162,6 @@ const CreateUserScreen = ({navigation}) => {
 
         <SaveButton onPress={handleSave} />
       </ScrollView>
-
     </SafeAreaView>
   );
 };

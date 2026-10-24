@@ -21,7 +21,7 @@ const Header_styles = StyleSheet.create({
   iconGroup: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4, 
+    gap: 4,
   },
 });
 

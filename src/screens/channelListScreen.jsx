@@ -8,10 +8,7 @@ const sort = { last_message_at: -1 };
 
 const ChannelListScreen = ({ navigation }) => {
   const { user, chatReady } = useAuth();
-  const filters = useMemo(
-    () => ({ type: 'messaging', members: { $in: [user.uid] } }),
-    [user.uid]
-  );
+  const filters = useMemo(() => ({ type: 'messaging', members: { $in: [user.uid] } }), [user.uid]);
 
   if (!chatReady) {
     return (

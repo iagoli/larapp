@@ -4,7 +4,6 @@ import { Picker } from '@react-native-picker/picker';
 import selectInputstyles from '../styles/selectInput_styles';
 import Label from './label';
 
-
 const SelectInput = ({ label, selectedValue, onValueChange, items }) => {
   return (
     <View style={selectInputstyles.container}>

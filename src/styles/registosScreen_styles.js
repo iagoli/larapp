@@ -8,33 +8,39 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: '600',
     color: '#5e3b7f',
-    marginBottom: 16,
+    flexShrink: 1,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
     gap: 8,
+    marginBottom: 12,
   },
   avatar: {
     backgroundColor: '#e0cfff',
   },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   scheduleButton: {
     flex: 1,
-    borderColor: '#5e3b7f',
+    marginRight: 8,
     borderRadius: 20,
-    justifyContent: 'center',
+    borderColor: '#5e3b7f',
   },
   tableHeader: {
     flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#f9efff',
     paddingVertical: 10,
     paddingHorizontal: 8,
     borderRadius: 10,
-    justifyContent: 'space-between',
     marginBottom: 8,
+    gap: 6,
   },
   headerText: {
     fontWeight: 'bold',
@@ -44,23 +50,24 @@ export default StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
-    backgroundColor: '#f4f0fa',
+    backgroundColor: '#f6edfc',
     paddingVertical: 8,
-    paddingHorizontal: 4,
-    borderRadius: 8,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    marginBottom: 8,
+    gap: 6,
+  },
+  cellCheckbox: {
+    width: 36,
+    alignItems: 'center',
   },
   cell: {
     fontSize: 14,
-    color: '#333',
+    color: '#3a2d4d',
   },
-  columnMedicamento: {
-    flex: 1.2,
-  },
-  columnData: {
-    flex: 1,
-  },
-  columnQuantidade: {
-    flex: 1,
+  vazio: {
+    padding: 16,
+    color: 'gray',
+    textAlign: 'center',
   },
 });

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    padding: 8, 
+    padding: 8,
   },
 });
 

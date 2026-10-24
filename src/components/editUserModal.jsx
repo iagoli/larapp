@@ -3,7 +3,7 @@ import { Modal, View, Text, TextInput, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
-import styles from '../styles/editRoomModal_styles'; 
+import styles from '../styles/editRoomModal_styles';
 
 const EditUserModal = ({ visible, user, onClose, onSaved }) => {
   const [nome, setNome] = useState('');
@@ -45,12 +45,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Editar Utilizador</Text>
@@ -77,7 +72,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
           <TextInput
             value={telemovel}
             onChangeText={setTelemovel}
-            placeholder="Telefone"
+            placeholder="Telemóvel"
             keyboardType="phone-pad"
             style={styles.input}
           />
@@ -99,7 +94,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
             style={styles.input}
           />
 
-          <Text style={styles.label}>Tipo de Usuário</Text>
+          <Text style={styles.label}>Tipo de Utilizador</Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={tipoUsuario}
@@ -119,7 +114,7 @@ const EditUserModal = ({ visible, user, onClose, onSaved }) => {
             </Pressable>
 
             <Pressable onPress={handleSave} style={styles.saveButton}>
-              <Text style={styles.buttonText}>Salvar</Text>
+              <Text style={styles.buttonText}>Guardar</Text>
             </Pressable>
           </View>
         </View>

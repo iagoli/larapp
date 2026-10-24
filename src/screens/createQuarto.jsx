@@ -6,27 +6,16 @@ import TextInputField from '../components/textInputField';
 import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
-import { useNavigation } from '@react-navigation/native';
-import { db } from '../../firebase.config';
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs
-} from 'firebase/firestore';
+import { db, app } from '../../firebase.config';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { app } from '../../firebase.config';
 
 const CreateQuarto = ({ navigation }) => {
   const [camas, setCamas] = useState('');
   const [numero, setNumero] = useState('');
   const [disponibilidade, setDisponibilidade] = useState('');
-  const [activeTab, setActiveTab] = useState('Quarto');
-  
+
   const disponibilidadeOptions = [
     { label: 'Selecione uma opção', value: '' },
     { label: 'Disponível', value: 'disponivel' },
@@ -39,7 +28,7 @@ const CreateQuarto = ({ navigation }) => {
     const user = auth.currentUser;
 
     if (!user) {
-      Alert.alert('Erro', 'Usuário não está autenticado.');
+      Alert.alert('Erro', 'Sessão expirada. Inicie sessão novamente.');
       return;
     }
 
@@ -76,7 +65,7 @@ const CreateQuarto = ({ navigation }) => {
     }
   };
 
-  const handleBack = () =>  navigation.goBack();
+  const handleBack = () => navigation.goBack();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -89,7 +78,7 @@ const CreateQuarto = ({ navigation }) => {
         <TextInputField
           value={camas}
           onChangeText={setCamas}
-          placeholder="Digite a quantidade de camas"
+          placeholder="Número de camas"
           keyboardType="numeric"
         />
 
@@ -97,7 +86,7 @@ const CreateQuarto = ({ navigation }) => {
         <TextInputField
           value={numero}
           onChangeText={setNumero}
-          placeholder="Digite o número do quarto"
+          placeholder="Ex.: 101"
           keyboardType="numeric"
         />
 
@@ -110,7 +99,6 @@ const CreateQuarto = ({ navigation }) => {
 
         <SaveButton onPress={handleSave} />
       </ScrollView>
-
     </SafeAreaView>
   );
 };

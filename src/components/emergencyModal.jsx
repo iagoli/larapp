@@ -15,12 +15,7 @@ const ligar = (numero) => {
 
 const EmergencyModal = ({ visible, onClose }) => {
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Contactos de Emergência</Text>
@@ -35,10 +30,7 @@ const EmergencyModal = ({ visible, onClose }) => {
           <Text style={styles.hint}>Toque num contacto para ligar.</Text>
 
           <View style={styles.buttonRow}>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={onClose}
-            >
+            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
               <Text style={styles.buttonText}>Fechar</Text>
             </TouchableOpacity>
           </View>

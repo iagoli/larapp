@@ -27,9 +27,7 @@ const AppDrawer = () => {
         </>
       )}
 
-      {role === 'admin' && (
-        <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
-      )}
+      {role === 'admin' && <Drawer.Screen name="Utilizadores" component={UsersListScreen} />}
     </Drawer.Navigator>
   );
 };

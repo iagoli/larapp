@@ -18,8 +18,6 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          console.log('✅ Firebase autenticado UID:', firebaseUser.uid);
-
           // Busca dados no Firestore
           const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
 

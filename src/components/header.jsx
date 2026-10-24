@@ -8,14 +8,30 @@ function Header({ title = 'Utilizadores', onEdit, onDelete, onAdd }) {
     <View style={styles.header}>
       <Text style={styles.headerLabel}>{title}</Text>
       <View style={styles.iconGroup}>
-        <IconButton icon="pencil" size={20} iconColor="#5e3b7f" onPress={onEdit} style={{ marginLeft: 6 }} />
-        <IconButton icon="delete" size={20} iconColor="#5e3b7f" onPress={onDelete} style={{ marginLeft: 6 }} />
-        <IconButton icon="plus" size={20} iconColor="#5e3b7f" onPress={onAdd} style={{ marginLeft: 6 }} />
+        <IconButton
+          icon="pencil"
+          size={20}
+          iconColor="#5e3b7f"
+          onPress={onEdit}
+          style={{ marginLeft: 6 }}
+        />
+        <IconButton
+          icon="delete"
+          size={20}
+          iconColor="#5e3b7f"
+          onPress={onDelete}
+          style={{ marginLeft: 6 }}
+        />
+        <IconButton
+          icon="plus"
+          size={20}
+          iconColor="#5e3b7f"
+          onPress={onAdd}
+          style={{ marginLeft: 6 }}
+        />
       </View>
     </View>
   );
 }
 
 export default Header;
-
-
