@@ -40,7 +40,8 @@ const CreateUtente = ({ navigation }) => {
           const data = doc.data();
           return {
             label: `Quarto ${data.numero}`,
-            value: doc.id,
+            // Os restantes ecrãs mostram e editam o quarto pelo número
+            value: data.numero,
           };
         });
 
