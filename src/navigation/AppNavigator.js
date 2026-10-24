@@ -22,6 +22,8 @@ import CreateAtividadeScreen from '../screens/createAtividadesScreen'
 import CreateMedicaoScreen from '../screens/createMedicacaoScreen'
 import CreateObservacoesScreen from '../screens/createObservacoesScreen'
 import CreateCuidadosScreen from '../screens/createCuidadosScreen'
+import ChatScreen from '../screens/chatScreen';
+import NovaConversaScreen from '../screens/novaConversaScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +55,9 @@ const AppNavigator = () => {
           <Stack.Screen name="CreateMedicacaoScreen" component={CreateMedicaoScreen} options={{ headerShown: true, title: 'Criar Medicacao' }} />
           <Stack.Screen name="CreateObservacoesScreen" component={CreateObservacoesScreen} options={{ headerShown: true, title: 'Criar Observacao' }} />
 
+
+          <Stack.Screen name="Conversa" component={ChatScreen} options={{ headerShown: true, title: 'Conversa' }} />
+          <Stack.Screen name="NovaConversa" component={NovaConversaScreen} options={{ headerShown: true, title: 'Nova conversa' }} />
 
           <Stack.Screen
             name="UtenteDetailsScreen"

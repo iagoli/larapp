@@ -30,6 +30,28 @@ const auth = getAuth();
 const db = getFirestore();
 
 const TIPOS_USUARIO = ['admin', 'enfermeiro', 'utente'];
+const EQUIPA = ['admin', 'enfermeiro'];
+const CANAL_EQUIPA = 'equipa';
+
+// Perfil do utilizador no Firestore; aceita documentos com id = uid ou com campo uid
+const getPerfil = async (uid) => {
+  const direto = await db.collection('users').doc(uid).get();
+  if (direto.exists) return direto.data();
+
+  const snapshot = await db.collection('users').where('uid', '==', uid).limit(1).get();
+  return snapshot.empty ? null : snapshot.docs[0].data();
+};
+
+const toStreamUser = (uid, perfil) => ({
+  id: uid,
+  name: perfil.nome || 'Utilizador',
+  image: perfil.photoUrl || undefined,
+  tipoUsuario: perfil.tipoUsuario,
+});
+
+// Utentes só falam com a equipa; a equipa fala com todos
+const podeConversar = (perfilA, perfilB) =>
+  EQUIPA.includes(perfilA.tipoUsuario) || EQUIPA.includes(perfilB.tipoUsuario);
 
 app.use(cors());
 app.use(express.json());
@@ -52,22 +74,92 @@ const requireAuth = async (req, res, next) => {
 };
 
 const requireAdmin = async (req, res, next) => {
-  const snapshot = await db.collection('users').where('uid', '==', req.uid).limit(1).get();
+  const perfil = await getPerfil(req.uid);
 
-  if (snapshot.empty || snapshot.docs[0].data().tipoUsuario !== 'admin') {
+  if (!perfil || perfil.tipoUsuario !== 'admin') {
     return res.status(403).json({ error: 'Apenas administradores podem executar esta ação' });
   }
 
   return next();
 };
 
-app.post('/token', requireAuth, (req, res) => {
+app.post('/token', requireAuth, async (req, res) => {
   try {
+    const perfil = await getPerfil(req.uid);
+    if (!perfil) {
+      return res.status(404).json({ error: 'Perfil de utilizador não encontrado' });
+    }
+
+    await serverClient.upsertUser(toStreamUser(req.uid, perfil));
+
+    if (EQUIPA.includes(perfil.tipoUsuario)) {
+      const canal = serverClient.channel('messaging', CANAL_EQUIPA, {
+        name: 'Equipa',
+        created_by_id: req.uid,
+      });
+      await canal.create();
+      await canal.addMembers([req.uid]);
+    }
+
     const token = serverClient.createToken(req.uid);
     return res.json({ token });
   } catch (err) {
     console.error('Erro ao gerar token:', err);
     return res.status(500).json({ error: 'Erro interno ao gerar token' });
+  }
+});
+
+app.get('/chat/contacts', requireAuth, async (req, res) => {
+  try {
+    const perfil = await getPerfil(req.uid);
+    if (!perfil) {
+      return res.status(404).json({ error: 'Perfil de utilizador não encontrado' });
+    }
+
+    const snapshot = await db.collection('users').get();
+    const contactos = snapshot.docs
+      .map((d) => d.data())
+      .filter((c) => c.uid && c.uid !== req.uid && podeConversar(perfil, c))
+      .map((c) => ({ uid: c.uid, nome: c.nome, tipoUsuario: c.tipoUsuario, photoUrl: c.photoUrl || null }))
+      .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+
+    return res.json({ contactos });
+  } catch (err) {
+    console.error('Erro ao listar contactos:', err);
+    return res.status(500).json({ error: 'Erro interno ao listar contactos' });
+  }
+});
+
+app.post('/chat/direct', requireAuth, async (req, res) => {
+  const { uid } = req.body;
+
+  if (!uid || uid === req.uid) {
+    return res.status(400).json({ error: 'Contacto inválido' });
+  }
+
+  try {
+    const [perfil, outro] = await Promise.all([getPerfil(req.uid), getPerfil(uid)]);
+
+    if (!perfil || !outro) {
+      return res.status(404).json({ error: 'Utilizador não encontrado' });
+    }
+    if (!podeConversar(perfil, outro)) {
+      return res.status(403).json({ error: 'Não é possível iniciar esta conversa' });
+    }
+
+    await serverClient.upsertUsers([toStreamUser(req.uid, perfil), toStreamUser(uid, outro)]);
+
+    // Canal "distinct": os mesmos dois membros reutilizam sempre a mesma conversa
+    const canal = serverClient.channel('messaging', {
+      members: [req.uid, uid],
+      created_by_id: req.uid,
+    });
+    await canal.create();
+
+    return res.json({ cid: canal.cid });
+  } catch (err) {
+    console.error('Erro ao criar conversa:', err);
+    return res.status(500).json({ error: 'Erro interno ao criar conversa' });
   }
 });
 

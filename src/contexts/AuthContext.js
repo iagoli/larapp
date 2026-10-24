@@ -39,21 +39,12 @@ export const AuthProvider = ({ children }) => {
                 await chatClient.connectUser(
                   {
                     id: firebaseUser.uid,
-                    name: userData.displayName ?? 'Usuário',
-                    image: userData.photoURL ?? undefined,
+                    name: userData.nome ?? 'Utilizador',
+                    image: userData.photoUrl ?? undefined,
                   },
                   token
                 );
 
-                console.log('✅ Usuário conectado ao Stream Chat');
-
-                // Cria o canal 'Geral' se não existir
-                const channel = chatClient.channel('messaging', `general-${firebaseUser.uid}`, {
-                  name: 'Geral',
-                  members: [firebaseUser.uid],
-                });
-
-                await channel.create();
                 setChatReady(true);
               })
               .catch((err) => {
