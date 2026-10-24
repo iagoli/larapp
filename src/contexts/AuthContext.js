@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
             setUser(fullUser); // 👉 permite que o app navegue imediatamente
 
             // Conecta ao chat da Stream em segundo plano
-            fetchChatToken(firebaseUser.uid)
+            fetchChatToken()
               .then(async (token) => {
                 if (!token) throw new Error('Token de chat não encontrado');
 
