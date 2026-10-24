@@ -26,6 +26,21 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 4,
   },
+  contact: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  number: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#5e3b7f',
+  },
+  hint: {
+    color: '#777',
+    fontSize: 12,
+    marginVertical: 12,
+  },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',

@@ -10,16 +10,12 @@ import HeaderButtons from '../components/headerButtons';
 import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { app, db } from '../../firebase.config';
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  getDocs
-} from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as uuid from 'uuid';
+import { apiPost } from '../services/api';
 
 const CreateUserScreen = ({navigation}) => {
   const [nome, setNome] = useState('');
@@ -63,17 +59,7 @@ const CreateUserScreen = ({navigation}) => {
       return;
     }
 
-    const auth = getAuth(app);
-    let userCredential;
-
     try {
-      // Create auth user
-      userCredential = await createUserWithEmailAndPassword(auth, email, '123456');
-      const newUser = userCredential.user;
-
-      // Send verification email
-      await sendEmailVerification(newUser);
-
       // Upload photo
       let photoUrl = null;
       if (photoUri) {
@@ -86,8 +72,8 @@ const CreateUserScreen = ({navigation}) => {
         photoUrl = await getDownloadURL(imageRef);
       }
 
-      // Save user data to Firestore
-      await addDoc(collection(db, 'users'), {
+      // O backend cria a conta com o Admin SDK, sem trocar a sessão do admin
+      await apiPost('/users', {
         nome,
         idade,
         email,
@@ -96,11 +82,12 @@ const CreateUserScreen = ({navigation}) => {
         tipoUsuario,
         utenteId: utenteId || null,
         photoUrl,
-        createdAt: serverTimestamp(),
-        uid: newUser.uid,
       });
 
-      Alert.alert('Sucesso', 'Utilizador criado com sucesso!');
+      // O novo utilizador define a própria senha através deste email
+      await sendPasswordResetEmail(getAuth(app), email);
+
+      Alert.alert('Sucesso', `Utilizador criado. Foi enviado um email para ${email} para definir a senha.`);
 
       // Reset form
       setNome('');

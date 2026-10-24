@@ -41,7 +41,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.20.0",
-    "stream-chat": "^9.4.0",
+    "stream-chat": "^9.5.1",
     "stream-chat-expo": "^7.1.1",
     "undefined": "",
     "uuid": "^11.1.0"

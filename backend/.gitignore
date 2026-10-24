@@ -1,1 +1,5 @@
 .env
+
+# Firebase service account
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
