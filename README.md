@@ -92,7 +92,8 @@ App (Expo) ──Firebase SDK──────────────▶ Fireb
 ### Requisitos
 
 - Node.js 20 ou mais recente.
-- Um projeto Firebase com Authentication (email/palavra-passe), Firestore e Storage ativos.
+- Um projeto Firebase com Authentication (email/palavra-passe) e Firestore ativos. O Storage é
+  opcional (ver abaixo).
 - Uma app no [Stream](https://getstream.io/chat/) (o plano gratuito chega).
 - A app [Expo Go](https://expo.dev/go) no telemóvel, ou um emulador Android ou iOS.
 
@@ -118,8 +119,14 @@ npm run dev    # http://localhost:3000
 ```bash
 npx firebase-tools login
 npx firebase-tools use <id-do-seu-projeto>
-npx firebase-tools deploy --only firestore,storage
+npx firebase-tools deploy --only firestore
 ```
+
+> **Storage (opcional):** o Firebase Storage só guarda as fotografias de utilizadores e utentes.
+> Sem ele, a app funciona normalmente e só o envio de fotos fica indisponível. Desde 2024, os
+> projetos novos só podem ativar o Storage no plano Blaze, que tem uma camada gratuita mas pede
+> um cartão. Para o usar, ative-o na consola (Storage > Get Started) e publique as regras com
+> `npx firebase-tools deploy --only storage`.
 
 ### 3. App
 
