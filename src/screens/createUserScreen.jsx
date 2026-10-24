@@ -7,7 +7,6 @@ import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader';
 import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
@@ -27,7 +26,6 @@ const CreateUserScreen = ({navigation}) => {
   const [utenteId, setUtenteId] = useState('');
   const [utentes, setUtentes] = useState([]);
   const [photoUri, setPhotoUri] = useState(null);
-  const [activeTab, setActiveTab] = useState('Utilizadores');
 
   const tipoUsuarioOptions = [
     { label: 'Selecione uma opção', value: '' },

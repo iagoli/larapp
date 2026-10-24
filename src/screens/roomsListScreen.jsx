@@ -3,7 +3,6 @@ import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/header';
 import RoomItem from '../components/roomItem';
 import ConfirmDialog from '../components/confirmDialog';
-import BottomTabBar from '../components/bottomTabBar';
 import RoomDetailsModal from '../components/roomDetailsModal';
 import EditRoomModal from '../components/editRoomModal';
 import styles from '../styles/roomsListScreen_styles';
@@ -18,7 +17,6 @@ const RoomsListScreen = ({ navigation }) => {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [activeTab, setActiveTab] = useState('Quartos');
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'rooms'), (snapshot) => {

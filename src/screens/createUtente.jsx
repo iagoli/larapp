@@ -7,7 +7,6 @@ import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader';
 import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 import { db } from '../../firebase.config';
 import { collection, doc, setDoc, serverTimestamp, getDocs, query, where } from 'firebase/firestore';
@@ -21,7 +20,6 @@ const CreateUtente = ({ navigation }) => {
   const [quarto, setQuarto] = useState('');
   const [idade, setIdade] = useState('');
   const [photoUri, setPhotoUri] = useState(null);
-  const [activeTab, setActiveTab] = useState('Utentes');
   const [quartosOptions, setQuartosOptions] = useState([]);
 
   useEffect(() => {

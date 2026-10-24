@@ -9,7 +9,6 @@ import CronogramaHoje from '../components/cronogramaHoje';
 import { useAuth } from '../contexts/AuthContext';
 
 const HomeScreen = () => {
-  const [activeTab, setActiveTab] = useState('Home');
   const [modalVisible, setModalVisible] = useState(false); 
   const navigation = useNavigation(); 
  

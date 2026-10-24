@@ -3,7 +3,6 @@ import { SafeAreaView, View, FlatList } from 'react-native';
 import Header from '../components/header';
 import UserItem from '../components/userItem';
 import ConfirmDialog from '../components/confirmDialog';
-import BottomTabBar from '../components/bottomTabBar';
 import UtenteDetailsModal from '../components/utenteDetailsModal'; 
 import EditUtenteModal from '../components/editUtenteModal';      
 import styles from '../styles/utentesListScreen_styles';
@@ -17,7 +16,6 @@ const UtentesListScreen = ({ navigation }) => {
   const [selectedUtente, setSelectedUtente] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('Utentes');
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'utentes'), (snapshot) => {

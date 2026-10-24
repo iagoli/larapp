@@ -6,7 +6,6 @@ import TextInputField from '../components/textInputField';
 import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import HeaderButtons from '../components/headerButtons';
-import BottomTabBar from '../components/bottomTabBar';
 import userScreenStyles from '../styles/userScreen_styles';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase.config';
@@ -25,7 +24,6 @@ const CreateQuarto = ({ navigation }) => {
   const [camas, setCamas] = useState('');
   const [numero, setNumero] = useState('');
   const [disponibilidade, setDisponibilidade] = useState('');
-  const [activeTab, setActiveTab] = useState('Quarto');
   
   const disponibilidadeOptions = [
     { label: 'Selecione uma opção', value: '' },
