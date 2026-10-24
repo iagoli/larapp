@@ -7,7 +7,6 @@ import ChatScreen from '../screens/chatScreen';
 import RoomsListScreen from '../screens/roomsListScreen';
 import UtentesListScreen from '../screens/utentesListScreen';
 import UsersListScreen from '../screens/userListScreen';
-import ChannelListScreen from '../screens/channelListScreen';
 import CustomDrawer from '../components/customDrawer';
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen';
 
@@ -27,7 +26,6 @@ const AppDrawer = () => {
           <Drawer.Screen name="Quartos" component={RoomsListScreen} />
           <Drawer.Screen name="Utentes" component={UtentesListScreen} />
           <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
-          <Drawer.Screen name="Canais de Chat" component={ChannelListScreen} />
           <Drawer.Screen name="Utente Details" component={UtenteDetailsScreen} />
         </>
       )}
