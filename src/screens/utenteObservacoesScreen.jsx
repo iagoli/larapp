@@ -6,7 +6,7 @@ import ConfirmDialog from '../components/confirmDialog';
 import ObservacaoTableHeader from '../components/observacaoTableHeader';
 import ObservacaoRow from '../components/observacaoRow';
 import EditObservacaoModal from '../components/editObservacaoModal';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 import { db } from '../../firebase.config';
@@ -21,6 +21,7 @@ const UtenteObservacoesScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
   
   const toggleCheckbox = (id) => {
@@ -78,9 +79,9 @@ const UtenteObservacoesScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar Observacao')}
+            onPress={() => navigation.navigate('CreateObservacoesScreen', { utenteId })}
           >
-            {!isCompact && 'Agendar Observacao'}
+            {!isCompact && 'Agendar Observação'}
           </Button>
 
           <IconButton icon="pencil" onPress={handleEditPress} />

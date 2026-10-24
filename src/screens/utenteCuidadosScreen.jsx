@@ -6,7 +6,7 @@ import CuidadosRow from '../components/cuidadosRow';
 import CuidadosTableHeader from '../components/cuidadosTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditCuidadoModal from '../components/editCuidadoModal';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 import { db } from '../../firebase.config';
@@ -22,6 +22,7 @@ const UtenteCuidadosScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
 
   const { registos } = useUtenteRegistos('cuidados', utenteId);
@@ -89,7 +90,7 @@ const UtenteCuidadosScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar Cuidado')}
+            onPress={() => navigation.navigate('CreateCuidadoScreen', { utenteId })}
           >
             {!isCompact && 'Agendar Cuidado Médico'}
           </Button>

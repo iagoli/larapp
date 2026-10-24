@@ -6,7 +6,7 @@ import AtividadeRow from '../components/atividadeRow';
 import AtividadeTableHeader from '../components/atividadeTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditAtividadeModal from '../components/editAtividadeModal';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 
 import { db } from '../../firebase.config';
@@ -21,6 +21,7 @@ const UtenteAtividadeScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
   const { registos: atividades } = useUtenteRegistos('atividades', utenteId);
 
@@ -83,7 +84,7 @@ const UtenteAtividadeScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar Cuidado')}
+            onPress={() => navigation.navigate('CreateAtividadesScreen', { utenteId })}
           >
             {!isCompact && 'Agendar Atividade'}
           </Button>

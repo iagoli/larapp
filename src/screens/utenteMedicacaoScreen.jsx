@@ -7,7 +7,7 @@ import styles from '../styles/utenteMedicacaoScreen_styles';
 import { db } from '../../firebase.config';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 
 
@@ -25,6 +25,7 @@ const UtenteMedicacaoScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
   
   const toggleCheckbox = (id) => {
@@ -89,7 +90,7 @@ const UtenteMedicacaoScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar')}
+            onPress={() => navigation.navigate('CreateMedicacaoScreen', { utenteId })}
           >
             {!isCompact && 'Agendar Medicação'}
           </Button>
@@ -103,7 +104,6 @@ const UtenteMedicacaoScreen = () => {
             onPress={() => setShowDeleteDialog(true)}
             disabled={!Object.values(selectedItems).includes(true)}
           />
-          <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>
 
         <View style={styles.tableHeader}>

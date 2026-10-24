@@ -7,6 +7,7 @@ import DateTimeInput from '../components/dateTimeInput';
 import userScreenStyles from '../styles/userScreen_styles';
 import { useRoute } from '@react-navigation/native';
 import { useGuardarRegisto } from '../hooks/useGuardarRegisto';
+import { agendarLembreteMedicacao } from '../services/lembretes';
 
 const CreateMedicacaoScreen = () => {
   const [medicamento, setMedicamento] = useState('');
@@ -17,18 +18,26 @@ const CreateMedicacaoScreen = () => {
   const utenteId = route.params?.utenteId;
   const { guardar, saving } = useGuardarRegisto('medicacoes');
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!medicamento.trim() || !quantidade.trim()) {
       Alert.alert('Campos obrigatórios', 'Indique o medicamento e a quantidade.');
       return;
     }
 
-    guardar({
+    const guardado = await guardar({
       medicamento: medicamento.trim(),
       dataHora: dataHora.toISOString(),
       quantidade: quantidade.trim(),
       utenteId,
     });
+
+    if (guardado) {
+      agendarLembreteMedicacao({
+        medicamento: medicamento.trim(),
+        quantidade: quantidade.trim(),
+        dataHora,
+      });
+    }
   };
 
   return (

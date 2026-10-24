@@ -6,7 +6,7 @@ import RefeicaoRow from '../components/refeicaoRow';
 import RefeicaoTableHeader from '../components/refeicaoTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditAlimentacaoModal from '../components/editAlimentacaoModal'; 
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -22,6 +22,7 @@ const UtenteRefeicoesScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
 
   const { registos } = useUtenteRegistos('alimentacoes', utenteId);
@@ -74,7 +75,7 @@ const UtenteRefeicoesScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar')}
+            onPress={() => navigation.navigate('CreateAlimentacoesScreen', { utenteId })}
           >
             {!isCompact && 'Agendar Refeição'}
           </Button>
