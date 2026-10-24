@@ -24,8 +24,11 @@ const AppDrawer = () => {
         <>
           <Drawer.Screen name="Quartos" component={RoomsListScreen} />
           <Drawer.Screen name="Utentes" component={UtentesListScreen} />
-          <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
         </>
+      )}
+
+      {role === 'admin' && (
+        <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
       )}
     </Drawer.Navigator>
   );

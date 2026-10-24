@@ -182,7 +182,8 @@ app.post('/users', requireAuth, requireAdmin, async (req, res) => {
       displayName: nome,
     });
 
-    await db.collection('users').add({
+    // id do documento = uid, como exigem as firestore.rules
+    await db.collection('users').doc(newUser.uid).set({
       nome,
       idade: idade || '',
       email,

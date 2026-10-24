@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { app, db } from '../../firebase.config';
 import { chatClient } from '../services/chatClient';
 import { fetchChatToken } from '../services/chatTokenService';
@@ -21,11 +21,9 @@ export const AuthProvider = ({ children }) => {
           console.log('✅ Firebase autenticado UID:', firebaseUser.uid);
 
           // Busca dados no Firestore
-          const q = query(collection(db, 'users'), where('uid', '==', firebaseUser.uid));
-          const querySnapshot = await getDocs(q);
+          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
 
-          if (!querySnapshot.empty) {
-            const userDoc = querySnapshot.docs[0];
+          if (userDoc.exists()) {
             const userData = userDoc.data();
             const fullUser = { uid: firebaseUser.uid, ...userData };
 
