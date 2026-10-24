@@ -7,8 +7,7 @@ import SelectInput from '../components/selectInput';
 import SaveButton from '../components/saveButton';
 import HeaderButtons from '../components/headerButtons';
 import userScreenStyles from '../styles/userScreen_styles';
-import { useNavigation } from '@react-navigation/native';
-import { db } from '../../firebase.config';
+import { db , app } from '../../firebase.config';
 import {
   collection,
   addDoc,
@@ -18,7 +17,6 @@ import {
   getDocs
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { app } from '../../firebase.config';
 
 const CreateQuarto = ({ navigation }) => {
   const [camas, setCamas] = useState('');

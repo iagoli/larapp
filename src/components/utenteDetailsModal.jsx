@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
 
 const UtenteDetailsModal = ({ visible, utente, onClose}) => {
   const navigation = useNavigation();

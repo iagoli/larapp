@@ -4,8 +4,7 @@ import UtenteHeader from '../components/utenteHeader';
 import UtenteCard from '../components/utenteCard';
 import styles from '../styles/utenteDetailsScreen_styles';
 import { useAuth } from '../contexts/AuthContext';
-import { useRoute } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute , useNavigation } from '@react-navigation/native';
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -18,7 +17,7 @@ const UtenteDetailsScreen = () => {
 
   const utenteId = route.params?.utenteId || user?.utenteId;
 
-  const [selectedTab, setSelectedTab] = useState('quarto');
+  const selectedTab = 'quarto';
   const [roomNumber, setRoomNumber] = useState('');
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');

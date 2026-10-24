@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import LoginStyles from '../styles/login_styles';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword , sendPasswordResetEmail } from "firebase/auth";
 import { app } from '../../firebase.config';
-import { sendPasswordResetEmail } from 'firebase/auth';
 
 const LoginScreen = () => {
 

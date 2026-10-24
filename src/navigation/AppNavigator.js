@@ -8,7 +8,6 @@ import CreateQuarto from '../screens/createQuarto';
 import RoomsListScreen from '../screens/roomsListScreen';
 import UtentesListScreen from '../screens/utentesListScreen';
 import CreateUtente from '../screens/createUtente';
-import UsersListScreen from '../screens/userListScreen';
 import CreateUserScreen from '../screens/createUserScreen'
 import UtenteDetailsScreen from '../screens/utenteDetailsScreen';
 import RegistosScreen from '../screens/registosScreen';

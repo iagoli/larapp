@@ -33,7 +33,7 @@ const ChatScreen = ({ route, navigation }) => {
         console.error('Erro ao abrir canal:', err);
         setError('Não foi possível abrir a conversa.');
       });
-  }, [cid, chatReady]);
+  }, [cid, chatReady, navigation, user.uid]);
 
   if (error) {
     return (

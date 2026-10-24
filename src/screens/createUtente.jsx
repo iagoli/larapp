@@ -8,10 +8,9 @@ import SaveButton from '../components/saveButton';
 import PhotoUploader from '../components/photoUploader';
 import HeaderButtons from '../components/headerButtons';
 import userScreenStyles from '../styles/userScreen_styles';
-import { db } from '../../firebase.config';
+import { db , app } from '../../firebase.config';
 import { collection, doc, setDoc, serverTimestamp, getDocs, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { app } from '../../firebase.config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as uuid from 'uuid';
 

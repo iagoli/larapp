@@ -9,7 +9,7 @@ const EditRegistoModal = ({ visible, definicao, registo, onClose, onSave }) => {
 
   useEffect(() => {
     if (visible && registo) setValores(valoresIniciais(definicao.campos, registo));
-  }, [visible, registo]);
+  }, [visible, registo, definicao.campos]);
 
   const handleSave = () => {
     const { erro, dados } = prepararDados(definicao.campos, valores);
