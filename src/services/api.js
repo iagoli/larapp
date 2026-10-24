@@ -1,8 +1,7 @@
 import { getAuth } from 'firebase/auth';
 import { app } from '../../firebase.config';
+import { API_URL } from '../config';
 
-// No telemóvel "localhost" é o próprio aparelho: defina EXPO_PUBLIC_API_URL com o IP da máquina
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
 
 const request = async (method, path, body) => {
   const currentUser = getAuth(app).currentUser;
