@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; 
@@ -14,7 +14,19 @@ const HomeScreen = () => {
  
   const { user } = useAuth();
   const utenteId = user?.utenteId;
-  
+  const isStaff = user?.tipoUsuario === 'admin' || user?.tipoUsuario === 'enfermeiro';
+
+  // Equipa sem utente associado escolhe primeiro o utente na lista
+  const openRegisto = (screen) => {
+    if (utenteId) {
+      navigation.navigate(screen, { utenteId });
+    } else if (isStaff) {
+      navigation.navigate('Utentes');
+    } else {
+      Alert.alert('Sem utente associado', 'Peça a um administrador para associar a sua conta a um utente.');
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={HomeStyles.container}>
@@ -29,7 +41,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => navigation.navigate('UtenteAtividadeScreen', { utenteId })}
+            onPress={() => openRegisto('UtenteAtividadeScreen')}
           >
             <FontAwesome5 name="walking" size={28} color="#000" marginLeft={5} />
             <Text style={HomeStyles.itemText}>Atividade</Text>
@@ -37,7 +49,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => navigation.navigate('UtenteCuidadosScreen', { utenteId })}
+            onPress={() => openRegisto('UtenteCuidadosScreen')}
           >
             <MaterialIcons name="event-note" size={24} color="#000" />
             <Text style={HomeStyles.itemText}>Cuidados</Text>
@@ -45,7 +57,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => navigation.navigate('UtenteRefeicoesScreen', { utenteId })}
+            onPress={() => openRegisto('UtenteRefeicoesScreen')}
           >
             <Ionicons name="time-outline" size={28} color="#000" />
             <Text style={HomeStyles.itemText}>Refeição</Text>
@@ -53,7 +65,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => navigation.navigate('UtenteMedicacaoScreen', { utenteId })}
+            onPress={() => openRegisto('UtenteMedicacaoScreen')}
           >
             <MaterialCommunityIcons name="pill" size={26} color="#000" />
             <Text style={HomeStyles.itemText}>Medicação</Text>
@@ -61,7 +73,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity
             style={HomeStyles.item}
-            onPress={() => navigation.navigate('UtenteObservacoesScreen', { utenteId })}
+            onPress={() => openRegisto('UtenteObservacoesScreen')}
           >
             <MaterialCommunityIcons name="comment-text-outline" size={26} color="#000" />
             <Text style={HomeStyles.itemText}>Observação</Text>
