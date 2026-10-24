@@ -15,4 +15,9 @@ module.exports = defineConfig([
       'no-console': ['warn', { allow: ['error', 'warn'] }],
     },
   },
+  {
+    // Servidor e scripts de linha de comando escrevem o progresso na consola
+    files: ['backend/**/*.js'],
+    rules: { 'no-console': 'off' },
+  },
 ]);

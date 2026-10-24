@@ -68,7 +68,7 @@ const requireAuth = async (req, res, next) => {
   try {
     req.uid = (await auth.verifyIdToken(idToken)).uid;
     return next();
-  } catch (err) {
+  } catch {
     return res.status(401).json({ error: 'Token de autenticação inválido' });
   }
 };

@@ -1,103 +1,181 @@
-# LarAppT46
+# LarApp
 
-## Getting started
+Aplicação móvel para a gestão de um lar de idosos. A equipa regista o dia a dia de cada utente
+(medicação, refeições, atividades, cuidados médicos e observações), gere quartos e contas, e
+comunica por chat com colegas e utentes. O utente vê o seu plano do dia e pode pedir
+ajuda num toque.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Projeto desenvolvido na unidade curricular **Desenvolvimento Multiplataforma** da **Escola
+Superior de Tecnologia e Gestão (ESTiG) do Instituto Politécnico de Bragança (IPB)**, no ano
+letivo 2024/25.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<!--
+Capturas de ecrã: guarde as imagens em docs/screenshots/ e descomente a tabela abaixo.
 
-## Add your files
+| Início | Registos do utente | Conversas |
+| :----: | :----------------: | :-------: |
+| <img src="docs/screenshots/home.png" width="220"> | <img src="docs/screenshots/registos.png" width="220"> | <img src="docs/screenshots/chat.png" width="220"> |
+-->
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Funcionalidades
+
+- **Autenticação** com Firebase Auth e recuperação da palavra-passe por email.
+- **Três perfis**, cada um com o seu menu e as suas permissões:
+  - **Administrador:** tudo o que o enfermeiro faz, mais criar, editar e remover contas.
+  - **Enfermeiro:** gere quartos e utentes e escreve os registos diários.
+  - **Utente:** consulta os seus próprios registos e o plano de hoje.
+- **Registos diários** por utente: medicação, alimentação, atividades, cuidados médicos e
+  observações, atualizados em tempo real.
+- **Lembretes de medicação** através de notificações locais.
+- **Cartão "Hoje"** na página inicial do utente, com a medicação, as refeições e as atividades
+  do dia por ordem.
+- **Chat** com Stream Chat: um canal da equipa e conversas diretas. Os utentes só podem falar
+  com a equipa.
+- **Botão SOS** que liga para o 112 ou para o SNS 24 (808 24 24 24).
+- **Fotografias** de utilizadores e utentes guardadas no Firebase Storage.
+
+## Tecnologias
+
+| Camada    | Tecnologias                                                                      |
+| --------- | -------------------------------------------------------------------------------- |
+| App       | Expo SDK 53, React Native 0.79, React 19, React Navigation 7, React Native Paper |
+| Dados     | Firebase Auth, Cloud Firestore, Firebase Storage                                 |
+| Chat      | Stream Chat (`stream-chat-expo`)                                                 |
+| Backend   | Node.js, Express 5, Firebase Admin SDK                                           |
+| Qualidade | ESLint, Prettier, GitHub Actions                                                 |
+| Build     | EAS Build (APK Android)                                                          |
+
+## Arquitetura
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.estig.ipb.pt/2425/dm/t46/larappt46.git
-git branch -M main
-git push -uf origin main
+App (Expo) ──Firebase SDK──────────────▶ Firebase (Auth, Firestore, Storage)
+     │                                        ▲
+     ├──HTTPS + ID token──▶ backend/ ──Admin SDK┘
+     │                      (Express) ──API secret──▶ Stream Chat
+     └──WebSocket (mensagens)───────────────────────▶ Stream Chat
 ```
 
-## Integrate with your tools
+- A app lê e escreve os dados diretamente no Firestore. As
+  [regras de segurança](firestore.rules) aplicam as permissões de cada perfil, com base no
+  documento `users/{uid}`.
+- O [backend](backend/index.js) guarda os segredos que não podem ir no telemóvel. Valida o
+  ID token do Firebase em cada pedido e:
+  - gera os tokens do Stream Chat (`POST /token`);
+  - lista os contactos e cria as conversas diretas (`GET /chat/contacts`, `POST /chat/direct`);
+  - cria contas novas com o Admin SDK (`POST /users`, só para administradores).
+- Os cinco tipos de registo estão descritos num único ficheiro,
+  [`src/constants/registos.js`](src/constants/registos.js). A partir dele são gerados os ecrãs de
+  lista, criação e edição.
 
-- [ ] [Set up project integrations](https://gitlab.estig.ipb.pt/2425/dm/t46/larappt46/-/settings/integrations)
+```
+├── App.js                 # Providers: Paper, Auth, Stream Chat, Navigation
+├── src/
+│   ├── config.js          # Variáveis de ambiente (EXPO_PUBLIC_*)
+│   ├── constants/         # Definição dos registos
+│   ├── contexts/          # AuthContext: sessão, perfil e ligação ao chat
+│   ├── hooks/             # Leitura e gravação de registos no Firestore
+│   ├── navigation/        # Stack + drawer com menus por perfil
+│   ├── screens/  components/  styles/  services/
+├── backend/
+│   ├── index.js           # API Express
+│   └── scripts/           # seed.js (dados demo), migrarUsersParaUid.js
+├── firestore.rules  storage.rules  firebase.json
+└── eas.json               # Perfis de build
+```
 
-## Collaborate with your team
+## Como executar
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Requisitos
 
-## Test and Deploy
+- Node.js 20 ou mais recente.
+- Um projeto Firebase com Authentication (email/palavra-passe), Firestore e Storage ativos.
+- Uma app no [Stream](https://getstream.io/chat/) (o plano gratuito chega).
+- A app [Expo Go](https://expo.dev/go) no telemóvel, ou um emulador Android ou iOS.
 
-Use the built-in continuous integration in GitLab.
+### 1. Backend
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```bash
+cd backend
+npm install
+cp .env.example .env
+```
 
----
+Preencha o `backend/.env` com a chave e o segredo do Stream. Descarregue também a chave da conta
+de serviço do Firebase (Consola > Definições do projeto > Contas de serviço) para
+`backend/serviceAccountKey.json`. Este ficheiro está no `.gitignore` e não deve ser publicado.
 
-# Editing this README
+```bash
+npm run seed   # contas e dados de demonstração (opcional)
+npm run dev    # http://localhost:3000
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### 2. Regras do Firebase
 
-## Suggestions for a good README
+```bash
+npx firebase-tools login
+npx firebase-tools use <id-do-seu-projeto>
+npx firebase-tools deploy --only firestore,storage
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### 3. App
 
-## Name
+```bash
+npm install
+cp .env.example .env
+npx expo start
+```
 
-Choose a self-explaining name for your project.
+No `.env`, preencha a configuração web do Firebase e a chave pública do Stream. Em
+`EXPO_PUBLIC_API_URL`, use o IP da sua máquina na rede local (por exemplo
+`http://192.168.1.10:3000`). O endereço `localhost` não funciona a partir do telemóvel.
 
-## Description
+### Contas de demonstração
 
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+O `npm run seed` cria as contas abaixo, além de 4 quartos, 3 utentes e registos para o dia de hoje:
 
-## Badges
+| Perfil        | Email                    | Palavra-passe |
+| ------------- | ------------------------ | ------------- |
+| Administrador | `admin@larapp.demo`      | `larapp-demo` |
+| Enfermeiro    | `enfermeiro@larapp.demo` | `larapp-demo` |
+| Utente        | `utente@larapp.demo`     | `larapp-demo` |
 
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Pode mudar a palavra-passe com `SEED_PASSWORD` no `backend/.env`. Para recriar os dados do zero,
+use `npm run seed -- --limpar`.
 
-## Visuals
+### Gerar o APK
 
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```bash
+npx eas-cli login
+npx eas-cli init                                    # liga o projeto à sua conta Expo
+npx eas-cli env:push --environment preview --path .env
+npx eas-cli build --platform android --profile preview
+```
 
-## Installation
+O APK precisa de um backend acessível pela internet. Antes do build, aponte
+`EXPO_PUBLIC_API_URL` para o endereço público do servidor.
 
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Scripts
 
-## Usage
+| Comando                 | Descrição                                 |
+| ----------------------- | ----------------------------------------- |
+| `npm start`             | Inicia o Expo                             |
+| `npm run lint`          | ESLint                                    |
+| `npm run format`        | Formata o código com Prettier             |
+| `backend: npm run dev`  | Backend com recarregamento automático     |
+| `backend: npm run seed` | Cria as contas e os dados de demonstração |
 
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Equipa
 
-## Support
+Projeto desenvolvido em grupo por:
 
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+- **Iago Lima** ([@iagoli](https://github.com/iagoli))
+- **Bruna Cacemiro**
+- **Ricardo Vieira**
 
-## Roadmap
+O histórico de commits original, feito no GitLab da ESTiG, foi preservado.
 
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-
-Show your appreciation to those who have contributed to the project.
-
-## License
-
-For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Depois da avaliação, o projeto foi revisto para publicação. Foram corrigidos erros e problemas de
+segurança, o chat foi ligado a dados reais, foram acrescentadas regras de segurança, os ecrãs de
+registos foram unificados e o projeto ganhou lint, CI e este README. O trabalho está organizado
+nas [issues](https://github.com/iagoli/larapp/issues?q=is%3Aissue) e nos
+[pull requests](https://github.com/iagoli/larapp/pulls?q=is%3Apr) deste repositório.
