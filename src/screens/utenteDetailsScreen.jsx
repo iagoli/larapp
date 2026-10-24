@@ -60,10 +60,6 @@ const UtenteDetailsScreen = () => {
     fetchUtente();
   }, [utenteId]);
 
-  const handleEdit = (title) => {
-    console.log('Editando:', title);
-  };
-
   return (
     <ScrollView style={styles.container}>
       <UtenteHeader
@@ -79,7 +75,6 @@ const UtenteDetailsScreen = () => {
           title={item.title}
           icon={item.icon}
           onAdd={() => navigation.navigate(item.createScreen, { utenteId })}
-          onEdit={() => handleEdit(item.title)}
           onPress={() => navigation.navigate(item.screen, { utenteId })}
         />
       ))}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button } from 'react-native-paper';
 import styles from '../styles/utenteRefeicoesScreen_styles';
@@ -6,13 +6,13 @@ import RefeicaoRow from '../components/refeicaoRow';
 import RefeicaoTableHeader from '../components/refeicaoTableHeader';
 import ConfirmDialog from '../components/confirmDialog';
 import EditAlimentacaoModal from '../components/editAlimentacaoModal'; 
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
+import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 
 const UtenteRefeicoesScreen = () => {
-  const [refeicoes, setRefeicoes] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -22,32 +22,16 @@ const UtenteRefeicoesScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
 
-  const fetchRefeicoes = async () => {
-    try {
-      const q = query(collection(db, 'alimentacoes'), where('utenteId', '==', utenteId));
-      const snapshot = await getDocs(q);
-
-      const data = snapshot.docs.map(docRef => {
-        const item = docRef.data();
-        return {
-          id: docRef.id,
-          prato: item.prato || 'Sem prato',
-          dataHora: item.dataHora || '',
-          date: item.dataHora ? new Date(item.dataHora).toISOString().split('T')[0] : 'Sem data',
-        };
-      });
-
-      setRefeicoes(data);
-    } catch (err) {
-      console.error('Erro ao buscar refeições:', err);
-    }
-  };
-
-  useEffect(() => {
-    fetchRefeicoes();
-  }, []);
+  const { registos } = useUtenteRegistos('alimentacoes', utenteId);
+  const refeicoes = registos.map((item) => ({
+    id: item.id,
+    prato: item.prato || 'Sem prato',
+    dataHora: item.dataHora || '',
+    date: item.dataHora ? new Date(item.dataHora).toISOString().split('T')[0] : 'Sem data',
+  }));
 
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -65,7 +49,6 @@ const UtenteRefeicoesScreen = () => {
 
       setSelectedItems({});
       setShowDeleteDialog(false);
-      await fetchRefeicoes();
     } catch (err) {
       console.error('Erro ao deletar refeições:', err);
     }
@@ -92,7 +75,7 @@ const UtenteRefeicoesScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar')}
+            onPress={() => navigation.navigate('CreateAlimentacoesScreen', { utenteId })}
           >
             {!isCompact && 'Agendar Refeição'}
           </Button>
@@ -129,7 +112,6 @@ const UtenteRefeicoesScreen = () => {
         visible={editModalVisible}
         alimentacao={editingItem}
         onClose={() => setEditModalVisible(false)}
-        onSaved={fetchRefeicoes}
       />
     </View>
   );

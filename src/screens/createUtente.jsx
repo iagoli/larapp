@@ -104,12 +104,11 @@ const CreateUtente = ({ navigation }) => {
   };
 
   const handleBack = () => navigation.goBack();
-  const handleMenu = () => console.log('Mais opções');
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <ScrollView contentContainerStyle={[userScreenStyles.container, { paddingBottom: 100 }]}>
-        <HeaderButtons onBackPress={handleBack} onMenuPress={handleMenu} />
+        <HeaderButtons onBackPress={handleBack} />
 
         <Title>Novo Utente</Title>
 

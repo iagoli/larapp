@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; 
 import HomeStyles from '../styles/homePage_styles';
-import EmergencyModal from '../components/emergencyModal'; 
+import EmergencyModal from '../components/emergencyModal';
+import CronogramaHoje from '../components/cronogramaHoje';
 import { useAuth } from '../contexts/AuthContext';
 
 const HomeScreen = () => {
@@ -35,50 +36,54 @@ const HomeScreen = () => {
           <Text style={HomeStyles.sub}>How are you?</Text>
         </View>
 
-        {/* Section: Cronograma dia */}
-        <View style={HomeStyles.card}>
-          <Text style={HomeStyles.cardTitle}>Cronograma dia</Text>
+        <ScrollView contentContainerStyle={{ paddingBottom: 180 }}>
+          {utenteId && <CronogramaHoje utenteId={utenteId} />}
 
-          <TouchableOpacity
-            style={HomeStyles.item}
-            onPress={() => openRegisto('UtenteAtividadeScreen')}
-          >
-            <FontAwesome5 name="walking" size={28} color="#000" marginLeft={5} />
-            <Text style={HomeStyles.itemText}>Atividade</Text>
-          </TouchableOpacity>
+          {/* Atalhos para os registos do utente */}
+          <View style={[HomeStyles.card, utenteId && { marginTop: 20 }]}>
+            <Text style={HomeStyles.cardTitle}>Registos</Text>
 
-          <TouchableOpacity
-            style={HomeStyles.item}
-            onPress={() => openRegisto('UtenteCuidadosScreen')}
-          >
-            <MaterialIcons name="event-note" size={24} color="#000" />
-            <Text style={HomeStyles.itemText}>Cuidados</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={HomeStyles.item}
+              onPress={() => openRegisto('UtenteAtividadeScreen')}
+            >
+              <FontAwesome5 name="walking" size={28} color="#000" marginLeft={5} />
+              <Text style={HomeStyles.itemText}>Atividade</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={HomeStyles.item}
-            onPress={() => openRegisto('UtenteRefeicoesScreen')}
-          >
-            <Ionicons name="time-outline" size={28} color="#000" />
-            <Text style={HomeStyles.itemText}>Refeição</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={HomeStyles.item}
+              onPress={() => openRegisto('UtenteCuidadosScreen')}
+            >
+              <MaterialIcons name="event-note" size={24} color="#000" />
+              <Text style={HomeStyles.itemText}>Cuidados</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={HomeStyles.item}
-            onPress={() => openRegisto('UtenteMedicacaoScreen')}
-          >
-            <MaterialCommunityIcons name="pill" size={26} color="#000" />
-            <Text style={HomeStyles.itemText}>Medicação</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={HomeStyles.item}
+              onPress={() => openRegisto('UtenteRefeicoesScreen')}
+            >
+              <Ionicons name="time-outline" size={28} color="#000" />
+              <Text style={HomeStyles.itemText}>Refeição</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={HomeStyles.item}
-            onPress={() => openRegisto('UtenteObservacoesScreen')}
-          >
-            <MaterialCommunityIcons name="comment-text-outline" size={26} color="#000" />
-            <Text style={HomeStyles.itemText}>Observação</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={HomeStyles.item}
+              onPress={() => openRegisto('UtenteMedicacaoScreen')}
+            >
+              <MaterialCommunityIcons name="pill" size={26} color="#000" />
+              <Text style={HomeStyles.itemText}>Medicação</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={HomeStyles.item}
+              onPress={() => openRegisto('UtenteObservacoesScreen')}
+            >
+              <MaterialCommunityIcons name="comment-text-outline" size={26} color="#000" />
+              <Text style={HomeStyles.itemText}>Observação</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
 
         {/* Floating Action Buttons */}
         <View style={HomeStyles.fabContainer}>

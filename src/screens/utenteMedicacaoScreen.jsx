@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import { Text, Avatar, IconButton, Button, Checkbox } from 'react-native-paper';
 import ConfirmDialog from '../components/confirmDialog';
 import EditMedicacaoModal from '../components/editMedicacaoModal';
 import styles from '../styles/utenteMedicacaoScreen_styles';
 import { db } from '../../firebase.config';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useUtenteRegistos } from '../hooks/useUtenteRegistos';
 
 
 const UtenteMedicacaoScreen = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [medications, setMedications] = useState([]);
   const [currentItem, setCurrentItem] = useState(null);
 
   const [medicamento, setMedicamento] = useState('');
@@ -33,37 +25,23 @@ const UtenteMedicacaoScreen = () => {
   const isCompact = screenWidth < 360;
 
   const route = useRoute();
+  const navigation = useNavigation();
   const { utenteId } = route.params;
   
   const toggleCheckbox = (id) => {
     setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const fetchMedicacoes = async () => {
-    try {
-      const q = query(collection(db, 'medicacoes'), where('utenteId', '==', utenteId));
-      const snapshot = await getDocs(q);
-
-      const data = snapshot.docs.map((doc) => {
-        const item = doc.data();
-        const date = item.dataHora
-          ? new Date(item.dataHora).toLocaleDateString('pt-PT')
-          : 'Sem data';
-
-        return {
-          id: doc.id,
-          name: item.medicamento || 'Sem nome',
-          date,
-          quantity: item.quantidade || 'Sem quantidade',
-          rawDate: item.dataHora,
-        };
-      });
-
-      setMedications(data);
-    } catch (error) {
-      console.error('Erro ao buscar medicações:', error);
-    }
-  };
+  const { registos } = useUtenteRegistos('medicacoes', utenteId);
+  const medications = registos.map((item) => ({
+    id: item.id,
+    name: item.medicamento || 'Sem nome',
+    date: item.dataHora
+      ? new Date(item.dataHora).toLocaleDateString('pt-PT')
+      : 'Sem data',
+    quantity: item.quantidade || 'Sem quantidade',
+    rawDate: item.dataHora,
+  }));
 
   const handleDelete = async () => {
     try {
@@ -73,7 +51,6 @@ const UtenteMedicacaoScreen = () => {
       );
       setSelectedItems({});
       setShowDeleteDialog(false);
-      fetchMedicacoes();
     } catch (error) {
       console.error('Erro ao deletar:', error);
     }
@@ -97,15 +74,10 @@ const UtenteMedicacaoScreen = () => {
       });
       setShowEditModal(false);
       setCurrentItem(null);
-      fetchMedicacoes();
     } catch (error) {
       console.error('Erro ao atualizar:', error);
     }
   };
-
-  useEffect(() => {
-    fetchMedicacoes();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -118,7 +90,7 @@ const UtenteMedicacaoScreen = () => {
             icon="calendar-plus"
             mode="outlined"
             style={styles.scheduleButton}
-            onPress={() => console.log('Agendar')}
+            onPress={() => navigation.navigate('CreateMedicacaoScreen', { utenteId })}
           >
             {!isCompact && 'Agendar Medicação'}
           </Button>
@@ -132,7 +104,6 @@ const UtenteMedicacaoScreen = () => {
             onPress={() => setShowDeleteDialog(true)}
             disabled={!Object.values(selectedItems).includes(true)}
           />
-          <IconButton icon="plus" onPress={() => console.log('Add')} />
         </View>
 
         <View style={styles.tableHeader}>

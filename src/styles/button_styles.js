@@ -10,6 +10,9 @@ const ButtonStyles = StyleSheet.create({
       marginTop: 10,
       marginLeft: 15,
     },
+    disabled: {
+      opacity: 0.6,
+    },
     text: {
       color: '#fff',
       fontWeight: 'bold',

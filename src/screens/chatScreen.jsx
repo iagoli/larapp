@@ -5,23 +5,35 @@ import { Channel, MessageList, MessageInput } from 'stream-chat-expo';
 import { useAuth } from '../contexts/AuthContext';
 import { chatClient } from '../services/chatClient';
 
-const ChatScreen = () => {
+// Nome do canal ou, numa conversa direta, o nome do outro membro
+const tituloDoCanal = (channel, uid) => {
+  if (channel.data?.name) return channel.data.name;
+  const outro = Object.values(channel.state.members).find((m) => m.user_id !== uid);
+  return outro?.user?.name || 'Conversa';
+};
+
+const ChatScreen = ({ route, navigation }) => {
+  const { cid } = route.params;
   const { user, chatReady } = useAuth();
   const [channel, setChannel] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!user || !chatReady) return;
+    if (!chatReady) return;
 
-    const newChannel = chatClient.channel('messaging', `general-${user.uid}`);
+    const [type, id] = cid.split(':');
+    const newChannel = chatClient.channel(type, id);
     newChannel
       .watch()
-      .then(() => setChannel(newChannel))
+      .then(() => {
+        setChannel(newChannel);
+        navigation.setOptions({ title: tituloDoCanal(newChannel, user.uid) });
+      })
       .catch((err) => {
         console.error('Erro ao abrir canal:', err);
-        setError('Não foi possível abrir o chat.');
+        setError('Não foi possível abrir a conversa.');
       });
-  }, [user, chatReady]);
+  }, [cid, chatReady]);
 
   if (error) {
     return (

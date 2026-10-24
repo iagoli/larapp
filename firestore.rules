@@ -1,0 +1,59 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Perfil em /users/{uid}; contas novas são criadas pelo backend (Admin SDK)
+    function perfil() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function temPerfil() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function isAdmin() {
+      return temPerfil() && perfil().tipoUsuario == 'admin';
+    }
+
+    function isStaff() {
+      return temPerfil() && perfil().tipoUsuario in ['admin', 'enfermeiro'];
+    }
+
+    function isProprioUtente(utenteId) {
+      return temPerfil() && perfil().utenteId == utenteId;
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isStaff());
+      allow update, delete: if isAdmin();
+      allow create: if false;
+    }
+
+    match /utentes/{utenteId} {
+      allow read: if isStaff() || isProprioUtente(utenteId);
+      allow write: if isStaff();
+    }
+
+    match /rooms/{roomId} {
+      allow read, write: if isStaff();
+    }
+
+    // Registos diários de cada utente: a equipa gere, o utente apenas consulta os seus
+    function isRegisto(colecao) {
+      return colecao in ['medicacoes', 'atividades', 'alimentacoes', 'cuidados', 'observacoes'];
+    }
+
+    match /{colecao}/{registoId} {
+      allow read: if isRegisto(colecao)
+        && (isStaff() || isProprioUtente(resource.data.utenteId));
+      allow create: if isRegisto(colecao) && isStaff()
+        && request.resource.data.utenteId is string;
+      allow update, delete: if isRegisto(colecao) && isStaff();
+    }
+  }
+}

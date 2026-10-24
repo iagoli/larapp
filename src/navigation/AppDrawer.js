@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useAuth } from '../contexts/AuthContext';
 
 import HomeScreen from '../screens/homeScreen';
-import ChatScreen from '../screens/chatScreen';
+import ChannelListScreen from '../screens/channelListScreen';
 import RoomsListScreen from '../screens/roomsListScreen';
 import UtentesListScreen from '../screens/utentesListScreen';
 import UsersListScreen from '../screens/userListScreen';
@@ -18,14 +18,17 @@ const AppDrawer = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}>
       <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Chat" component={ChatScreen} />
+      <Drawer.Screen name="Chat" component={ChannelListScreen} options={{ title: 'Conversas' }} />
 
       {(role === 'admin' || role === 'enfermeiro') && (
         <>
           <Drawer.Screen name="Quartos" component={RoomsListScreen} />
           <Drawer.Screen name="Utentes" component={UtentesListScreen} />
-          <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
         </>
+      )}
+
+      {role === 'admin' && (
+        <Drawer.Screen name="Utilizadores" component={UsersListScreen} />
       )}
     </Drawer.Navigator>
   );
